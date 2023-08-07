@@ -2,21 +2,19 @@
 
 import json
 import sys
-import requests
-
 from datetime import datetime
+import requests
 
 
 def main():
     json_file = sys.argv[1]
     output_file = sys.argv[2]
 
-    with open(json_file, "r") as fd:
-        metadata = json.load(fd)
+    with open(json_file, "r", encoding="utf-8") as file:
+        metadata = json.load(file)
 
-    outfile = open(output_file, "w")
-    convert(outfile, metadata)
-    outfile.close()
+    with open(output_file, "w", encoding="utf-8") as output_file:
+        convert(output_file, metadata)
 
 
 def convert(file, metadata):
@@ -90,7 +88,7 @@ def convert_resource(file, resource, publisher):
         file=file,
     )
 
-    # TODO
+    # TODO # pylint: disable=W0511
     # print('  <category domain="eaf-classification-coded">38002</category>', file=file)
     # print('  <sdx:subject>38002</sdx:subject>', file=file)
 
@@ -124,12 +122,12 @@ def get_license_version(resource_license):
 def get_license_name(resource_license):
     if "/by/" in resource_license:
         return "CC BY"
-    elif "/zero/" in resource_license:
+    if "/zero/" in resource_license:
         return "CC0"
-    elif "/sa-by/" in resource_license:
+    if "/sa-by/" in resource_license:
         return "CC BY-SA"
-    else:
-        return None
+
+    return None
 
 
 def get_resource_type(resource):
@@ -137,14 +135,14 @@ def get_resource_type(resource):
 
     if schema_type == "Article":
         return "Arbeitsblatt, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
-    elif schema_type == "Course":
+    if schema_type == "Course":
         return "Kurs, Entdeckendes Lernen, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
-    elif schema_type == "Quiz":
+    if schema_type == "Quiz":
         return "Übung, Test/Prüfung, Lernkontrolle, Webseite"
-    elif schema_type == "VideoObject":
+    if schema_type == "VideoObject":
         return "Video, Audiovisuelles Medium"
-    else:
-        return "App, Interaktion, Entdeckendes Lernen, Webtool"
+
+    return "App, Interaktion, Entdeckendes Lernen, Webtool"
 
 
 def escape(input_string):
@@ -175,6 +173,7 @@ def get_publisher():
                 }
             """,
         },
+        timeout=60
     )
 
     return req.json()["data"]["metadata"]["publisher"]

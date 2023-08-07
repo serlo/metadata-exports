@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
 import json
-import requests
 import sys
+import requests
 
 
 def main():
     metadata = list(fetch_all_metadata())
 
-    with open(sys.argv[1], "w") as fd:
-        json.dump(metadata, fd, indent=2)
+    with open(sys.argv[1], "w", encoding="utf-8") as file:
+        json.dump(metadata, file, indent=2)
 
 
 def fetch_all_metadata():
@@ -53,6 +53,7 @@ def fetch_metadata(first=500, after=None):
             """,
             "variables": {"first": first, "after": after},
         },
+        timeout=60
     )
 
     return req.json()
