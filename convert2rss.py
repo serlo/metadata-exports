@@ -6,14 +6,11 @@ from datetime import datetime
 from serlo_api_client import fetch_publisher
 
 
-def main():
-    json_file = sys.argv[1]
-    output_file = sys.argv[2]
+def main(input_filename: str, output_filename: str):
+    with open(input_filename, "r", encoding="utf-8") as input_file:
+        metadata = json.load(input_file)
 
-    with open(json_file, "r", encoding="utf-8") as file:
-        metadata = json.load(file)
-
-    with open(output_file, "w", encoding="utf-8") as output_file:
+    with open(output_filename, "w", encoding="utf-8") as output_file:
         convert(output_file, metadata)
 
 
@@ -164,4 +161,8 @@ def get_publisher():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 3:
+        print("Usage: convert2rss.py INPUT_FILENAME OUTPUT_FILENAME")
+        sys.exit(1)
+
+    main(sys.argv[1], sys.argv[2])

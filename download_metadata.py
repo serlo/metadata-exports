@@ -7,10 +7,10 @@ from typing import Dict, Any
 from serlo_api_client import fetch_metadata
 
 
-def main():
+def main(output_filename: str):
     metadata = list(fetch_all_metadata())
 
-    with open(sys.argv[1], "w", encoding="utf-8") as file:
+    with open(output_filename, "w", encoding="utf-8") as file:
         json.dump(metadata, file, indent=2)
 
 
@@ -29,4 +29,8 @@ def fetch_all_metadata() -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        print("Usage: download_metadata.py OUTPUT_FILENAME")
+        sys.exit(1)
+
+    main(sys.argv[1])
