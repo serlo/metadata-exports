@@ -1,5 +1,5 @@
 """A client to send requests to the Serlo GraphQL API"""
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
@@ -24,7 +24,18 @@ def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
     return execute(query, params)
 
 
-def execute(query: str, params: Dict[str, Any]) -> Dict[str, Any]:
+def fetch_publisher() -> Dict[str, Any]:
+    query = """
+        query {
+            metadata {
+                publisher
+            }
+        }
+    """
+    return execute(query)
+
+
+def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     transport = RequestsHTTPTransport(url="https://api.serlo.org/graphql")
     client = Client(transport=transport, fetch_schema_from_transport=True)
     graphql_query = gql(query)

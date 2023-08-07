@@ -3,7 +3,7 @@
 import json
 import sys
 from datetime import datetime
-import requests
+from serlo_api_client import fetch_publisher
 
 
 def main():
@@ -159,24 +159,8 @@ def format_date(date):
 
 
 def get_publisher():
-    req = requests.post(
-        "https://api.serlo.org/graphql",
-        headers={
-            "Content-Type": "application/json",
-        },
-        json={
-            "query": """
-                query {
-                    metadata {
-                        publisher
-                    }
-                }
-            """,
-        },
-        timeout=60
-    )
-
-    return req.json()["data"]["metadata"]["publisher"]
+    response = fetch_publisher()
+    return response["metadata"]["publisher"]  # pylint: disable=E1136
 
 
 if __name__ == "__main__":
