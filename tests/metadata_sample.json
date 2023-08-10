@@ -1,0 +1,2641 @@
+[
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1495",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:36:44+00:00",
+    "dateModified": "2022-02-10T11:02:01+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/70932",
+        "name": "metzgaria",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/97046",
+        "name": "Lenali",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/547",
+        "name": "ESHA",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/52009",
+        "name": "SebSoGa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/40928",
+        "name": "JonasBl",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/324",
+        "name": "Hannes",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15491",
+        "name": "haberlm",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/22573",
+        "name": "roehren",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/96306",
+        "name": "emkadys",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/1",
+        "name": "arekkas",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/10",
+        "name": "Simon",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/677",
+        "name": "AK1701",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15473",
+        "name": "inyono",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15478",
+        "name": "Lena09",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/18981",
+        "name": "wolfgang",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27689",
+        "name": "philipp_gadow",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/49129",
+        "name": "testaccount",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/82804",
+        "name": "Monika_Wirthl",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/101613",
+        "name": "Colentrix",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/139548",
+        "name": "IvanP",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/196336",
+        "name": "Matheo",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Addition, auch Plusrechnen genannt, geh\u00f6rt zu den Grundrechenarten der Mathematik. Lerne, was ein Summand ist. \u21d2 Hier lernst du, dass das Assoziativgesetz und Kommutativgesetz gelten.  \u21d2 Veranschaulichung durch Merktabellen und Zahlengeraden. F\u00fcr den Anfang kannst du auch schriftlich addieren! Viele \u00dcbungsaufgaben sind verf\u00fcgbar.\u2713 Lernen mit Serlo!",
+    "headline": "Addition",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1495
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1292"
+      },
+      {
+        "id": "https://serlo.org/16072"
+      },
+      {
+        "id": "https://serlo.org/16174"
+      },
+      {
+        "id": "https://serlo.org/33119"
+      },
+      {
+        "id": "https://serlo.org/34743"
+      },
+      {
+        "id": "https://serlo.org/34744"
+      },
+      {
+        "id": "https://serlo.org/148173"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.208666492+00:00",
+        "dateModified": "2023-08-07T17:10:35.208666492+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Addition",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/238975"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1497",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:36:51+00:00",
+    "dateModified": "2023-08-03T23:09:50+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26175",
+        "name": "Nessa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/324",
+        "name": "Hannes",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15481",
+        "name": "franzi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15491",
+        "name": "haberlm",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26217",
+        "name": "Kulla",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27693",
+        "name": "Nish",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/146667",
+        "name": "BerndF",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Das kleinste gemeinsame Vielfache, kurz: kgV, mehrerer Zahlen ist die kleinste nat\u00fcrliche Zahl, die ein ganzzahliges Vielfaches jeder dieser Zahlen ist.\n\nEin \"Vielfaches\" - z.B. von der Zahl 2 - bezeichnet dabei das Ergebnis der Multiplikation von 2 mit einer ganzen Zahl (also sind Vielfache von 2 beispielsweise   oder ).",
+    "headline": "Kleinstes gemeinsames Vielfaches",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1497
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1341"
+      },
+      {
+        "id": "https://serlo.org/16089"
+      },
+      {
+        "id": "https://serlo.org/33128"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.208727810+00:00",
+        "dateModified": "2023-08-07T17:10:35.208727810+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Kleinstes gemeinsames Vielfaches",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/281243"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1499",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:01+00:00",
+    "dateModified": "2023-01-08T11:29:30+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/100244",
+        "name": "Julia_Heger",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15481",
+        "name": "franzi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/52009",
+        "name": "SebSoGa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/97046",
+        "name": "Lenali",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/1",
+        "name": "arekkas",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15478",
+        "name": "Lena09",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27693",
+        "name": "Nish",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/46690",
+        "name": "Inception_",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/81950",
+        "name": "Menuja",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/87383",
+        "name": "kazuki",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Binomische Formeln einfach erkl\u00e4rt. Verwendung der binomischen Formel zum Aufl\u00f6sen von Klammern und Faktorisieren. Mit vielen Beispielen und \u00dcbungen! ",
+    "headline": "Binomische Formeln",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1499
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1333"
+      },
+      {
+        "id": "https://serlo.org/1444"
+      },
+      {
+        "id": "https://serlo.org/16176"
+      },
+      {
+        "id": "https://serlo.org/16202"
+      },
+      {
+        "id": "https://serlo.org/55229"
+      },
+      {
+        "id": "https://serlo.org/155910"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.208814401+00:00",
+        "dateModified": "2023-08-07T17:10:35.208814401+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Binomische Formeln",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/264196"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1501",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:01+00:00",
+    "dateModified": "2023-08-04T09:57:57+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26175",
+        "name": "Nessa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/64900",
+        "name": "Kowalsky",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/169563",
+        "name": "Peter",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15478",
+        "name": "Lena09",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/69190",
+        "name": "fxjonas",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26217",
+        "name": "Kulla",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/51236",
+        "name": "alexanderbrand",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/70932",
+        "name": "metzgaria",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/100275",
+        "name": "nicoproske",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/147285",
+        "name": "Kopernikus68",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Die Ergebnismenge oder der Ergebnisraum ist die Menge aller m\u00f6glichen Ergebnisse eines Zufallsexperiments .\nBezeichnet wird die Ergebnismenge bzw. der Ergebnisraum zumeist mit dem griechischen Buchstaben \u03a9 (\"Omega\"). (In manchen Lehrb\u00fcchern wird auch das Symbol S verwendet.)\n\nDie Ereignismenge ist die Menge aller Ereignisse und nicht das selbe wie die Ergebnismenge!",
+    "headline": "Ergebnismenge",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1501
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1314"
+      },
+      {
+        "id": "https://serlo.org/16098"
+      },
+      {
+        "id": "https://serlo.org/16143"
+      },
+      {
+        "id": "https://serlo.org/16197"
+      },
+      {
+        "id": "https://serlo.org/16220"
+      },
+      {
+        "id": "https://serlo.org/16356"
+      },
+      {
+        "id": "https://serlo.org/16405"
+      },
+      {
+        "id": "https://serlo.org/105608"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.208876443+00:00",
+        "dateModified": "2023-08-07T17:10:35.208876443+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Ergebnismenge",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/281247"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1503",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:02+00:00",
+    "dateModified": "2022-10-14T09:58:49+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/266",
+        "name": "Renate",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27687",
+        "name": "LorenzHuber",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27693",
+        "name": "Nish",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/324",
+        "name": "Hannes",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15473",
+        "name": "inyono",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27689",
+        "name": "philipp_gadow",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/52009",
+        "name": "SebSoGa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/87383",
+        "name": "kazuki",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/139548",
+        "name": "IvanP",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "W\u00e4hrend die absolute H\u00e4ufigkeit angibt, wie oft ein bestimmtes Ereignis eintritt (Anzahl), beschreibt die relative H\u00e4ufigkeit, wie gro\u00df der Anteil der absoluten H\u00e4ufigkeit an der Gesamtzahl der Versuche ist. ",
+    "headline": "Relative H\u00e4ufigkeit",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1503
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/16087"
+      },
+      {
+        "id": "https://serlo.org/16098"
+      },
+      {
+        "id": "https://serlo.org/16361"
+      },
+      {
+        "id": "https://serlo.org/16374"
+      },
+      {
+        "id": "https://serlo.org/22779"
+      },
+      {
+        "id": "https://serlo.org/33130"
+      },
+      {
+        "id": "https://serlo.org/105609"
+      },
+      {
+        "id": "https://serlo.org/173165"
+      },
+      {
+        "id": "https://serlo.org/173828"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.208926118+00:00",
+        "dateModified": "2023-08-07T17:10:35.208926118+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Relative H\u00e4ufigkeit",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/259252"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1505",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:08+00:00",
+    "dateModified": "2023-08-03T23:12:04+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/52009",
+        "name": "SebSoGa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15481",
+        "name": "franzi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/324",
+        "name": "Hannes",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26217",
+        "name": "Kulla",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27692",
+        "name": "Katha26",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27693",
+        "name": "Nish",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/64900",
+        "name": "Kowalsky",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/82804",
+        "name": "Monika_Wirthl",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Eine beliebige Teilmenge des Ergebnisraumes \u03a9 wird in der Stochastik als Ereignis bezeichnet.\n\nMan sagt, ein Ereignis \"tritt ein\", wenn das Ergebnis eines Zufallsexperimentes ein Element dieses Ereignisses ist. Manchmal k\u00f6nnen auch mehrere Ereignisse gleichzeitig eintreten. ",
+    "headline": "Ereignis",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1505
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1315"
+      },
+      {
+        "id": "https://serlo.org/16098"
+      },
+      {
+        "id": "https://serlo.org/16143"
+      },
+      {
+        "id": "https://serlo.org/16197"
+      },
+      {
+        "id": "https://serlo.org/16220"
+      },
+      {
+        "id": "https://serlo.org/16405"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.208972052+00:00",
+        "dateModified": "2023-08-07T17:10:35.208972052+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Ereignis",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/281245"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1507",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:12+00:00",
+    "dateModified": "2022-10-14T10:03:02+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/96306",
+        "name": "emkadys",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/10",
+        "name": "Simon",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/266",
+        "name": "Renate",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15473",
+        "name": "inyono",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15481",
+        "name": "franzi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/49129",
+        "name": "testaccount",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/70932",
+        "name": "metzgaria",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/82804",
+        "name": "Monika_Wirthl",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/139548",
+        "name": "IvanP",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Die Subtraktion ist eine der vier  Grundrechenarten. In der Grundschule und in der Umgangssprache verwendet man meist den Ausdruck Abziehen f\u00fcr die Subtraktion von zwei oder mehr Zahlen.",
+    "headline": "Subtraktion",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1507
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1293"
+      },
+      {
+        "id": "https://serlo.org/16072"
+      },
+      {
+        "id": "https://serlo.org/16174"
+      },
+      {
+        "id": "https://serlo.org/33119"
+      },
+      {
+        "id": "https://serlo.org/34743"
+      },
+      {
+        "id": "https://serlo.org/34744"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.209011874+00:00",
+        "dateModified": "2023-08-07T17:10:35.209011874+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Subtraktion",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/259254"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1509",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:13+00:00",
+    "dateModified": "2023-01-04T14:38:26+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/27693",
+        "name": "Nish",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15478",
+        "name": "Lena09",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/42101",
+        "name": "VeronikaWidhopf",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/266",
+        "name": "Renate",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/324",
+        "name": "Hannes",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15475",
+        "name": "blacksleet",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/25162",
+        "name": "renepick",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/64900",
+        "name": "Kowalsky",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/87383",
+        "name": "kazuki",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/117641",
+        "name": "namlong111",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "Lerne das K\u00fcrzen und Erweitern von Br\u00fcchen \u21d2 Hier findest du die Methoden zum Erweitern und K\u00fcrzen von Br\u00fcchen, mit Beispielen, Videos und Aufgaben erkl\u00e4rt. \u2713 Lernen mit Serlo",
+    "headline": "Br\u00fcche k\u00fcrzen und erweitern",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1509
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/16082"
+      },
+      {
+        "id": "https://serlo.org/16164"
+      },
+      {
+        "id": "https://serlo.org/24279"
+      },
+      {
+        "id": "https://serlo.org/33128"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.209047511+00:00",
+        "dateModified": "2023-08-07T17:10:35.209047511+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Br\u00fcche k\u00fcrzen und erweitern",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/263881"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1511",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:18+00:00",
+    "dateModified": "2023-08-01T12:29:45+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/324",
+        "name": "Hannes",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/4",
+        "name": "Deleted",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/42100",
+        "name": "fade",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/121732",
+        "name": "Jonathan",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15478",
+        "name": "Lena09",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/18981",
+        "name": "wolfgang",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26217",
+        "name": "Kulla",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/40928",
+        "name": "JonasBl",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/52009",
+        "name": "SebSoGa",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/57449",
+        "name": "franzi13013",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/64900",
+        "name": "Kowalsky",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/73435",
+        "name": "kathongi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/82804",
+        "name": "Monika_Wirthl",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/120537",
+        "name": "max25",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/164877",
+        "name": "Marc_Ho",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/169563",
+        "name": "Peter",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/196336",
+        "name": "Matheo",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/264323",
+        "name": "Alexandra-Wolfram",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "In diesem Artikel findest alles \u00fcber Wurzeln wie die Quadratwurzeln aus Termen, Rechenregeln, das Wurzelziehen in Gleichungen und ein anschauliches Video.",
+    "headline": "Rechnen mit Quadratwurzeln",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1511
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/16116"
+      },
+      {
+        "id": "https://serlo.org/16133"
+      },
+      {
+        "id": "https://serlo.org/16193"
+      },
+      {
+        "id": "https://serlo.org/16228"
+      },
+      {
+        "id": "https://serlo.org/16360"
+      },
+      {
+        "id": "https://serlo.org/23673"
+      },
+      {
+        "id": "https://serlo.org/55180"
+      },
+      {
+        "id": "https://serlo.org/172764"
+      },
+      {
+        "id": "https://serlo.org/173824"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.209102144+00:00",
+        "dateModified": "2023-08-07T17:10:35.209102144+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Rechnen mit Quadratwurzeln",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/281039"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/1513",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-03-01T20:37:24+00:00",
+    "dateModified": "2023-01-04T14:46:02+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/677",
+        "name": "AK1701",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/64900",
+        "name": "Kowalsky",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/98363",
+        "name": "Oliver_Heinzel",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/6",
+        "name": "Legacy",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15473",
+        "name": "inyono",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/15478",
+        "name": "Lena09",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/64302",
+        "name": "Digamma",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/87383",
+        "name": "kazuki",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/146133",
+        "name": "WandaPaetzold",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/197401",
+        "name": "Annika-Hemlein",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": " Lerne die Diskriminante kennen \u2192 Hier lernst du wie wichtig die Diskriminante f\u00fcr eine Quadratische Funktion ist, wie du sie berechnen kannst f\u00fcr die Mitternachts-/p-q-Formel, wie die Nullstelle und Schnittpunkt von quadratische Funktionen mit der Diskriminante zusammen h\u00e4ngt, mit Beispielen, Videos und Aufgaben erkl\u00e4rt. \u2713 Lernen mit Serlo",
+    "headline": "Diskriminante",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 1513
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/1396"
+      },
+      {
+        "id": "https://serlo.org/16200"
+      },
+      {
+        "id": "https://serlo.org/16242"
+      },
+      {
+        "id": "https://serlo.org/55229"
+      },
+      {
+        "id": "https://serlo.org/155912"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-07T17:10:35.209137550+00:00",
+        "dateModified": "2023-08-07T17:10:35.209137550+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Diskriminante",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/263883"
+    }
+  }
+]
