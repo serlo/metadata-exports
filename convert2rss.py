@@ -103,7 +103,8 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
 
     # TODO # pylint: disable=W0511
     # print('  <category domain="eaf-classification-coded">38002</category>', file=file)
-    # print('  <sdx:subject>38002</sdx:subject>', file=file)
+
+    rss += "  <sdx:subject>380</sdx:subject>\n"
 
     resource_license = resource["license"]["id"]
     license_name = get_license_name(resource_license)
