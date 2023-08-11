@@ -1595,6 +1595,146 @@
     "@context": [
       "https://w3id.org/kim/amb/context.jsonld",
       {
+        "@language": "en",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/32996",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-11-16T15:02:57+00:00",
+    "dateModified": "2023-04-18T18:43:05+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/31",
+        "name": "Hokkaidokuerbis",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/148701",
+        "name": "Sascha_Lill_95",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/32478",
+        "name": "Emma",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "description": "The Gaussian elimination is a procedure for solving systems of linear equations. The addition method is applied to the expanded coefficient matrix.",
+    "headline": "Gaussian Elimination",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 32996
+    },
+    "inLanguage": [
+      "en"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/34129"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-10T13:06:42.102000736+00:00",
+        "dateModified": "2023-08-10T13:06:42.102000736+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        },
+        "type": "WebAPI"
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Gaussian Elimination",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/272535"
+    }
+  },
+  {
+    "about": [
+      {
+        "type": "Concept",
+        "id": "http://w3id.org/kim/schulfaecher/s1017",
+        "inScheme": {
+          "id": "http://w3id.org/kim/schulfaecher/"
+        }
+      }
+    ],
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
         "@language": "de",
         "@vocab": "http://schema.org/",
         "id": "@id",

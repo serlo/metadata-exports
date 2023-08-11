@@ -7,6 +7,8 @@ from typing import Dict, Any, List
 
 from serlo_api_client import fetch_publisher
 
+GERMAN_LANGUAGE_CODE = "de"
+
 
 def main(input_filename: str, output_filename: str):
     with open(input_filename, "r", encoding="utf-8") as input_file:
@@ -37,7 +39,11 @@ def generate_rss(
     rss += f"  <copyright>{serlo_name}</copyright>\n"
     rss += f"  <pubDate>{format_date(published_date)}</pubDate>\n"
 
-    for resource in metadata:
+    resources_in_german = filter(
+        lambda res: escape(res["inLanguage"][0]) == GERMAN_LANGUAGE_CODE, metadata
+    )
+
+    for resource in resources_in_german:
         rss += converted_resource(resource, publisher)
 
     rss += """</channel>
@@ -51,7 +57,7 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
     rss = "<item>\n"
 
     rss += f'  <title>{escape(resource["name"])}</title>\n'
-    rss += f'  <sdx:language>{escape(resource["inLanguage"][0])}</sdx:language>\n'
+    rss += f"  <sdx:language>{GERMAN_LANGUAGE_CODE}</sdx:language>\n"
 
     if "description" in resource and resource["description"]:
         rss += f'  <description>{escape(resource["description"])}</description>\n'
