@@ -136,13 +136,13 @@ def get_license_name(resource_license):
 
 
 def get_resource_type(resource):
-    schema_type = resource["type"][1]
+    resource_types = resource["type"]
 
-    if schema_type == "Article":
+    if "Article" in resource_types:
         return "Arbeitsblatt, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
-    if schema_type == "Course":
+    if "Course" in resource_types:
         return "Kurs, Entdeckendes Lernen, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
-    if schema_type == "Quiz":
+    if "Quiz" in resource_types:
         return "Übung, Test/Prüfung, Lernkontrolle, Webseite"
 
     return "App, Interaktion, Entdeckendes Lernen, Webtool"
