@@ -8,6 +8,7 @@ from typing import Dict, Any, List
 from serlo_api_client import fetch_publisher
 
 GERMAN_LANGUAGE_CODE = "de"
+VIDEO_RESOURCE_TYPE = "VideoObject"
 
 
 def main(input_filename: str, output_filename: str):
@@ -39,11 +40,7 @@ def generate_rss(
     rss += f"  <copyright>{serlo_name}</copyright>\n"
     rss += f"  <pubDate>{format_date(published_date)}</pubDate>\n"
 
-    resources_in_german = filter(
-        lambda res: escape(res["inLanguage"][0]) == GERMAN_LANGUAGE_CODE, metadata
-    )
-
-    for resource in resources_in_german:
+    for resource in filtered_data(metadata):
         rss += converted_resource(resource, publisher)
 
     rss += """</channel>
@@ -51,6 +48,18 @@ def generate_rss(
 """
 
     return rss
+
+
+def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def is_in_german(res):
+        return escape(res["inLanguage"][0]) == GERMAN_LANGUAGE_CODE
+
+    def is_a_video_resource(res):
+        return VIDEO_RESOURCE_TYPE in res["type"]
+
+    return [
+        res for res in metadata if is_in_german(res) and not is_a_video_resource(res)
+    ]
 
 
 def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> str:
