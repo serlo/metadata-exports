@@ -144,8 +144,6 @@ def get_resource_type(resource):
         return "Kurs, Entdeckendes Lernen, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
     if schema_type == "Quiz":
         return "Übung, Test/Prüfung, Lernkontrolle, Webseite"
-    if schema_type == "VideoObject":
-        return "Video, Audiovisuelles Medium"
 
     return "App, Interaktion, Entdeckendes Lernen, Webtool"
 
