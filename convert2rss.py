@@ -9,6 +9,7 @@ from serlo_api_client import fetch_publisher
 
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
+MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
 
 
 def main(input_filename: str, output_filename: str):
@@ -57,8 +58,15 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     def is_a_video_resource(res):
         return VIDEO_RESOURCE_TYPE in res["type"]
 
+    def is_the_subject_math(res):
+        return res["about"][0]["id"] == MATHEMATICS_SUBJECT_ID
+
     return [
-        res for res in metadata if is_in_german(res) and not is_a_video_resource(res)
+        res
+        for res in metadata
+        if is_in_german(res)
+        and not is_a_video_resource(res)
+        and is_the_subject_math(res)
     ]
 
 
