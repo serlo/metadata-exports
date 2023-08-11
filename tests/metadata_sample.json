@@ -3182,5 +3182,135 @@
     "version": {
       "id": "https://serlo.org/263883"
     }
+  },
+  {
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/26467",
+    "type": [
+      "LearningResource",
+      "Article"
+    ],
+    "dateCreated": "2014-07-18T11:13:47+00:00",
+    "dateModified": "2022-03-24T08:23:13+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26334",
+        "name": "NiCi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/98362",
+        "name": "julian_sieber",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "headline": "Alphabet",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 26467
+    },
+    "inLanguage": [
+      "de"
+    ],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/26389"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-10T13:06:42.096942303+00:00",
+        "dateModified": "2023-08-10T13:06:42.096942303+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        },
+        "type": "WebAPI"
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Alphabet",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/242120"
+    }
   }
 ]

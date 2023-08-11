@@ -59,7 +59,11 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         return VIDEO_RESOURCE_TYPE in res["type"]
 
     def is_the_subject_math(res):
-        return res["about"][0]["id"] == MATHEMATICS_SUBJECT_ID
+        return (
+            "about" in res
+            and len(res["about"]) == 1
+            and res["about"][0]["id"] == MATHEMATICS_SUBJECT_ID
+        )
 
     return [
         res
