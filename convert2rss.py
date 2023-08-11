@@ -3,7 +3,7 @@
 import json
 import sys
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, List
 
 from serlo_api_client import fetch_publisher
 
@@ -19,7 +19,7 @@ def main(input_filename: str, output_filename: str):
 
 
 def generate_rss(
-    metadata: Dict[str, Any], publisher: Dict[str, Any], published_date: datetime
+    metadata: List[Dict[str, Any]], publisher: Dict[str, Any], published_date: datetime
 ) -> str:
     serlo_url = escape(publisher["url"])
     serlo_description = escape(publisher["description"])
