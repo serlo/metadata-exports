@@ -30,13 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pipenv
 
-      - name: Prepare public folder
-        id: folder
-        run: |
-          mkdir public
-          echo "name=public" >> $GITHUB_OUTPUT
-
-      - name: Install dev requirements
+      - name: Install python requirements
         run: pipenv install
 
       - run: pipenv run python download_metadata.py public/serlo-metadata.json
@@ -44,13 +38,12 @@ jobs:
       - run: pipenv run python convert2rss.py public/serlo-metadata.json public/serlo-metadata.rss
 
       - name: Setup Pages
-        id: pages
         uses: actions/configure-pages@v2
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ${{ steps.folder.outputs.name }}
+          path: public
 
   deploy:
     permissions:
