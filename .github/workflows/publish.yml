@@ -33,7 +33,6 @@ jobs:
       - name: Prepare public folder
         id: folder
         run: |
-          mkdir public
           echo "name=public" >> $GITHUB_OUTPUT
 
       - name: Install dev requirements
