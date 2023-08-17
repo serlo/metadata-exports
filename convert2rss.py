@@ -105,10 +105,9 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
 
     rss += "  <sdx:schoolType>Realschule, Gymnasium, Mittel- / Hauptschule, Fachoberschule</sdx:schoolType>\n"
 
-    # TODO # pylint: disable=W0511
-    # print('  <category domain="eaf-classification-coded">38002</category>', file=file)
-
+    # This need to be updated when we add additional subjects
     rss += "  <sdx:subject>380</sdx:subject>\n"
+    rss += '  <category domain="eaf-classification-coded">380</category>\n'
 
     resource_license = resource["license"]["id"]
     license_name = get_license_name(resource_license)
