@@ -9,6 +9,7 @@ from serlo_api_client import fetch_publisher
 
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
+MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
 
 
 def main(input_filename: str, output_filename: str):
@@ -57,8 +58,19 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     def is_a_video_resource(res):
         return VIDEO_RESOURCE_TYPE in res["type"]
 
+    def is_the_subject_math(res):
+        return (
+            "about" in res
+            and len(res["about"]) == 1
+            and res["about"][0]["id"] == MATHEMATICS_SUBJECT_ID
+        )
+
     return [
-        res for res in metadata if is_in_german(res) and not is_a_video_resource(res)
+        res
+        for res in metadata
+        if is_in_german(res)
+        and not is_a_video_resource(res)
+        and is_the_subject_math(res)
     ]
 
 
@@ -95,9 +107,9 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
 
     rss += "  <sdx:schoolType>Realschule, Gymnasium, Mittel- / Hauptschule, Fachoberschule</sdx:schoolType>\n"
 
-    # TODO # pylint: disable=W0511
-    # print('  <category domain="eaf-classification-coded">38002</category>', file=file)
-    # print('  <sdx:subject>38002</sdx:subject>', file=file)
+    # This need to be updated when we add additional subjects
+    rss += "  <sdx:subject>380</sdx:subject>\n"
+    rss += '  <category domain="eaf-classification-coded">380</category>\n'
 
     resource_license = resource["license"]["id"]
     license_name = get_license_name(resource_license)
