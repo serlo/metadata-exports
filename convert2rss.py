@@ -71,6 +71,7 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if is_in_german(res)
         and not is_a_video_resource(res)
         and is_the_subject_math(res)
+        #and get_license_name(res["license"]["id"]) is not None
     ]
 
 
@@ -143,7 +144,7 @@ def get_license_name(resource_license):
         return "CC BY"
     if "/zero/" in resource_license:
         return "CC0"
-    if "/sa-by/" in resource_license:
+    if "/by-sa/" in resource_license:
         return "CC BY-SA"
 
     return None
