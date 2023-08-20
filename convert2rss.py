@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import json
+import re
 import sys
+import requests
 from datetime import datetime
 from typing import Dict, Any, List
 
@@ -81,8 +83,10 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
     rss += f'  <title>{escape(resource["name"])}</title>\n'
     rss += f"  <sdx:language>{GERMAN_LANGUAGE_CODE}</sdx:language>\n"
 
-    if "description" in resource and resource["description"]:
-        rss += f'  <description>{escape(resource["description"])}</description>\n'
+    description = get_description(resource)
+
+    if description:
+        rss += f'  <description>{escape(description)}</description>\n'
 
     rss += f'  <link>{escape(resource["id"])}</link>\n'
 
@@ -129,6 +133,39 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
 """
 
     return rss
+
+
+def get_description(resource):
+    if "description" in resource and isinstance(resource["description"], str):
+        return resource["description"]
+
+    identifier = resource.get("identifier", {}).get("value", None)
+
+    if not isinstance(identifier, int):
+        return None
+
+    response = requests.get(f"https://serlo.org/{identifier}")
+
+    if not response.ok:
+        return None
+
+    pattern = r'<script type="application/ld\+json">(.*?)</script>'
+    matches = re.findall(pattern, response.text, re.DOTALL)
+
+    if len(matches) == 0:
+        return None
+
+    match = matches[0]
+
+    try:
+        data = json.loads(match.strip())
+
+        if "description" in data and isinstance(data["description"], str):
+            return data["description"]
+        else:
+            return None
+    except:
+        return None
 
 
 def get_license_version(resource_license):
