@@ -19,10 +19,7 @@
       }
     ],
     "id": "https://serlo.org/1495",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:36:44+00:00",
     "dateModified": "2022-02-10T11:02:01+00:00",
     "creator": [
@@ -264,9 +261,7 @@
       "type": "PropertyValue",
       "value": 1495
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -376,10 +371,7 @@
       }
     ],
     "id": "https://serlo.org/1497",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:36:51+00:00",
     "dateModified": "2023-08-03T23:09:50+00:00",
     "creator": [
@@ -491,9 +483,7 @@
       "type": "PropertyValue",
       "value": 1497
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -591,10 +581,7 @@
       }
     ],
     "id": "https://serlo.org/1499",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:01+00:00",
     "dateModified": "2023-01-08T11:29:30+00:00",
     "creator": [
@@ -736,9 +723,7 @@
       "type": "PropertyValue",
       "value": 1499
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -845,10 +830,7 @@
       }
     ],
     "id": "https://serlo.org/1501",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:01+00:00",
     "dateModified": "2023-08-04T09:57:57+00:00",
     "creator": [
@@ -1000,9 +982,7 @@
       "type": "PropertyValue",
       "value": 1501
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -1115,10 +1095,7 @@
       }
     ],
     "id": "https://serlo.org/193200",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2021-02-08T10:32:26+00:00",
     "dateModified": "2022-07-28T12:40:41+00:00",
     "creator": [
@@ -1149,9 +1126,7 @@
       "type": "PropertyValue",
       "value": 193200
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -1244,10 +1219,7 @@
       }
     ],
     "id": "https://serlo.org/46011",
-    "type": [
-      "LearningResource",
-      "VideoObject"
-    ],
+    "type": ["LearningResource", "VideoObject"],
     "dateCreated": "2015-09-16T09:43:11+00:00",
     "dateModified": "2020-01-29T16:57:24+00:00",
     "creator": [
@@ -1288,9 +1260,7 @@
       "type": "PropertyValue",
       "value": 46011
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -1380,10 +1350,7 @@
       }
     ],
     "id": "https://serlo.org/1503",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:02+00:00",
     "dateModified": "2022-10-14T09:58:49+00:00",
     "creator": [
@@ -1505,9 +1472,7 @@
       "type": "PropertyValue",
       "value": 1503
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -1623,10 +1588,7 @@
       }
     ],
     "id": "https://serlo.org/1505",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:08+00:00",
     "dateModified": "2023-08-03T23:12:04+00:00",
     "creator": [
@@ -1758,9 +1720,7 @@
       "type": "PropertyValue",
       "value": 1505
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -1867,10 +1827,7 @@
       }
     ],
     "id": "https://serlo.org/32996",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-11-16T15:02:57+00:00",
     "dateModified": "2023-04-18T18:43:05+00:00",
     "creator": [
@@ -1912,9 +1869,7 @@
       "type": "PropertyValue",
       "value": 32996
     },
-    "inLanguage": [
-      "en"
-    ],
+    "inLanguage": ["en"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -2007,10 +1962,7 @@
       }
     ],
     "id": "https://serlo.org/32996",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-11-16T15:02:57+00:00",
     "dateModified": "2023-04-18T18:43:05+00:00",
     "creator": [
@@ -2052,9 +2004,7 @@
       "type": "PropertyValue",
       "value": 32996
     },
-    "inLanguage": [
-      "en"
-    ],
+    "inLanguage": ["en"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -2147,10 +2097,7 @@
       }
     ],
     "id": "https://serlo.org/1507",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:12+00:00",
     "dateModified": "2022-10-14T10:03:02+00:00",
     "creator": [
@@ -2282,9 +2229,7 @@
       "type": "PropertyValue",
       "value": 1507
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -2391,10 +2336,7 @@
       }
     ],
     "id": "https://serlo.org/1509",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:13+00:00",
     "dateModified": "2023-01-04T14:38:26+00:00",
     "creator": [
@@ -2526,9 +2468,7 @@
       "type": "PropertyValue",
       "value": 1509
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -2629,10 +2569,7 @@
       }
     ],
     "id": "https://serlo.org/1511",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:18+00:00",
     "dateModified": "2023-08-01T12:29:45+00:00",
     "creator": [
@@ -2854,9 +2791,7 @@
       "type": "PropertyValue",
       "value": 1511
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -2972,10 +2907,7 @@
       }
     ],
     "id": "https://serlo.org/1513",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-03-01T20:37:24+00:00",
     "dateModified": "2023-01-04T14:46:02+00:00",
     "creator": [
@@ -3097,9 +3029,7 @@
       "type": "PropertyValue",
       "value": 1513
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -3194,10 +3124,7 @@
       }
     ],
     "id": "https://serlo.org/26467",
-    "type": [
-      "LearningResource",
-      "Article"
-    ],
+    "type": ["LearningResource", "Article"],
     "dateCreated": "2014-07-18T11:13:47+00:00",
     "dateModified": "2022-03-24T08:23:13+00:00",
     "creator": [
@@ -3238,9 +3165,7 @@
       "type": "PropertyValue",
       "value": 26467
     },
-    "inLanguage": [
-      "de"
-    ],
+    "inLanguage": ["de"],
     "isAccessibleForFree": true,
     "isFamilyFriendly": true,
     "isPartOf": [
@@ -3282,6 +3207,131 @@
     ],
     "license": {
       "id": "https://creativecommons.org/licenses/by-sa/4.0/deed.de"
+    },
+    "mainEntityOfPage": [
+      {
+        "dateCreated": "2023-08-10T13:06:42.096942303+00:00",
+        "dateModified": "2023-08-10T13:06:42.096942303+00:00",
+        "id": "https://serlo.org/metadata",
+        "provider": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        },
+        "type": "WebAPI"
+      }
+    ],
+    "maintainer": {
+      "id": "https://serlo.org/organization",
+      "name": "Serlo Education e.V.",
+      "type": "Organization"
+    },
+    "name": "Alphabet",
+    "publisher": [
+      {
+        "id": "https://serlo.org/organization",
+        "name": "Serlo Education e.V.",
+        "type": "Organization"
+      }
+    ],
+    "version": {
+      "id": "https://serlo.org/242120"
+    }
+  },
+  {
+    "@context": [
+      "https://w3id.org/kim/amb/context.jsonld",
+      {
+        "@language": "de",
+        "@vocab": "http://schema.org/",
+        "id": "@id",
+        "type": "@type"
+      }
+    ],
+    "id": "https://serlo.org/26467",
+    "type": ["LearningResource", "Article"],
+    "dateCreated": "2014-07-18T11:13:47+00:00",
+    "dateModified": "2022-03-24T08:23:13+00:00",
+    "creator": [
+      {
+        "type": "Person",
+        "id": "https://serlo.org/26334",
+        "name": "NiCi",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/98362",
+        "name": "julian_sieber",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      },
+      {
+        "type": "Person",
+        "id": "https://serlo.org/240298",
+        "name": "Felix_Eccardt",
+        "affiliation": {
+          "id": "https://serlo.org/organization",
+          "name": "Serlo Education e.V.",
+          "type": "Organization"
+        }
+      }
+    ],
+    "headline": "Alphabet",
+    "identifier": {
+      "propertyID": "UUID",
+      "type": "PropertyValue",
+      "value": 26467
+    },
+    "inLanguage": ["de"],
+    "isAccessibleForFree": true,
+    "isFamilyFriendly": true,
+    "isPartOf": [
+      {
+        "id": "https://serlo.org/26389"
+      }
+    ],
+    "learningResourceType": [
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/text"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/worksheet"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/course"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/web_page"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/wiki"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/demonstration"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/image"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/open_activity"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/teaching_module"
+      },
+      {
+        "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/tool"
+      }
+    ],
+    "license": {
+      "id": "https://example.com/license"
     },
     "mainEntityOfPage": [
       {
