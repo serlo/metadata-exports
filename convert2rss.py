@@ -3,9 +3,10 @@
 import json
 import re
 import sys
-import requests
 from datetime import datetime
 from typing import Dict, Any, List
+
+import requests
 
 from serlo_api_client import fetch_publisher
 
@@ -144,7 +145,7 @@ def get_description(resource):
     if not isinstance(identifier, int):
         return None
 
-    response = requests.get(f"https://serlo.org/{identifier}")
+    response = requests.get(f"https://serlo.org/{identifier}", timeout=60)
 
     if not response.ok:
         return None
@@ -162,10 +163,10 @@ def get_description(resource):
 
         if "description" in data and isinstance(data["description"], str):
             return data["description"]
-        else:
-            return None
-    except:
-        return None
+    except (TypeError, json.JSONDecodeError):
+        pass
+
+    return None
 
 
 def get_license_version(resource_license):
