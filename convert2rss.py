@@ -87,7 +87,7 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
     description = get_description(resource)
 
     if description:
-        rss += f'  <description>{escape(description)}</description>\n'
+        rss += f"  <description>{escape(description)}</description>\n"
 
     rss += f'  <link>{escape(resource["id"])}</link>\n'
 
