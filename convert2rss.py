@@ -165,15 +165,15 @@ def get_description(
     if "description" in resource and isinstance(resource["description"], str):
         return resource["description"]
 
-    if time_passed > timedelta(minutes=30):
-        return None
-
     cached_value = description_cache.get(resource["id"], {})
 
     if cached_value.get("version", None) == resource["version"] and isinstance(
         cached_value.get("description", None), str
     ):
         return cached_value["description"]
+
+    if time_passed > timedelta(minutes=30):
+        return None
 
     new_description = load_description_from_website(resource)
 
