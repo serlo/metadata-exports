@@ -20,5 +20,7 @@ def test_generate_rss_from_metadata():
                 f"{test_dir}/export_sample.rss", "r", encoding="utf-8"
             ) as export_sample_file:
                 expected_rss_export = export_sample_file.read()
-                actual_rss_export = generate_rss(metadata, publisher, published_date)
+                actual_rss_export = generate_rss(
+                    metadata, publisher, {}, lambda: published_date
+                )
                 assert actual_rss_export == expected_rss_export
