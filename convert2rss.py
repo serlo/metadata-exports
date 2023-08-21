@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 import json
+import os
 import re
 import sys
-from datetime import datetime
-from typing import Dict, Any, List
+from datetime import datetime, timedelta
+from typing import Dict, Any, List, Callable
 
 import requests
 
@@ -13,21 +14,34 @@ from serlo_api_client import fetch_publisher
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
 MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
+DESCRIPTION_CACHE_FILENAME = "description-cache.json"
 
 
 def main(input_filename: str, output_filename: str):
     with open(input_filename, "r", encoding="utf-8") as input_file:
         metadata = json.load(input_file)
 
+    description_cache = get_description_cache()
+
     with open(output_filename, "w", encoding="utf-8") as output_file:
         publisher = get_publisher()
-        rss_export = generate_rss(metadata, publisher, datetime.utcnow())
+        rss_export = generate_rss(
+            metadata, publisher, description_cache, datetime.utcnow
+        )
         print(rss_export, file=output_file)
+
+    description_cache_target = os.path.join("public", DESCRIPTION_CACHE_FILENAME)
+    with open(description_cache_target, "w", encoding="utf-8") as output_file:
+        json.dump(description_cache, output_file)
 
 
 def generate_rss(
-    metadata: List[Dict[str, Any]], publisher: Dict[str, Any], published_date: datetime
+    metadata: List[Dict[str, Any]],
+    publisher: Dict[str, Any],
+    description_cache: Dict[str, Any],
+    get_current_time: Callable[[], datetime],
 ) -> str:
+    published_date = get_current_time()
     serlo_url = escape(publisher["url"])
     serlo_description = escape(publisher["description"])
     serlo_name = escape(publisher["name"])
@@ -45,7 +59,9 @@ def generate_rss(
     rss += f"  <pubDate>{format_date(published_date)}</pubDate>\n"
 
     for resource in filtered_data(metadata):
-        rss += converted_resource(resource, publisher)
+        rss += converted_resource(
+            resource, publisher, description_cache, get_current_time() - published_date
+        )
 
     rss += """</channel>
 </rss>
@@ -78,13 +94,18 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     ]
 
 
-def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> str:
+def converted_resource(
+    resource: Dict[str, Any],
+    publisher: Dict[str, Any],
+    description_cache: Dict[str, Any],
+    time_passed: timedelta,
+) -> str:
     rss = "<item>\n"
 
     rss += f'  <title>{escape(resource["name"])}</title>\n'
     rss += f"  <sdx:language>{GERMAN_LANGUAGE_CODE}</sdx:language>\n"
 
-    description = get_description(resource)
+    description = get_description(resource, description_cache, time_passed)
 
     if description:
         rss += f"  <description>{escape(description)}</description>\n"
@@ -136,16 +157,44 @@ def converted_resource(resource: Dict[str, Any], publisher: Dict[str, Any]) -> s
     return rss
 
 
-def get_description(resource):
+def get_description(
+    resource: Dict[str, Any],
+    description_cache: Dict[str, Any],
+    time_passed: timedelta,
+):
     if "description" in resource and isinstance(resource["description"], str):
         return resource["description"]
 
+    if time_passed > timedelta(minutes=30):
+        return None
+
+    cached_value = description_cache.get(resource["id"], {})
+
+    if cached_value.get("version", None) == resource["version"] and isinstance(
+        cached_value.get("description", None), str
+    ):
+        return cached_value["description"]
+
+    new_description = load_description_from_website(resource)
+
+    description_cache[resource["id"]] = {
+        "description": new_description,
+        "version": resource["version"],
+    }
+
+    return new_description
+
+
+def load_description_from_website(resource: Dict[str, Any]):
     identifier = resource.get("identifier", {}).get("value", None)
 
     if not isinstance(identifier, int):
         return None
 
-    response = requests.get(f"https://serlo.org/{identifier}", timeout=60)
+    try:
+        response = requests.get(f"https://serlo.org/{identifier}", timeout=60)
+    except requests.exceptions.ReadTimeout:
+        return None
 
     if not response.ok:
         return None
@@ -217,6 +266,18 @@ def format_date(date):
 def get_publisher() -> Dict[str, Any]:
     response = fetch_publisher()
     return response["metadata"]["publisher"]  # pylint: disable=E1136
+
+
+def get_description_cache():
+    try:
+        response = requests.get(
+            "https://serlo.github.io/metadata-exports/description-cache.json",
+            timeout=60,
+        )
+
+        return response.json()
+    except (requests.exceptions.ReadTimeout, json.JSONDecodeError, TypeError):
+        return {}
 
 
 if __name__ == "__main__":
