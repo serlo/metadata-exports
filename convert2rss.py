@@ -23,10 +23,13 @@ def main(input_filename: str, output_filename: str):
 
     description_cache = get_description_cache()
 
+    with open("keywords.json", "r", encoding="utf-8") as input_file:
+        keywords = json.load(input_file)
+
     with open(output_filename, "w", encoding="utf-8") as output_file:
         publisher = get_publisher()
         rss_export = generate_rss(
-            metadata, publisher, description_cache, datetime.utcnow
+            metadata, publisher, description_cache, datetime.utcnow, keywords
         )
         print(rss_export, file=output_file)
 
@@ -40,6 +43,7 @@ def generate_rss(
     publisher: Dict[str, Any],
     description_cache: Dict[str, Any],
     get_current_time: Callable[[], datetime],
+    keywords,
 ) -> str:
     published_date = get_current_time()
     serlo_url = escape(publisher["url"])
@@ -60,7 +64,11 @@ def generate_rss(
 
     for resource in filtered_data(metadata):
         rss += converted_resource(
-            resource, publisher, description_cache, get_current_time() - published_date
+            resource,
+            publisher,
+            description_cache,
+            get_current_time() - published_date,
+            keywords,
         )
 
     rss += """</channel>
@@ -99,6 +107,7 @@ def converted_resource(
     publisher: Dict[str, Any],
     description_cache: Dict[str, Any],
     time_passed: timedelta,
+    keywords,
 ) -> str:
     rss = "<item>\n"
 
@@ -109,6 +118,11 @@ def converted_resource(
 
     if description:
         rss += f"  <description>{escape(description)}</description>\n"
+
+    resource_keywords = keywords.get(resource["id"], [])
+
+    if len(resource_keywords) > 0:
+        rss += f'  <itunes:keywords>{", ".join(resource_keywords)}</itunes:keywords>\n'
 
     rss += f'  <link>{escape(resource["id"])}</link>\n'
 
@@ -190,8 +204,21 @@ def load_description_from_website(resource: Dict[str, Any]):
     if not isinstance(identifier, int):
         return None
 
+    data = load_json_ld(f"https://serlo.org/{identifier}")
+
+    if (
+        data is not None
+        and "description" in data
+        and isinstance(data["description"], str)
+    ):
+        return data["description"]
+
+    return None
+
+
+def load_json_ld(url):
     try:
-        response = requests.get(f"https://serlo.org/{identifier}", timeout=60)
+        response = requests.get(url, timeout=60)
     except requests.exceptions.ReadTimeout:
         return None
 
@@ -207,10 +234,7 @@ def load_description_from_website(resource: Dict[str, Any]):
     match = matches[0]
 
     try:
-        data = json.loads(match.strip())
-
-        if "description" in data and isinstance(data["description"], str):
-            return data["description"]
+        return json.loads(match.strip())
     except (TypeError, json.JSONDecodeError):
         pass
 

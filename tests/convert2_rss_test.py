@@ -7,6 +7,9 @@ from convert2rss import generate_rss
 
 def test_generate_rss_from_metadata():
     test_dir = str(PurePath(__file__).parent)
+    with open("keywords.json", "r", encoding="utf-8") as input_file:
+        keywords = json.load(input_file)
+
     with open(
         f"{test_dir}/metadata_sample.json", "r", encoding="utf-8"
     ) as metadata_sample_file:
@@ -21,6 +24,6 @@ def test_generate_rss_from_metadata():
             ) as export_sample_file:
                 expected_rss_export = export_sample_file.read()
                 actual_rss_export = generate_rss(
-                    metadata, publisher, {}, lambda: published_date
+                    metadata, publisher, {}, lambda: published_date, keywords
                 )
                 assert actual_rss_export == expected_rss_export
