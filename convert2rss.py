@@ -136,7 +136,6 @@ def converted_resource(
 
     # This need to be updated when we add additional subjects
     rss += "  <sdx:subject>380</sdx:subject>\n"
-    rss += '  <category domain="eaf-classification-coded">380</category>\n'
 
     resource_license = resource["license"]["id"]
     license_name = get_license_name(resource_license)
