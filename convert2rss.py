@@ -137,7 +137,7 @@ def converted_resource(
     date_created = format_date(datetime.fromisoformat(resource["dateCreated"]))
     rss += f"  <pubDate>{date_created}</pubDate>\n"
 
-    rss += f'  <itunes:image href="https://de.serlo.org/_assets/img/meta/mathe.png"></itunes:image>\n'
+    rss += '  <itunes:image href="https://de.serlo.org/_assets/img/meta/mathe.png"></itunes:image>\n'
 
     rss += """  <sdx:userGroups>learner, teacher</sdx:userGroups>
   <sdx:educationalLevel>Sekundarstufe I, Sekundarstufe II</sdx:educationalLevel>
