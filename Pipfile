@@ -10,7 +10,7 @@ requests-toolbelt = "==1.0.0"
 [dev-packages]
 pylint = "==2.17.5"
 black = "==23.9.1"
-pytest = "==7.4.1"
+pytest = "==7.4.2"
 
 [scripts]
 lint = "pylint *.py"
