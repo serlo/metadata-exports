@@ -8,7 +8,7 @@ gql = "==3.4.1"
 requests-toolbelt = "==1.0.0"
 
 [dev-packages]
-pylint = "==2.17.6"
+pylint = "==2.17.7"
 black = "==23.9.1"
 pytest = "==7.4.2"
 
