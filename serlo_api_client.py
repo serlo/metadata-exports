@@ -1,4 +1,5 @@
 """A client to send requests to the Serlo GraphQL API"""
+
 from typing import Dict, Any, Optional
 
 from gql import gql, Client
