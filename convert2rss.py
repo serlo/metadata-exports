@@ -13,6 +13,7 @@ from serlo_api_client import fetch_publisher
 
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
+QUIZ_RESOURCE_TYPE = "Quiz"
 MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
 DESCRIPTION_CACHE_FILENAME = "description-cache.json"
 
@@ -85,6 +86,9 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     def is_a_video_resource(res):
         return VIDEO_RESOURCE_TYPE in res["type"]
 
+    def is_a_quiz_resource(res):
+        return QUIZ_RESOURCE_TYPE in res["type"]
+
     def is_the_subject_math(res):
         return (
             "about" in res
@@ -97,6 +101,7 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         for res in metadata
         if is_in_german(res)
         and not is_a_video_resource(res)
+        and not is_a_quiz_resource(res)
         and is_the_subject_math(res)
         and get_license_name(res["license"]["id"]) is not None
     ]
@@ -267,8 +272,6 @@ def get_resource_type(resource):
         return "Arbeitsblatt, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
     if "Course" in resource_types:
         return "Kurs, Entdeckendes Lernen, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
-    if "Quiz" in resource_types:
-        return "Übung, Test/Prüfung, Lernkontrolle, Webseite"
 
     return "App, Interaktion, Entdeckendes Lernen, Webtool"
 
