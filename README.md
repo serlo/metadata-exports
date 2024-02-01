@@ -12,3 +12,9 @@
 * Run `pipenv install --dev` to install the dev dependencies.
 * Run `pipenv run lint` to run the linting.
 * Run `pipenv run format` to format the code.
+* Run `exit` to exit the shell
+
+### Export Metadata
+
+* Run `pipenv run python download_metadata.py [output_file]` to download all metadata from serlo.org
+* Run `pipenv run python convert2rss.py [input_file] [output_file]` to convert the downloaded .json into .rss
