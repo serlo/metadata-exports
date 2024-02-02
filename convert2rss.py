@@ -272,6 +272,8 @@ def get_resource_type(resource):
         return "Arbeitsblatt, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
     if "Course" in resource_types:
         return "Kurs, Entdeckendes Lernen, Text, Unterrichtsbaustein, Veranschaulichung, Webseite"
+    if "Quiz" in resource_types:
+        return "Übung, Test/Prüfung, Lernkontrolle, Webseite"
 
     return "App, Interaktion, Entdeckendes Lernen, Webtool"
 
