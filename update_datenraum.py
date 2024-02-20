@@ -18,7 +18,7 @@ def main(metadata_file, nodes_file):
 
     session = create_datenraum_session()
 
-    for ressource in ressources[100]:
+    for ressource in ressources[:100]:
         ressource_id = ressource["id"]
         datenraum_id = serlo_id_to_datenraum_id.get(ressource["id"], None)
 
