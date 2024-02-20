@@ -5,16 +5,40 @@ from requests.auth import HTTPBasicAuth
 
 
 class Datenraum:
-    def __init__(self, base_url, client_id, client_secret, slug):
+    def __init__(self, base_url, client_id, client_secret, slug, name):
         self.token = None
+        self.source = None
         self.base_url = base_url
         self.slug = slug
         self.client_id = client_id
         self.client_secret = client_secret
+        self.name = name
         self.session = requests.Session()
+
+    def get_source_id(self):
+        source = self.get_source()
+
+        if source is None:
+            self.register_source()
+            source = self.get_source()
+
+        assert source is not None
+
+        return source["id"]
+
+    def register_source(self):
+        response = self.post_json(
+            "/api/core/sources",
+            {"organization": self.name, "name": self.name, "slug": self.slug},
+        )
+
+        assert response.status_code == 201
 
     def get_source(self):
         return self.get_json(f"/api/core/sources/slug/{self.slug}")
+
+    def post_json(self, endpoint, json):
+        return self.call("POST", endpoint, json=json)
 
     def get_json(self, endpoint):
         response = self.call("GET", endpoint, headers={"Accept": "application/json"})
@@ -24,9 +48,11 @@ class Datenraum:
 
         return response.json()
 
-    def call(self, method, endpoint, headers=None):
+    def call(self, method, endpoint, headers=None, json=None):
         return self.send(
-            requests.Request(method, self.base_url + endpoint, headers=headers)
+            requests.Request(
+                method, self.base_url + endpoint, headers=headers, json=json
+            )
         )
 
     def send(self, req, no_retries=0):
