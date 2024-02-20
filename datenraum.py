@@ -1,13 +1,25 @@
+import json
 import time
+import os
 import requests
 
 from requests.auth import HTTPBasicAuth
 
 
-class Datenraum:
+def create_datenraum_session():
+    base_url = os.environ.get("DATENRAUM_BASE_URL")
+    client_id = os.environ.get("CLIENT_ID")
+    client_secret = os.environ.get("CLIENT_SECRET")
+
+    return DatenraumSession(
+        base_url, client_id, client_secret, "serlo", "Serlo Education e.V."
+    )
+
+
+class DatenraumSession:
     def __init__(self, base_url, client_id, client_secret, slug, name):
         self.token = None
-        self.source = None
+        self.source_id = None
         self.base_url = base_url
         self.slug = slug
         self.client_id = client_id
@@ -15,7 +27,42 @@ class Datenraum:
         self.name = name
         self.session = requests.Session()
 
+    def add_node(self, node, node_type="LearningOpportunity"):
+        node["@context"] = [
+            "https://w3id.org/kim/amb/context.jsonld",
+            "https://schema.org",
+            {"@language": "de"},
+        ]
+
+        assert "id" in node and isinstance(node["id"], str)
+        assert "name" in node and isinstance(node["name"], str)
+
+        data = {
+            "title": node["name"],
+            "sourceId": self.get_source_id(),
+            "externalId": node["id"],
+            "metadata": {"Amb": node},
+            "nodeClass": node_type,
+        }
+
+        if "description" in node:
+            data["description"] = node["description"]
+
+        response = self.post_json(
+            "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
+        )
+
+        assert response.status_code == 201
+
     def get_source_id(self):
+        if self.source_id is None:
+            self.source_id = self.register_and_get_source_id()
+
+        assert isinstance(self.source_id, str)
+
+        return self.source_id
+
+    def register_and_get_source_id(self):
         source = self.get_source()
 
         if source is None:
@@ -37,8 +84,8 @@ class Datenraum:
     def get_source(self):
         return self.get_json(f"/api/core/sources/slug/{self.slug}")
 
-    def post_json(self, endpoint, json):
-        return self.call("POST", endpoint, json=json)
+    def post_json(self, endpoint, json, params=None):
+        return self.call("POST", endpoint, json=json, params=params)
 
     def get_json(self, endpoint):
         response = self.call("GET", endpoint, headers={"Accept": "application/json"})
@@ -48,10 +95,14 @@ class Datenraum:
 
         return response.json()
 
-    def call(self, method, endpoint, headers=None, json=None):
+    def call(self, method, endpoint, headers=None, json=None, params=None):
         return self.send(
             requests.Request(
-                method, self.base_url + endpoint, headers=headers, json=json
+                method,
+                self.base_url + endpoint,
+                headers=headers,
+                json=json,
+                params=params,
             )
         )
 
