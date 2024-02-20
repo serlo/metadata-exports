@@ -8,19 +8,19 @@ def main(metadata_file, nodes_file):
     with open(metadata_file, "r", encoding="utf-8") as input_file:
         ressources = json.load(input_file)
 
-    datenraum_id_to_serlo_id = {}
+    serlo_id_to_datenraum_id = {}
 
     with open(nodes_file, "r", encoding="utf-8") as input_file:
         nodes = json.load(input_file)
 
         for node in nodes:
-            datenraum_id_to_serlo_id[node["externalId"]] = node["id"]
+            serlo_id_to_datenraum_id[node["externalId"]] = node["id"]
 
     session = create_datenraum_session()
 
     for ressource in ressources[:1010]:
         ressource_id = ressource["id"]
-        datenraum_id = datenraum_id_to_serlo_id.get(ressource["id"], None)
+        datenraum_id = serlo_id_to_datenraum_id.get(ressource["id"], None)
 
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")
@@ -34,6 +34,16 @@ def main(metadata_file, nodes_file):
             print(f"INFO: Update node {datenraum_id} for {ressource_id}")
 
             session.update_node(ressource, datenraum_id)
+
+    stored_ids = set(serlo_id_to_datenraum_id.keys())
+    current_ids = set(ressource["id"] for ressource in ressources)
+
+    for ressource_id in stored_ids - current_ids:
+        datenraum_id = serlo_id_to_datenraum_id[ressource_id]
+
+        print(f"INFO: Delete node {datenraum_id}")
+
+        session.delete_node(datenraum_id)
 
 
 if __name__ == "__main__":

@@ -47,6 +47,9 @@ class DatenraumSession:
 
         assert response.status_code == 204
 
+    def delete_node(self, node_id):
+        self.delete(f"/api/core/nodes/{node_id}")
+
     def get_nodes(self, offset, limit=100):
         result = self.get_json(
             "/api/core/nodes",
@@ -102,6 +105,11 @@ class DatenraumSession:
             return None
 
         return response.json()
+
+    def delete(self, endpoint):
+        response = self.call("DELETE", endpoint)
+
+        assert response.status_code == 204
 
     def call(self, method, endpoint, headers=None, json=None, params=None):
         return self.send(
