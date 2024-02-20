@@ -28,31 +28,24 @@ class DatenraumSession:
         self.session = requests.Session()
 
     def add_node(self, node, node_type="LearningOpportunity"):
-        node["@context"] = [
-            "https://w3id.org/kim/amb/context.jsonld",
-            "https://schema.org",
-            {"@language": "de"},
-        ]
-
-        assert "id" in node and isinstance(node["id"], str)
-        assert "name" in node and isinstance(node["name"], str)
-
-        data = {
-            "title": node["name"],
-            "sourceId": self.get_source_id(),
-            "externalId": node["id"],
-            "metadata": {"Amb": node},
-            "nodeClass": node_type,
-        }
-
-        if "description" in node:
-            data["description"] = node["description"]
+        data = self.convert_node_to_request_body(node, node_type)
 
         response = self.post_json(
             "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
         )
 
         assert response.status_code == 201
+
+    def update_node(self, node, node_id, node_type="LearningOpportunity"):
+        data = self.convert_node_to_request_body(node, node_type)
+
+        response = self.put_json(
+            f"/api/core/nodes/{node_id}",
+            json=data,
+            params={"metadataValidation": "Amb"},
+        )
+
+        assert response.status_code == 204
 
     def get_nodes(self, offset, limit=100):
         result = self.get_json(
@@ -96,6 +89,9 @@ class DatenraumSession:
 
     def post_json(self, endpoint, json, params=None):
         return self.call("POST", endpoint, json=json, params=params)
+
+    def put_json(self, endpoint, json, params=None):
+        return self.call("PUT", endpoint, json=json, params=params)
 
     def get_json(self, endpoint, params=None):
         response = self.call(
@@ -152,6 +148,29 @@ class DatenraumSession:
 
         self.token = response.json()
         self.token["expires_at"] = current_time() + self.token["expires_in"] - 20
+
+    def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
+        node["@context"] = [
+            "https://w3id.org/kim/amb/context.jsonld",
+            "https://schema.org",
+            {"@language": "de"},
+        ]
+
+        assert "id" in node and isinstance(node["id"], str)
+        assert "name" in node and isinstance(node["name"], str)
+
+        data = {
+            "title": node["name"],
+            "sourceId": self.get_source_id(),
+            "externalId": node["id"],
+            "metadata": {"Amb": node},
+            "nodeClass": node_type,
+        }
+
+        if "description" in node:
+            data["description"] = node["description"]
+
+        return data
 
     def is_token_expired(self):
         return self.token == None or self.token["expires_at"] >= current_time()

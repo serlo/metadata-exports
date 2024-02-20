@@ -31,7 +31,9 @@ def main(metadata_file, nodes_file):
             except AssertionError:
                 print(f"ERROR: {ressource_id} couldn't be added")
         else:
-            pass
+            print(f"INFO: Update node {datenraum_id} for {ressource_id}")
+
+            session.update_node(ressource, datenraum_id)
 
 
 if __name__ == "__main__":
