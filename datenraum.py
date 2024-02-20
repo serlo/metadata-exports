@@ -104,7 +104,13 @@ class DatenraumSession:
         if response.status_code == 404:
             return None
 
-        return response.json()
+        try:
+            return response.json()
+        except requests.exceptions.JSONDecodeError as error:
+            print(response.status_code)
+            print(response.text)
+
+            raise error
 
     def delete(self, endpoint):
         response = self.call("DELETE", endpoint)
