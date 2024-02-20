@@ -11,6 +11,10 @@ def create_datenraum_session():
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
 
+    assert base_url is not None
+    assert client_id is not None
+    assert client_secret is not None
+
     return DatenraumSession(
         base_url, client_id, client_secret, "serlo", "Serlo Education e.V."
     )
