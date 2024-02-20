@@ -106,7 +106,7 @@ class DatenraumSession:
 
         try:
             return response.json()
-        except requests.exceptions.JSONDecodeError as error:
+        except json.JSONDecodeError as error:
             print(response.status_code)
             print(response.text)
 
