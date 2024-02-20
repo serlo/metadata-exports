@@ -1,7 +1,7 @@
-import json
 import time
 import os
 import requests
+import sys
 
 from requests.auth import HTTPBasicAuth
 
@@ -107,8 +107,8 @@ class DatenraumSession:
         try:
             return response.json()
         except requests.exceptions.RequestException as error:
-            print(response.status_code)
-            print(response.text)
+            sys.stderr.write(str(response.status_code) + "\n")
+            sys.stderr.write(response.text + "\n")
 
             raise error
 
