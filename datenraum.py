@@ -54,6 +54,16 @@ class DatenraumSession:
 
         assert response.status_code == 201
 
+    def get_nodes(self, offset, limit=100):
+        result = self.get_json(
+            "/api/core/nodes",
+            params={"sourceSlug": self.slug, "limit": limit, "offset": offset},
+        )
+
+        assert result is not None
+
+        return result["_embedded"]["nodes"]
+
     def get_source_id(self):
         if self.source_id is None:
             self.source_id = self.register_and_get_source_id()
@@ -87,8 +97,10 @@ class DatenraumSession:
     def post_json(self, endpoint, json, params=None):
         return self.call("POST", endpoint, json=json, params=params)
 
-    def get_json(self, endpoint):
-        response = self.call("GET", endpoint, headers={"Accept": "application/json"})
+    def get_json(self, endpoint, params=None):
+        response = self.call(
+            "GET", endpoint, params=params, headers={"Accept": "application/json"}
+        )
 
         if response.status_code == 404:
             return None
