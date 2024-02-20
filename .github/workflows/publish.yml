@@ -2,12 +2,12 @@ name: Publish metadata
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
 
   workflow_dispatch:
 
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 permissions:
   contents: read
@@ -35,7 +35,11 @@ jobs:
 
       - run: pipenv run python download_metadata.py public/serlo-metadata.json
 
+      - run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-nodes.json
+
       - run: pipenv run python convert2rss.py public/serlo-metadata.json public/serlo-metadata.rss
+
+      - run: pipenv run python update_datenraum.py public/serlo-metadata.json public/serlo-datenraum-nodes.json
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
