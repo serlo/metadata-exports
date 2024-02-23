@@ -108,15 +108,15 @@ class DatenraumSession:
         return self.get_json(f"/api/core/sources/slug/{self.slug}")
 
     def post_json(self, endpoint, json, params=None):
-        return self.call("POST", endpoint, json=json, params=params)
+        return self.send(requests.Request("POST", self.base_url + endpoint, json=json, params=params))
 
     def put_json(self, endpoint, json, params=None):
-        return self.call("PUT", endpoint, json=json, params=params)
+        return self.send(requests.Request("PUT", self.base_url + endpoint, json=json, params=params))
 
     def get_json(self, endpoint, params=None):
-        response = self.call(
-            "GET", endpoint, params=params, headers={"Accept": "application/json"}
-        )
+        response = self.send(requests.Request(
+            "GET", self.base_url + endpoint, params=params, headers={"Accept": "application/json"}
+        ))
 
         if response.status_code == 404:
             return None
@@ -130,20 +130,9 @@ class DatenraumSession:
             raise error
 
     def delete(self, endpoint):
-        response = self.call("DELETE", endpoint)
+        response = self.send(requests.Request("DELETE", self.base_url + endpoint))
 
         assert response.status_code == 204
-
-    def call(self, method, endpoint, headers=None, json=None, params=None):
-        return self.send(
-            requests.Request(
-                method,
-                self.base_url + endpoint,
-                headers=headers,
-                json=json,
-                params=params,
-            )
-        )
 
     def send(self, req, no_retries=0):
         if self.is_token_expired():
