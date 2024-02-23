@@ -1,8 +1,8 @@
 import time
 import os
-import requests
 import sys
-
+from dataclasses import dataclass
+import requests
 from requests.auth import HTTPBasicAuth
 
 
@@ -16,18 +16,31 @@ def create_datenraum_session():
     assert client_secret is not None
 
     return DatenraumSession(
-        base_url, client_id, client_secret, "serlo", "Serlo Education e.V."
+        base_url, Client(client_id, client_secret), "serlo", "Serlo Education e.V."
     )
 
 
+@dataclass
+class Client:
+    """
+    This is a client with ID and secret.
+    """
+
+    id: str
+    secret: str
+
+
 class DatenraumSession:
-    def __init__(self, base_url, client_id, client_secret, slug, name):
+    """
+    This is a session for the Datenraum.
+    """
+
+    def __init__(self, base_url, client, slug, name):
         self.token = None
         self.source_id = None
         self.base_url = base_url
         self.slug = slug
-        self.client_id = client_id
-        self.client_secret = client_secret
+        self.client = client
         self.name = name
         self.session = requests.Session()
 
@@ -95,14 +108,23 @@ class DatenraumSession:
         return self.get_json(f"/api/core/sources/slug/{self.slug}")
 
     def post_json(self, endpoint, json, params=None):
-        return self.call("POST", endpoint, json=json, params=params)
+        return self.send(
+            requests.Request("POST", self.base_url + endpoint, json=json, params=params)
+        )
 
     def put_json(self, endpoint, json, params=None):
-        return self.call("PUT", endpoint, json=json, params=params)
+        return self.send(
+            requests.Request("PUT", self.base_url + endpoint, json=json, params=params)
+        )
 
     def get_json(self, endpoint, params=None):
-        response = self.call(
-            "GET", endpoint, params=params, headers={"Accept": "application/json"}
+        response = self.send(
+            requests.Request(
+                "GET",
+                self.base_url + endpoint,
+                params=params,
+                headers={"Accept": "application/json"},
+            )
         )
 
         if response.status_code == 404:
@@ -117,20 +139,9 @@ class DatenraumSession:
             raise error
 
     def delete(self, endpoint):
-        response = self.call("DELETE", endpoint)
+        response = self.send(requests.Request("DELETE", self.base_url + endpoint))
 
         assert response.status_code == 204
-
-    def call(self, method, endpoint, headers=None, json=None, params=None):
-        return self.send(
-            requests.Request(
-                method,
-                self.base_url + endpoint,
-                headers=headers,
-                json=json,
-                params=params,
-            )
-        )
 
     def send(self, req, no_retries=0):
         if self.is_token_expired():
@@ -156,13 +167,13 @@ class DatenraumSession:
 
         response = self.session.post(
             url,
-            auth=HTTPBasicAuth(self.client_id, self.client_secret),
+            auth=HTTPBasicAuth(self.client.id, self.client.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"grant_type": "client_credentials"},
         )
 
         if response.status_code != 200:
-            raise Exception(response.text)
+            raise IOError(response.text)
 
         self.token = response.json()
         self.token["expires_at"] = current_time() + self.token["expires_in"] - 20
@@ -191,7 +202,7 @@ class DatenraumSession:
         return data
 
     def is_token_expired(self):
-        return self.token == None or self.token["expires_at"] >= current_time()
+        return self.token is None or self.token["expires_at"] >= current_time()
 
 
 def current_time():
