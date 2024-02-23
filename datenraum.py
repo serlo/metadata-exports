@@ -108,15 +108,24 @@ class DatenraumSession:
         return self.get_json(f"/api/core/sources/slug/{self.slug}")
 
     def post_json(self, endpoint, json, params=None):
-        return self.send(requests.Request("POST", self.base_url + endpoint, json=json, params=params))
+        return self.send(
+            requests.Request("POST", self.base_url + endpoint, json=json, params=params)
+        )
 
     def put_json(self, endpoint, json, params=None):
-        return self.send(requests.Request("PUT", self.base_url + endpoint, json=json, params=params))
+        return self.send(
+            requests.Request("PUT", self.base_url + endpoint, json=json, params=params)
+        )
 
     def get_json(self, endpoint, params=None):
-        response = self.send(requests.Request(
-            "GET", self.base_url + endpoint, params=params, headers={"Accept": "application/json"}
-        ))
+        response = self.send(
+            requests.Request(
+                "GET",
+                self.base_url + endpoint,
+                params=params,
+                headers={"Accept": "application/json"},
+            )
+        )
 
         if response.status_code == 404:
             return None
