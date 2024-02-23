@@ -169,7 +169,7 @@ class DatenraumSession:
 
         response = self.session.post(
             url,
-            auth=HTTPBasicAuth(self.client, id, self.client.secret),
+            auth=HTTPBasicAuth(self.client.id, self.client.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"grant_type": "client_credentials"},
         )
