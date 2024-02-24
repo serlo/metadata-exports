@@ -19,8 +19,8 @@ def main(output_file):
         if len(new_nodes) == 0:
             break
 
-    with open(output_file, "w", encoding="utf8") as fd:
-        json.dump(nodes, fd, indent=2)
+    with open(output_file, "w", encoding="utf8") as new_file:
+        json.dump(nodes, new_file, indent=2)
 
 
 if __name__ == "__main__":

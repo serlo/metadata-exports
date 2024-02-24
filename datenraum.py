@@ -7,47 +7,34 @@ from requests.auth import HTTPBasicAuth
 
 
 def create_datenraum_session():
-    base_url = os.environ.get("DATENRAUM_BASE_URL")
+    base_url = "https://dam.demo.meinbildungsraum.de/datenraum"
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
 
-    assert base_url is not None
     assert client_id is not None
     assert client_secret is not None
 
-    return DatenraumSession(
-        base_url, Client(client_id, client_secret), "serlo", "Serlo Education e.V."
+    session = Session(base_url, Credentials(client_id, client_secret))
+    client = Client(session)
+
+    return client.create_source(
+        slug="serlo", name="Serlo Education e.V.", organization="Serlo Education e.V."
     )
 
 
-@dataclass
-class Client:
+class Source:
     """
-    This is a client with ID and secret.
-    """
-
-    id: str
-    secret: str
-
-
-class DatenraumSession:
-    """
-    This is a session for the Datenraum.
+    Represents a source in the Datenraum for creating, updating, or deleting nodes.
     """
 
-    def __init__(self, base_url, client, slug, name):
-        self.token = None
-        self.source_id = None
-        self.base_url = base_url
-        self.slug = slug
-        self.client = client
-        self.name = name
-        self.session = requests.Session()
+    def __init__(self, session, source_id):
+        self.session = session
+        self.source_id = source_id
 
     def add_node(self, node, node_type="LearningOpportunity"):
         data = self.convert_node_to_request_body(node, node_type)
 
-        response = self.post_json(
+        response = self.session.post_json(
             "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
         )
 
@@ -56,7 +43,7 @@ class DatenraumSession:
     def update_node(self, node, node_id, node_type="LearningOpportunity"):
         data = self.convert_node_to_request_body(node, node_type)
 
-        response = self.put_json(
+        response = self.session.put_json(
             f"/api/core/nodes/{node_id}",
             json=data,
             params={"metadataValidation": "Amb"},
@@ -65,47 +52,94 @@ class DatenraumSession:
         assert response.status_code == 204
 
     def delete_node(self, node_id):
-        self.delete(f"/api/core/nodes/{node_id}")
+        self.session.delete(f"/api/core/nodes/{node_id}")
 
     def get_nodes(self, offset, limit=100):
-        result = self.get_json(
+        result = self.session.get_json(
             "/api/core/nodes",
-            params={"sourceSlug": self.slug, "limit": limit, "offset": offset},
+            params={"sourceId": self.source_id, "limit": limit, "offset": offset},
         )
 
         assert result is not None
 
         return result["_embedded"]["nodes"]
 
-    def get_source_id(self):
-        if self.source_id is None:
-            self.source_id = self.register_and_get_source_id()
+    def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
+        node["@context"] = [
+            "https://w3id.org/kim/amb/context.jsonld",
+            "https://schema.org",
+            {"@language": "de"},
+        ]
 
-        assert isinstance(self.source_id, str)
+        assert "id" in node and isinstance(node["id"], str)
+        assert "name" in node and isinstance(node["name"], str)
 
-        return self.source_id
+        data = {
+            "title": node["name"],
+            "sourceId": self.source_id,
+            "externalId": node["id"],
+            "metadata": {"Amb": node},
+            "nodeClass": node_type,
+        }
 
-    def register_and_get_source_id(self):
-        source = self.get_source()
+        if "description" in node:
+            data["description"] = node["description"]
+
+        return data
+
+
+class Client:
+    """
+    A client for accessing the Datenraum.
+    """
+
+    def __init__(self, session):
+        self.session = session
+
+    def create_source(self, slug, name, organization):
+        source = self.get_source(slug)
 
         if source is None:
-            self.register_source()
-            source = self.get_source()
+            self.register_source(slug, name, organization)
+            source = self.get_source(slug)
 
         assert source is not None
 
-        return source["id"]
+        if name != source["name"] or organization != source["organization"]:
+            self.update_source(source["id"], name, organization)
 
-    def register_source(self):
-        response = self.post_json(
+        return Source(self.session, source["id"])
+
+    def register_source(self, slug, name, organization):
+        response = self.session.post_json(
             "/api/core/sources",
-            {"organization": self.name, "name": self.name, "slug": self.slug},
+            {"organization": organization, "name": name, "slug": slug},
         )
 
         assert response.status_code == 201
 
-    def get_source(self):
-        return self.get_json(f"/api/core/sources/slug/{self.slug}")
+    def update_source(self, source_id, name, organization):
+        response = self.session.patch_json(
+            f"/api/core/sources/{source_id}",
+            {"organization": organization, "name": name},
+        )
+
+        assert response.status_code == 204
+
+    def get_source(self, slug):
+        return self.session.get_json(f"/api/core/sources/slug/{slug}")
+
+
+class Session:
+    """
+    Class for handling API calls to the Datenraums. Manages authentication token creation and renewal.
+    """
+
+    def __init__(self, base_url, credentials):
+        self.token = None
+        self.base_url = base_url
+        self.credentials = credentials
+        self.session = requests.Session()
 
     def post_json(self, endpoint, json, params=None):
         return self.send(
@@ -115,6 +149,16 @@ class DatenraumSession:
     def put_json(self, endpoint, json, params=None):
         return self.send(
             requests.Request("PUT", self.base_url + endpoint, json=json, params=params)
+        )
+
+    def patch_json(self, endpoint, json):
+        return self.send(
+            requests.Request(
+                "PATCH",
+                self.base_url + endpoint,
+                json=json,
+                headers={"Content-Type": "application/json-patch+json"},
+            )
         )
 
     def get_json(self, endpoint, params=None):
@@ -167,7 +211,7 @@ class DatenraumSession:
 
         response = self.session.post(
             url,
-            auth=HTTPBasicAuth(self.client.id, self.client.secret),
+            auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"grant_type": "client_credentials"},
         )
@@ -178,31 +222,18 @@ class DatenraumSession:
         self.token = response.json()
         self.token["expires_at"] = current_time() + self.token["expires_in"] - 20
 
-    def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
-        node["@context"] = [
-            "https://w3id.org/kim/amb/context.jsonld",
-            "https://schema.org",
-            {"@language": "de"},
-        ]
-
-        assert "id" in node and isinstance(node["id"], str)
-        assert "name" in node and isinstance(node["name"], str)
-
-        data = {
-            "title": node["name"],
-            "sourceId": self.get_source_id(),
-            "externalId": node["id"],
-            "metadata": {"Amb": node},
-            "nodeClass": node_type,
-        }
-
-        if "description" in node:
-            data["description"] = node["description"]
-
-        return data
-
     def is_token_expired(self):
         return self.token is None or self.token["expires_at"] >= current_time()
+
+
+@dataclass
+class Credentials:
+    """
+    Data class for storing client credentials.
+    """
+
+    identifier: str
+    secret: str
 
 
 def current_time():

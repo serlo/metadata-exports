@@ -25,7 +25,6 @@ def main(metadata_file, nodes_file):
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")
 
-            # Add a new node
             try:
                 session.add_node(ressource)
             except AssertionError:
@@ -33,7 +32,12 @@ def main(metadata_file, nodes_file):
         else:
             print(f"INFO: Update node {datenraum_id} for {ressource_id}")
 
-            session.update_node(ressource, datenraum_id)
+            try:
+                session.update_node(ressource, datenraum_id)
+            except AssertionError:
+                print(
+                    f"ERROR: {ressource_id} with node {datenraum_id} couldn't be updated"
+                )
 
     stored_ids = set(serlo_id_to_datenraum_id.keys())
     current_ids = set(ressource["id"] for ressource in ressources)
@@ -43,7 +47,10 @@ def main(metadata_file, nodes_file):
 
         print(f"INFO: Delete node {datenraum_id}")
 
-        session.delete_node(datenraum_id)
+        try:
+            session.delete_node(datenraum_id)
+        except AssertionError:
+            print(f"ERROR: {datenraum_id} couldn't be deleted")
 
 
 if __name__ == "__main__":
