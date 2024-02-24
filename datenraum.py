@@ -16,7 +16,7 @@ def create_datenraum_session():
     assert client_secret is not None
 
     return DatenraumSession(
-        Client(base_url, Credentials(client_id, client_secret)),
+        Session(base_url, Credentials(client_id, client_secret)),
         "serlo",
         "Serlo Education e.V.",
     )
@@ -120,14 +120,13 @@ class DatenraumSession:
         return data
 
 
-class Client:
+class Session:
     """
-    This is a session for the Datenraum.
+    Class for handling API calls to the Datenraums. Manages authentication token creation and renewal.
     """
 
     def __init__(self, base_url, credentials):
         self.token = None
-        self.source_id = None
         self.base_url = base_url
         self.credentials = credentials
         self.session = requests.Session()
