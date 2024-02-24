@@ -106,6 +106,9 @@ class Client:
 
         assert source is not None
 
+        if name != source["name"] or organization != source["organization"]:
+            self.update_source(source["id"], name, organization)
+
         return Source(self.session, source["id"])
 
     def register_source(self, slug, name, organization):
@@ -115,6 +118,14 @@ class Client:
         )
 
         assert response.status_code == 201
+
+    def update_source(self, source_id, name, organization):
+        response = self.session.patch_json(
+            f"/api/core/sources/{source_id}",
+            {"organization": organization, "name": name},
+        )
+
+        assert response.status_code == 204
 
     def get_source(self, slug):
         return self.session.get_json(f"/api/core/sources/slug/{slug}")
@@ -139,6 +150,16 @@ class Session:
     def put_json(self, endpoint, json, params=None):
         return self.send(
             requests.Request("PUT", self.base_url + endpoint, json=json, params=params)
+        )
+
+    def patch_json(self, endpoint, json):
+        return self.send(
+            requests.Request(
+                "PATCH",
+                self.base_url + endpoint,
+                json=json,
+                headers={"Content-Type": "application/json-patch+json"},
+            )
         )
 
     def get_json(self, endpoint, params=None):
