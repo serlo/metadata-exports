@@ -37,7 +37,6 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          DATENRAUM_BASE_URL: ${{ vars.DATENRAUM_BASE_URL }}
 
       - run: pipenv run python download_metadata.py public/serlo-metadata.json
 
@@ -47,7 +46,6 @@ jobs:
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          DATENRAUM_BASE_URL: ${{ vars.DATENRAUM_BASE_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

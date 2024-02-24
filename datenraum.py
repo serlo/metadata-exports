@@ -7,11 +7,10 @@ from requests.auth import HTTPBasicAuth
 
 
 def create_datenraum_session():
-    base_url = os.environ.get("DATENRAUM_BASE_URL")
+    base_url = "https://dam.demo.meinbildungsraum.de/datenraum"
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
 
-    assert base_url is not None
     assert client_id is not None
     assert client_secret is not None
 
