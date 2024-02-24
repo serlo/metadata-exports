@@ -16,7 +16,9 @@ def create_datenraum_session():
     assert client_secret is not None
 
     return DatenraumSession(
-        base_url, ClientData(client_id, client_secret), "serlo", "Serlo Education e.V."
+        Client(base_url, Credentials(client_id, client_secret)),
+        "serlo",
+        "Serlo Education e.V.",
     )
 
 
@@ -25,19 +27,15 @@ class DatenraumSession:
     This is a session for the Datenraum.
     """
 
-    def __init__(self, base_url, client, slug, name):
-        self.token = None
-        self.source_id = None
-        self.base_url = base_url
-        self.slug = slug
+    def __init__(self, client, slug, name):
         self.client = client
+        self.slug = slug
         self.name = name
-        self.session = requests.Session()
 
     def add_node(self, node, node_type="LearningOpportunity"):
         data = self.convert_node_to_request_body(node, node_type)
 
-        response = self.post_json(
+        response = self.client.post_json(
             "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
         )
 
@@ -46,7 +44,7 @@ class DatenraumSession:
     def update_node(self, node, node_id, node_type="LearningOpportunity"):
         data = self.convert_node_to_request_body(node, node_type)
 
-        response = self.put_json(
+        response = self.client.put_json(
             f"/api/core/nodes/{node_id}",
             json=data,
             params={"metadataValidation": "Amb"},
@@ -55,10 +53,10 @@ class DatenraumSession:
         assert response.status_code == 204
 
     def delete_node(self, node_id):
-        self.delete(f"/api/core/nodes/{node_id}")
+        self.client.delete(f"/api/core/nodes/{node_id}")
 
     def get_nodes(self, offset, limit=100):
-        result = self.get_json(
+        result = self.client.get_json(
             "/api/core/nodes",
             params={"sourceSlug": self.slug, "limit": limit, "offset": offset},
         )
@@ -87,7 +85,7 @@ class DatenraumSession:
         return source["id"]
 
     def register_source(self):
-        response = self.post_json(
+        response = self.client.post_json(
             "/api/core/sources",
             {"organization": self.name, "name": self.name, "slug": self.slug},
         )
@@ -95,7 +93,43 @@ class DatenraumSession:
         assert response.status_code == 201
 
     def get_source(self):
-        return self.get_json(f"/api/core/sources/slug/{self.slug}")
+        return self.client.get_json(f"/api/core/sources/slug/{self.slug}")
+
+    def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
+        node["@context"] = [
+            "https://w3id.org/kim/amb/context.jsonld",
+            "https://schema.org",
+            {"@language": "de"},
+        ]
+
+        assert "id" in node and isinstance(node["id"], str)
+        assert "name" in node and isinstance(node["name"], str)
+
+        data = {
+            "title": node["name"],
+            "sourceId": self.get_source_id(),
+            "externalId": node["id"],
+            "metadata": {"Amb": node},
+            "nodeClass": node_type,
+        }
+
+        if "description" in node:
+            data["description"] = node["description"]
+
+        return data
+
+
+class Client:
+    """
+    This is a session for the Datenraum.
+    """
+
+    def __init__(self, base_url, credentials):
+        self.token = None
+        self.source_id = None
+        self.base_url = base_url
+        self.credentials = credentials
+        self.session = requests.Session()
 
     def post_json(self, endpoint, json, params=None):
         return self.send(
@@ -157,7 +191,7 @@ class DatenraumSession:
 
         response = self.session.post(
             url,
-            auth=HTTPBasicAuth(self.client.id, self.client.secret),
+            auth=HTTPBasicAuth(self.credentials.id, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"grant_type": "client_credentials"},
         )
@@ -168,37 +202,14 @@ class DatenraumSession:
         self.token = response.json()
         self.token["expires_at"] = current_time() + self.token["expires_in"] - 20
 
-    def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
-        node["@context"] = [
-            "https://w3id.org/kim/amb/context.jsonld",
-            "https://schema.org",
-            {"@language": "de"},
-        ]
-
-        assert "id" in node and isinstance(node["id"], str)
-        assert "name" in node and isinstance(node["name"], str)
-
-        data = {
-            "title": node["name"],
-            "sourceId": self.get_source_id(),
-            "externalId": node["id"],
-            "metadata": {"Amb": node},
-            "nodeClass": node_type,
-        }
-
-        if "description" in node:
-            data["description"] = node["description"]
-
-        return data
-
     def is_token_expired(self):
         return self.token is None or self.token["expires_at"] >= current_time()
 
 
 @dataclass
-class ClientData:
+class Credentials:
     """
-    This is a client with ID and secret.
+    Data class for storing client credentials.
     """
 
     id: str
