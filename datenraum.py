@@ -16,18 +16,8 @@ def create_datenraum_session():
     assert client_secret is not None
 
     return DatenraumSession(
-        base_url, Client(client_id, client_secret), "serlo", "Serlo Education e.V."
+        base_url, ClientData(client_id, client_secret), "serlo", "Serlo Education e.V."
     )
-
-
-@dataclass
-class Client:
-    """
-    This is a client with ID and secret.
-    """
-
-    id: str
-    secret: str
 
 
 class DatenraumSession:
@@ -203,6 +193,16 @@ class DatenraumSession:
 
     def is_token_expired(self):
         return self.token is None or self.token["expires_at"] >= current_time()
+
+
+@dataclass
+class ClientData:
+    """
+    This is a client with ID and secret.
+    """
+
+    id: str
+    secret: str
 
 
 def current_time():
