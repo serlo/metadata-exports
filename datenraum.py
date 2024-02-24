@@ -211,7 +211,7 @@ class Session:
 
         response = self.session.post(
             url,
-            auth=HTTPBasicAuth(self.credentials.id, self.credentials.secret),
+            auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"grant_type": "client_credentials"},
         )
