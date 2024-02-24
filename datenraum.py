@@ -28,6 +28,7 @@ class DatenraumSession:
     """
 
     def __init__(self, client, slug, name):
+        self.source_id = None
         self.client = client
         self.slug = slug
         self.name = name
@@ -212,7 +213,7 @@ class Credentials:
     Data class for storing client credentials.
     """
 
-    id: str
+    identifier: str
     secret: str
 
 
