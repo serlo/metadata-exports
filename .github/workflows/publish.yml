@@ -42,7 +42,7 @@ jobs:
 
       - run: pipenv run python convert2rss.py public/serlo-metadata.json public/serlo-metadata.rss
 
-      - run: pipenv run python update_datenraum.py public/serlo-metadata.json public/serlo-datenraum-nodes.json
+      - run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-nodes.json
         env:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
