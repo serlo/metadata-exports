@@ -15,28 +15,27 @@ def create_datenraum_session():
     assert client_id is not None
     assert client_secret is not None
 
-    return DatenraumSession(
-        Session(base_url, Credentials(client_id, client_secret)),
-        "serlo",
-        "Serlo Education e.V.",
+    session = Session(base_url, Credentials(client_id, client_secret))
+    client = Client(session)
+
+    return client.create_source(
+        slug="serlo", name="Serlo Education e.V.", organization="Serlo Education e.V."
     )
 
 
-class DatenraumSession:
+class Source:
     """
-    This is a session for the Datenraum.
+    Represents a source in the Datenraum for creating, updating, or deleting nodes.
     """
 
-    def __init__(self, client, slug, name):
-        self.source_id = None
-        self.client = client
-        self.slug = slug
-        self.name = name
+    def __init__(self, session, source_id):
+        self.session = session
+        self.source_id = source_id
 
     def add_node(self, node, node_type="LearningOpportunity"):
         data = self.convert_node_to_request_body(node, node_type)
 
-        response = self.client.post_json(
+        response = self.session.post_json(
             "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
         )
 
@@ -45,7 +44,7 @@ class DatenraumSession:
     def update_node(self, node, node_id, node_type="LearningOpportunity"):
         data = self.convert_node_to_request_body(node, node_type)
 
-        response = self.client.put_json(
+        response = self.session.put_json(
             f"/api/core/nodes/{node_id}",
             json=data,
             params={"metadataValidation": "Amb"},
@@ -54,47 +53,17 @@ class DatenraumSession:
         assert response.status_code == 204
 
     def delete_node(self, node_id):
-        self.client.delete(f"/api/core/nodes/{node_id}")
+        self.session.delete(f"/api/core/nodes/{node_id}")
 
     def get_nodes(self, offset, limit=100):
-        result = self.client.get_json(
+        result = self.session.get_json(
             "/api/core/nodes",
-            params={"sourceSlug": self.slug, "limit": limit, "offset": offset},
+            params={"sourceId": self.source_id, "limit": limit, "offset": offset},
         )
 
         assert result is not None
 
         return result["_embedded"]["nodes"]
-
-    def get_source_id(self):
-        if self.source_id is None:
-            self.source_id = self.register_and_get_source_id()
-
-        assert isinstance(self.source_id, str)
-
-        return self.source_id
-
-    def register_and_get_source_id(self):
-        source = self.get_source()
-
-        if source is None:
-            self.register_source()
-            source = self.get_source()
-
-        assert source is not None
-
-        return source["id"]
-
-    def register_source(self):
-        response = self.client.post_json(
-            "/api/core/sources",
-            {"organization": self.name, "name": self.name, "slug": self.slug},
-        )
-
-        assert response.status_code == 201
-
-    def get_source(self):
-        return self.client.get_json(f"/api/core/sources/slug/{self.slug}")
 
     def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
         node["@context"] = [
@@ -108,7 +77,7 @@ class DatenraumSession:
 
         data = {
             "title": node["name"],
-            "sourceId": self.get_source_id(),
+            "sourceId": self.source_id,
             "externalId": node["id"],
             "metadata": {"Amb": node},
             "nodeClass": node_type,
@@ -118,6 +87,37 @@ class DatenraumSession:
             data["description"] = node["description"]
 
         return data
+
+
+class Client:
+    """
+    A client for accessing the Datenraum.
+    """
+
+    def __init__(self, session):
+        self.session = session
+
+    def create_source(self, slug, name, organization):
+        source = self.get_source(slug)
+
+        if source is None:
+            self.register_source(slug, name, organization)
+            source = self.get_source(slug)
+
+        assert source is not None
+
+        return Source(self.session, source["id"])
+
+    def register_source(self, slug, name, organization):
+        response = self.session.post_json(
+            "/api/core/sources",
+            {"organization": organization, "name": name, "slug": slug},
+        )
+
+        assert response.status_code == 201
+
+    def get_source(self, slug):
+        return self.session.get_json(f"/api/core/sources/slug/{slug}")
 
 
 class Session:
