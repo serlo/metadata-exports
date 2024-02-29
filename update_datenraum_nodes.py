@@ -5,10 +5,10 @@ from datetime import datetime
 from datenraum import create_datenraum_session
 from convert2rss import get_description
 
-
+DESCRIPTION_PATH = "public/description-cache.json"
 def main(metadata_file, nodes_file):
 
-    published_date = datetime.utcnow
+    published_date = datetime.utcnow()
 
     with open(metadata_file, "r", encoding="utf-8") as input_file:
         ressources = json.load(input_file)
@@ -21,7 +21,7 @@ def main(metadata_file, nodes_file):
         for node in nodes:
             serlo_id_to_datenraum_id[node["externalId"]] = node["id"]
 
-    with open("public/description-cache.json", "r", encoding="utf-8") as input_file:
+    with open(DESCRIPTION_PATH, "r", encoding="utf-8") as input_file:
         description_cache = json.load(input_file)
 
     session = create_datenraum_session()
@@ -36,8 +36,9 @@ def main(metadata_file, nodes_file):
             or ressource["description"].isspace()
         ):
             ressource["description"] = get_description(
-                ressource, description_cache, datetime.utcnow - published_date
+                ressource, description_cache, datetime.utcnow() - published_date
             )
+            print(f"description updated for {ressource_id} with node id {datenraum_id}")
 
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")
@@ -68,6 +69,9 @@ def main(metadata_file, nodes_file):
             session.delete_node(datenraum_id)
         except AssertionError:
             print(f"ERROR: {datenraum_id} couldn't be deleted")
+
+    with open(DESCRIPTION_PATH, "w", encoding="utf-8") as output_file:
+        json.dump(description_cache, output_file)
 
 
 if __name__ == "__main__":
