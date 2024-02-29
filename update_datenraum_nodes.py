@@ -1,13 +1,14 @@
 import sys
 import json
+from datetime import datetime
 
 from datenraum import create_datenraum_session
-from convert2rss import get_description, get_description_cache
+from convert2rss import get_description
 
 
 def main(metadata_file, nodes_file):
 
-    published_date = get_current_time()
+    published_date = datetime.utcnow
 
     with open(metadata_file, "r", encoding="utf-8") as input_file:
         ressources = json.load(input_file)
@@ -29,8 +30,14 @@ def main(metadata_file, nodes_file):
         ressource_id = ressource["id"]
         datenraum_id = serlo_id_to_datenraum_id.get(ressource["id"], None)
 
-        if "descriptopn" not in ressource or not ressource["description"] or ressource["description"].isspace():
-            ressource["description"] = get_description(ressource, description_cache, get_current_time - published_date)
+        if (
+            "descriptopn" not in ressource
+            or not ressource["description"]
+            or ressource["description"].isspace()
+        ):
+            ressource["description"] = get_description(
+                ressource, description_cache, datetime.utcnow - published_date
+            )
 
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")
