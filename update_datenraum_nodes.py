@@ -6,6 +6,8 @@ from datenraum import create_datenraum_session
 from convert2rss import get_description
 
 DESCRIPTION_PATH = "public/description-cache.json"
+
+
 def main(metadata_file, nodes_file):
 
     published_date = datetime.utcnow()
@@ -26,7 +28,20 @@ def main(metadata_file, nodes_file):
 
     session = create_datenraum_session()
 
-    for ressource in ressources:
+    update_session(
+        session, ressources, serlo_id_to_datenraum_id, description_cache, published_date
+    )
+
+    delete_deprecated_ids(session, serlo_id_to_datenraum_id, ressources)
+
+    with open(DESCRIPTION_PATH, "w", encoding="utf-8") as output_file:
+        json.dump(description_cache, output_file)
+
+
+def update_session(
+    session, resources, serlo_id_to_datenraum_id, description_cache, published_date
+):
+    for ressource in resources:
         ressource_id = ressource["id"]
         datenraum_id = serlo_id_to_datenraum_id.get(ressource["id"], None)
 
@@ -57,8 +72,10 @@ def main(metadata_file, nodes_file):
                     f"ERROR: {ressource_id} with node {datenraum_id} couldn't be updated"
                 )
 
+
+def delete_deprecated_ids(session, serlo_id_to_datenraum_id, resources):
     stored_ids = set(serlo_id_to_datenraum_id.keys())
-    current_ids = set(ressource["id"] for ressource in ressources)
+    current_ids = set(ressource["id"] for ressource in resources)
 
     for ressource_id in stored_ids - current_ids:
         datenraum_id = serlo_id_to_datenraum_id[ressource_id]
@@ -69,9 +86,6 @@ def main(metadata_file, nodes_file):
             session.delete_node(datenraum_id)
         except AssertionError:
             print(f"ERROR: {datenraum_id} couldn't be deleted")
-
-    with open(DESCRIPTION_PATH, "w", encoding="utf-8") as output_file:
-        json.dump(description_cache, output_file)
 
 
 if __name__ == "__main__":
