@@ -65,10 +65,12 @@ class Source:
         return result["_embedded"]["nodes"]
 
     def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
+        language = node.get("inLanguage", [])[:1]
+
         node["@context"] = [
             "https://w3id.org/kim/amb/context.jsonld",
             "https://schema.org",
-            {"@language": "de"},
+            {"@language": language[0] if language else "de"},
         ]
 
         assert "id" in node and isinstance(node["id"], str)
