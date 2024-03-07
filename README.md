@@ -12,6 +12,7 @@
 * Run `pipenv install --dev` to install the dev dependencies.
 * Run `pipenv run lint` to run the linting.
 * Run `pipenv run format` to format the code.
+* Run `pipenv run test` to run the tests in /tests.
 * Run `exit` to exit the shell
 
 ### Export Metadata
