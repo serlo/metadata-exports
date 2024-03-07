@@ -1,48 +1,42 @@
 #!/usr/bin/env python
 
 import json
-import os
-import re
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Dict, Any, List, Callable
 
 import requests
 
 from serlo_api_client import fetch_publisher
+from enhance_metadata import enhance_metadata
 
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
 QUIZ_RESOURCE_TYPE = "Quiz"
 MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
-DESCRIPTION_CACHE_FILENAME = "description-cache.json"
+ENHANCED_METADATA_PATH = "public/enhanced-metadata.json"
 
 
 def main(input_filename: str, output_filename: str):
-    with open(input_filename, "r", encoding="utf-8") as input_file:
-        metadata = json.load(input_file)
-
     description_cache = get_description_cache()
+
+    enhance_metadata(input_filename, description_cache, ENHANCED_METADATA_PATH)
+
+    with open(ENHANCED_METADATA_PATH, "r", encoding="utf-8") as input_file:
+        metadata = json.load(input_file)
 
     with open("keywords.json", "r", encoding="utf-8") as input_file:
         keywords = json.load(input_file)
 
     with open(output_filename, "w", encoding="utf-8") as output_file:
         publisher = get_publisher()
-        rss_export = generate_rss(
-            metadata, publisher, description_cache, datetime.utcnow, keywords
-        )
+        rss_export = generate_rss(metadata, publisher, datetime.utcnow, keywords)
         print(rss_export, file=output_file)
-
-    description_cache_target = os.path.join("public", DESCRIPTION_CACHE_FILENAME)
-    with open(description_cache_target, "w", encoding="utf-8") as output_file:
-        json.dump(description_cache, output_file)
 
 
 def generate_rss(
     metadata: List[Dict[str, Any]],
     publisher: Dict[str, Any],
-    description_cache: Dict[str, Any],
     get_current_time: Callable[[], datetime],
     keywords,
 ) -> str:
@@ -67,8 +61,6 @@ def generate_rss(
         rss += converted_resource(
             resource,
             publisher,
-            description_cache,
-            get_current_time() - published_date,
             keywords,
         )
 
@@ -110,8 +102,6 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 def converted_resource(
     resource: Dict[str, Any],
     publisher: Dict[str, Any],
-    description_cache: Dict[str, Any],
-    time_passed: timedelta,
     keywords,
 ) -> str:
     rss = "<item>\n"
@@ -119,7 +109,7 @@ def converted_resource(
     rss += f'  <title>{escape(resource["name"])}</title>\n'
     rss += f"  <sdx:language>{GERMAN_LANGUAGE_CODE}</sdx:language>\n"
 
-    description = get_description(resource, description_cache, time_passed)
+    description = resource["description"]
 
     if description:
         rss += f"  <description>{escape(description)}</description>\n"
@@ -173,77 +163,6 @@ def converted_resource(
 """
 
     return rss
-
-
-def get_description(
-    resource: Dict[str, Any],
-    description_cache: Dict[str, Any],
-    time_passed: timedelta,
-):
-    if "description" in resource and isinstance(resource["description"], str):
-        return resource["description"]
-
-    cached_value = description_cache.get(resource["id"], {})
-
-    if cached_value.get("version", None) == resource["version"] and isinstance(
-        cached_value.get("description", None), str
-    ):
-        return cached_value["description"]
-
-    if time_passed > timedelta(minutes=30):
-        return None
-
-    new_description = load_description_from_website(resource)
-
-    description_cache[resource["id"]] = {
-        "description": new_description,
-        "version": resource["version"],
-    }
-
-    return new_description
-
-
-def load_description_from_website(resource: Dict[str, Any]):
-    identifier = resource.get("identifier", {}).get("value", None)
-
-    if not isinstance(identifier, int):
-        return None
-
-    data = load_json_ld(f"https://serlo.org/{identifier}")
-
-    if (
-        data is not None
-        and "description" in data
-        and isinstance(data["description"], str)
-    ):
-        return data["description"]
-
-    return None
-
-
-def load_json_ld(url):
-    try:
-        response = requests.get(url, timeout=60)
-    except requests.exceptions.ReadTimeout:
-        return None
-
-    if not response.ok:
-        return None
-
-    pattern = r'<script type="application/ld\+json">(.*?)</script>'
-    matches = re.findall(pattern, response.text, re.DOTALL)
-
-    if len(matches) == 0:
-        return None
-
-    match = matches[0]
-
-    try:
-        return json.loads(match.strip())
-    except (TypeError, json.JSONDecodeError):
-        pass
-
-    return None
 
 
 def get_license_version(resource_license):

@@ -24,6 +24,6 @@ def test_generate_rss_from_metadata():
             ) as export_sample_file:
                 expected_rss_export = export_sample_file.read()
                 actual_rss_export = generate_rss(
-                    metadata, publisher, {}, lambda: published_date, keywords
+                    metadata, publisher, lambda: published_date, keywords
                 )
                 assert actual_rss_export == expected_rss_export

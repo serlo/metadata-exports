@@ -1,18 +1,21 @@
 import sys
 import json
-from datetime import datetime
 
 from datenraum import create_datenraum_session
-from convert2rss import get_description
+from enhance_metadata import enhance_metadata
 
-DESCRIPTION_PATH = "public/description-cache.json"
+ENHANCED_METADATA_PATH = "public/enhanced-metadata.json"
 
 
 def main(metadata_file, nodes_file):
+    description_path = "public/description-cache.json"
 
-    published_date = datetime.utcnow()
+    with open(description_path, "r", encoding="utf-8") as input_file:
+        description_cache = json.load(input_file)
 
-    with open(metadata_file, "r", encoding="utf-8") as input_file:
+    enhance_metadata(metadata_file, description_cache, ENHANCED_METADATA_PATH)
+
+    with open(ENHANCED_METADATA_PATH, "r", encoding="utf-8") as input_file:
         resources = json.load(input_file)
 
     serlo_id_to_datenraum_id = {}
@@ -23,37 +26,17 @@ def main(metadata_file, nodes_file):
         for node in nodes:
             serlo_id_to_datenraum_id[node["externalId"]] = node["id"]
 
-    with open(DESCRIPTION_PATH, "r", encoding="utf-8") as input_file:
-        description_cache = json.load(input_file)
-
     session = create_datenraum_session()
 
-    update_session(
-        session, resources, serlo_id_to_datenraum_id, description_cache, published_date
-    )
+    update_session(session, resources, serlo_id_to_datenraum_id)
 
     delete_deprecated_ids(session, serlo_id_to_datenraum_id, resources)
 
-    with open(DESCRIPTION_PATH, "w", encoding="utf-8") as output_file:
-        json.dump(description_cache, output_file)
 
-
-def update_session(
-    session, resources, serlo_id_to_datenraum_id, description_cache, published_date
-):
+def update_session(session, resources, serlo_id_to_datenraum_id):
     for ressource in resources:
         ressource_id = ressource["id"]
         datenraum_id = serlo_id_to_datenraum_id.get(ressource["id"], None)
-
-        if (
-            "descriptopn" not in ressource
-            or not ressource["description"]
-            or ressource["description"].isspace()
-        ):
-            ressource["description"] = get_description(
-                ressource, description_cache, datetime.utcnow() - published_date
-            )
-            print(f"description updated for {ressource_id} with node id {datenraum_id}")
 
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")

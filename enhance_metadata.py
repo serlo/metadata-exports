@@ -1,43 +1,74 @@
-def enhance_metadata(metadata_file, enhanced_metadata_path):
-    DESCRIPTION_PATH = "public/description-cache.json"
+import json
+from typing import Dict, Any
+
+from datetime import datetime, timedelta, timezone
+from load_json_ld import load_json_ld
+
+
+def enhance_metadata(
+    metadata_file: str, description_cache, enhanced_metadata_path: str
+):
+    description_path = "public/description-cache.json"
+
+    start_time = datetime.now(timezone.utc)
 
     with open(metadata_file, "r", encoding="utf-8") as input_file:
         resources = json.load(input_file)
 
-    with open(DESCRIPTION_PATH, "r", encoding="utf-8") as input_file:
-        description_cache = json.load(input_file)
+    for resource in resources:
+        resource["description"] = get_description(
+            resource, description_cache, datetime.now(timezone.utc) - start_time
+        )
 
-    enhanced_resources = map(lambda x: enhance(x, description_cache), resources)
-
-
-    #TODO: time and update description cache
-
+    with open(description_path, "w", encoding="utf-8") as output_file:
+        json.dump(description_cache, output_file)
 
     with open(enhanced_metadata_path, "w", encoding="utf-8") as output_file:
-        json.dump(enhanced_resources, output_file)
-
-    return
+        json.dump(resources, output_file)
 
 
-def enhance(resource, description_cache):
+def get_description(
+    resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: datetime
+):
+    resource_id = resource["id"]
     if "description" in resource and isinstance(resource["description"], str):
-        return resource
+        return resource["description"]
 
-    cached_value = description_cache.get(resource["id"], {})
+    cached_value = description_cache.get(resource_id, {})
 
     if cached_value.get("version", None) == resource["version"] and isinstance(
-            cached_value.get("description", None), str
+        cached_value.get("description", None), str
     ):
-        resource["description"] = cached_value["description"]
-        return resource
+        return cached_value["description"]
+
+    if time_passed > timedelta(minutes=20):
+        return None
 
     new_description = load_description_from_website(resource)
 
-    description_cache[resource["id"]] = {
+    description_cache[resource_id] = {
         "description": new_description,
         "version": resource["version"],
     }
 
-    resource["description"] = description_cache[resource["id"]]
+    print(f"updated description for {resource_id}")
 
-    return resource
+    return new_description
+
+
+def load_description_from_website(resource: Dict[str, Any]):
+    identifier = resource.get("identifier", {}).get("value", None)
+
+    if not isinstance(identifier, int):
+        return None
+
+    data = load_json_ld(f"https://serlo.org/{identifier}")
+
+    if (
+        data is not None
+        and "description" in data
+        and isinstance(data["description"], str)
+    ):
+        return data["description"]
+
+    return None
