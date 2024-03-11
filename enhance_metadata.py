@@ -51,7 +51,8 @@ def get_description(
         "version": resource["version"],
     }
 
-    print(f"updated description for {resource_id}")
+    if new_description:
+        print(f"updated description for {resource_id}")
 
     return new_description
 

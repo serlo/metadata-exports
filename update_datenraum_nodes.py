@@ -28,7 +28,9 @@ def main(metadata_file, nodes_file):
 
     session = create_datenraum_session()
 
-    update_session(session, resources, serlo_id_to_datenraum_id)
+    filtered_resources = [resource for resource in resources if resource["description"]]
+
+    update_session(session, filtered_resources, serlo_id_to_datenraum_id)
 
     delete_deprecated_ids(session, serlo_id_to_datenraum_id, resources)
 
