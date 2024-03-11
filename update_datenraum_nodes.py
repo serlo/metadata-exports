@@ -32,7 +32,7 @@ def main(metadata_file, nodes_file):
 
     update_session(session, filtered_resources, serlo_id_to_datenraum_id)
 
-    delete_deprecated_ids(session, serlo_id_to_datenraum_id, resources)
+    delete_deprecated_ids(session, serlo_id_to_datenraum_id, filtered_resources)
 
 
 def update_session(session, resources, serlo_id_to_datenraum_id):
