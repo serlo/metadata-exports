@@ -4,6 +4,7 @@ from pathlib import PurePath
 import unittest
 from convert2rss import generate_rss
 
+
 class TestGenerateRssFromMetadata(unittest.TestCase):
     def test_generate_rss_from_metadata(self):
         test_dir = str(PurePath(__file__).parent)
