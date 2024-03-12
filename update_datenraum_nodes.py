@@ -1,16 +1,10 @@
 import sys
 import json
-from datetime import datetime
 
 from datenraum import create_datenraum_session
-from convert2rss import get_description
-
-DESCRIPTION_PATH = "public/description-cache.json"
 
 
 def main(metadata_file, nodes_file):
-
-    published_date = datetime.utcnow()
 
     with open(metadata_file, "r", encoding="utf-8") as input_file:
         resources = json.load(input_file)
@@ -23,37 +17,19 @@ def main(metadata_file, nodes_file):
         for node in nodes:
             serlo_id_to_datenraum_id[node["externalId"]] = node["id"]
 
-    with open(DESCRIPTION_PATH, "r", encoding="utf-8") as input_file:
-        description_cache = json.load(input_file)
-
     session = create_datenraum_session()
 
-    update_session(
-        session, resources, serlo_id_to_datenraum_id, description_cache, published_date
-    )
+    filtered_resources = [resource for resource in resources if resource["description"]]
 
-    delete_deprecated_ids(session, serlo_id_to_datenraum_id, resources)
+    update_session(session, filtered_resources, serlo_id_to_datenraum_id)
 
-    with open(DESCRIPTION_PATH, "w", encoding="utf-8") as output_file:
-        json.dump(description_cache, output_file)
+    delete_deprecated_ids(session, serlo_id_to_datenraum_id, filtered_resources)
 
 
-def update_session(
-    session, resources, serlo_id_to_datenraum_id, description_cache, published_date
-):
+def update_session(session, resources, serlo_id_to_datenraum_id):
     for ressource in resources:
         ressource_id = ressource["id"]
         datenraum_id = serlo_id_to_datenraum_id.get(ressource["id"], None)
-
-        if (
-            "descriptopn" not in ressource
-            or not ressource["description"]
-            or ressource["description"].isspace()
-        ):
-            ressource["description"] = get_description(
-                ressource, description_cache, datetime.utcnow() - published_date
-            )
-            print(f"description updated for {ressource_id} with node id {datenraum_id}")
 
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")
