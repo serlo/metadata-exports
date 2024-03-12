@@ -104,7 +104,7 @@ def converted_resource(
     rss += f'  <title>{escape(resource["name"])}</title>\n'
     rss += f"  <sdx:language>{GERMAN_LANGUAGE_CODE}</sdx:language>\n"
 
-    if "description" in resource:
+    if "description" in resource and resource["description"]:
         description = resource["description"]
         rss += f"  <description>{escape(description)}</description>\n"
 
