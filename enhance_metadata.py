@@ -5,8 +5,6 @@ from typing import Dict, Any
 from datetime import datetime, timedelta, timezone
 from load_json_ld import load_json_ld
 
-DESCRIPTION_PATH = "public/description-cache.json"
-
 
 def enhance_and_print_metadata(resources, enhanced_metadata_path: str):
     description_cache = load_description_cache_from_last_run()
@@ -17,7 +15,7 @@ def enhance_and_print_metadata(resources, enhanced_metadata_path: str):
             resource, description_cache, datetime.now(timezone.utc) - start_time
         )
 
-    with open(DESCRIPTION_PATH, "w", encoding="utf-8") as output_file:
+    with open("public/description-cache.json", "w", encoding="utf-8") as output_file:
         json.dump(description_cache, output_file)
 
     with open(enhanced_metadata_path, "w", encoding="utf-8") as output_file:
