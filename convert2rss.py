@@ -5,8 +5,6 @@ import sys
 from datetime import datetime
 from typing import Dict, Any, List, Callable
 
-import requests
-
 from serlo_api_client import fetch_publisher
 
 GERMAN_LANGUAGE_CODE = "de"
@@ -16,7 +14,6 @@ MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
 
 
 def main(input_filename: str, output_filename: str):
-
     with open(input_filename, "r", encoding="utf-8") as input_file:
         metadata = json.load(input_file)
 
@@ -207,18 +204,6 @@ def format_date(date):
 def get_publisher() -> Dict[str, Any]:
     response = fetch_publisher()
     return response["metadata"]["publisher"]  # pylint: disable=E1136
-
-
-def get_description_cache():
-    try:
-        response = requests.get(
-            "https://serlo.github.io/metadata-exports/description-cache.json",
-            timeout=60,
-        )
-
-        return response.json()
-    except (requests.exceptions.ReadTimeout, json.JSONDecodeError, TypeError):
-        return {}
 
 
 if __name__ == "__main__":

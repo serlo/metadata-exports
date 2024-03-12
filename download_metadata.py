@@ -2,10 +2,11 @@
 
 import json
 import sys
-import requests
 
-from datetime import datetime, timedelta, timezone
 from typing import Dict, Any
+from datetime import datetime, timedelta, timezone
+
+import requests
 
 from load_json_ld import load_json_ld
 from serlo_api_client import fetch_metadata
