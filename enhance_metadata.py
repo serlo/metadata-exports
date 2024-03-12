@@ -1,4 +1,5 @@
 import json
+import requests
 from typing import Dict, Any
 
 from datetime import datetime, timedelta, timezone
@@ -8,10 +9,8 @@ DESCRIPTION_PATH = "public/description-cache.json"
 
 
 def enhance_and_print_metadata(resources, enhanced_metadata_path: str):
+    description_cache = load_description_cache_from_last_run()
     start_time = datetime.now(timezone.utc)
-
-    with open(DESCRIPTION_PATH, "r", encoding="utf-8") as input_file:
-        description_cache = json.load(input_file)
 
     for resource in resources:
         resource["description"] = get_description(
@@ -71,3 +70,15 @@ def load_description_from_website(resource: Dict[str, Any]):
         return data["description"]
 
     return None
+
+
+def load_description_cache_from_last_run():
+    try:
+        response = requests.get(
+            "https://serlo.github.io/metadata-exports/description-cache.json",
+            timeout=60,
+        )
+
+        return response.json()
+    except (requests.exceptions.ReadTimeout, json.JSONDecodeError, TypeError):
+        return {}
