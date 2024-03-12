@@ -1,17 +1,16 @@
 #!/usr/bin/env python
 
-import json
 import sys
 from typing import Dict, Any
 
 from serlo_api_client import fetch_metadata
+from enhance_metadata import enhance_and_print_metadata
 
 
 def main(output_filename: str):
     metadata = list(fetch_all_metadata())
 
-    with open(output_filename, "w", encoding="utf-8") as file:
-        json.dump(metadata, file, indent=2)
+    enhance_and_print_metadata(metadata, output_filename)
 
 
 def fetch_all_metadata() -> Dict[str, Any]:

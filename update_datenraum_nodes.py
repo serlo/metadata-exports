@@ -2,20 +2,11 @@ import sys
 import json
 
 from datenraum import create_datenraum_session
-from enhance_metadata import enhance_metadata
-
-ENHANCED_METADATA_PATH = "public/enhanced-metadata.json"
 
 
 def main(metadata_file, nodes_file):
-    description_path = "public/description-cache.json"
 
-    with open(description_path, "r", encoding="utf-8") as input_file:
-        description_cache = json.load(input_file)
-
-    enhance_metadata(metadata_file, description_cache, ENHANCED_METADATA_PATH)
-
-    with open(ENHANCED_METADATA_PATH, "r", encoding="utf-8") as input_file:
+    with open(metadata_file, "r", encoding="utf-8") as input_file:
         resources = json.load(input_file)
 
     serlo_id_to_datenraum_id = {}

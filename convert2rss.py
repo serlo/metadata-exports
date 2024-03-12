@@ -8,21 +8,16 @@ from typing import Dict, Any, List, Callable
 import requests
 
 from serlo_api_client import fetch_publisher
-from enhance_metadata import enhance_metadata
 
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
 QUIZ_RESOURCE_TYPE = "Quiz"
 MATHEMATICS_SUBJECT_ID = "http://w3id.org/kim/schulfaecher/s1017"
-ENHANCED_METADATA_PATH = "public/enhanced-metadata.json"
 
 
 def main(input_filename: str, output_filename: str):
-    description_cache = get_description_cache()
 
-    enhance_metadata(input_filename, description_cache, ENHANCED_METADATA_PATH)
-
-    with open(ENHANCED_METADATA_PATH, "r", encoding="utf-8") as input_file:
+    with open(input_filename, "r", encoding="utf-8") as input_file:
         metadata = json.load(input_file)
 
     with open("keywords.json", "r", encoding="utf-8") as input_file:
