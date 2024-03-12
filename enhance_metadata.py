@@ -25,7 +25,7 @@ def enhance_and_print_metadata(resources, enhanced_metadata_path: str):
 
 
 def get_description(
-    resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: datetime
+    resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: timedelta
 ):
     resource_id = resource["id"]
     if "description" in resource and isinstance(resource["description"], str):
