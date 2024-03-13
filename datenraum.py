@@ -24,7 +24,7 @@ def create_datenraum_session():
 
 class Source:
     """
-    Represents a source in the Datenraum for creating, updating, or deleting nodes.
+    Represents a source in the Datenraum for creating, updating, or deleting nodes or edges
     """
 
     def __init__(self, session, source_id):
@@ -89,6 +89,22 @@ class Source:
 
         return data
 
+    def add_edge_type(self, name, description, slug):
+        response = self.session.post_json(
+            f"/api/core/edge-types", 
+            json = {  
+                "name": name,
+                "description": description,
+                "slug": slug,
+            }
+        )
+        assert response.status_code == 201
+
+    def add_edge(self, edge_type_id, tail_node_id, head_node_id):
+        response = self.session.put_json(
+            f"/api/core/edges/{edge_type_id}/{tail_node_id}/{head_node_id}", json=""
+        )
+        assert response.status_code == 201
 
 class Client:
     """
