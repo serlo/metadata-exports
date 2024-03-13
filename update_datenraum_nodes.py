@@ -19,7 +19,14 @@ def main(metadata_file, nodes_file):
 
     session = create_datenraum_session()
 
-    filtered_resources = [resource for resource in resources if resource["description"]]
+    filtered_resources = [
+        resource
+        for resource in resources
+        if "description" in resource
+        and isinstance(resource["description"], str)
+        and not resource["description"] == ""
+        and not resource["description"].isspace()
+    ]
 
     update_session(session, filtered_resources, serlo_id_to_datenraum_id)
 

@@ -48,13 +48,21 @@ def get_description(
     resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: timedelta
 ):
     resource_id = resource["id"]
-    if "description" in resource and isinstance(resource["description"], str):
+    if (
+        "description" in resource
+        and isinstance(resource["description"], str)
+        and not resource["description"] == ""
+        and not resource["description"].isspace()
+    ):
         return resource["description"]
 
     cached_value = description_cache.get(resource_id, {})
 
-    if cached_value.get("version", None) == resource["version"] and isinstance(
-        cached_value.get("description", None), str
+    if (
+        cached_value.get("version", None) == resource["version"]
+        and isinstance(cached_value.get("description", None), str)
+        and not cached_value["description"] == ""
+        and not cached_value["description"].isspace()
     ):
         return cached_value["description"]
 
@@ -86,6 +94,8 @@ def load_description_from_website(resource: Dict[str, Any]):
         data is not None
         and "description" in data
         and isinstance(data["description"], str)
+        and not data["description"] == ""
+        and not data["description"].isspace()
     ):
         return data["description"]
 
