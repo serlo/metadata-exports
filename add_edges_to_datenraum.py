@@ -14,10 +14,14 @@ def process_node(session, node, taxonomy):
         if part.get("id") == taxonomy:
             print(node["id"])
             # for taxonomy we need "id": "b8f566a7-5c2e-49e9-a029-b1f5e4eb9a18" or "sourceId"?
+            taxonomy_id_mapping = {
+                "https://serlo.org/155948": "0119d2c8-bf46-46e6-928e-02138803d150",
+                "https://serlo.org/192971": "b8f566a7-5c2e-49e9-a029-b1f5e4eb9a18",
+            }
             session.add_edge(
                 "4ea05b3f-7780-44b5-84e2-2edcdbae7ae0",
-                "b8f566a7-5c2e-49e9-a029-b1f5e4eb9a18",
                 node["id"],
+                taxonomy_id_mapping.get(taxonomy),
             )
 
 
@@ -32,7 +36,7 @@ def main():
     # the edge type to be used
     # session.add_edge_type("content -> taxonomy", "points to a content node to its taxonomy node", "isPartOf")
 
-    with open("datenraum_nodes_0314.json", "r", encoding="utf-8") as file:
+    with open("new_datenraum_nodes.json", "r", encoding="utf-8") as file:
         data = json.load(file)
 
     # iterate over all ids of nodes part of the two taxonomies
