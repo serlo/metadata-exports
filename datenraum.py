@@ -64,6 +64,12 @@ class Source:
 
         return result["_embedded"]["nodes"]
 
+    def get_node_from_external_id(self, external_id):
+        return self.session.get_json(
+            f"/api/core/nodes/external/{self.source_id}",
+            params={"externalId": external_id},
+        )
+
     def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
         language = node.get("inLanguage", [])[:1]
 
