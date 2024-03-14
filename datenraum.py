@@ -92,28 +92,29 @@ class Source:
     def add_edge_type(self, name, description, slug):
         response = self.session.post_json(
             "/api/core/edge-types",
-            json = {
+            json={
                 "name": name,
                 "description": description,
                 "slug": slug,
-            }
+            },
         )
         assert response.status_code == 201
 
     def add_edge(self, edge_type_id, tail_node_id, head_node_id):
         response = self.session.put_json(
             f"/api/core/edges/{edge_type_id}/{tail_node_id}/{head_node_id}",
-            json = {
+            json={
                 "metadata": {
                     "isAiGenerated": False,
                 }
-            }
+            },
         )
         print(response.status_code)
         assert response.status_code in (201, 204)
 
     def delete_edge_type(self, edge_type_id):
         self.session.delete(f"/api/core/edge-types/{edge_type_id}")
+
 
 class Client:
     """
