@@ -91,7 +91,7 @@ class Source:
 
     def add_edge_type(self, name, description, slug):
         response = self.session.post_json(
-            f"/api/core/edge-types",
+            "/api/core/edge-types",
             json = {
                 "name": name,
                 "description": description,
