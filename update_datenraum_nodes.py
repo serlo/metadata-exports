@@ -5,7 +5,6 @@ from datenraum import create_datenraum_session
 
 
 def main(metadata_file, nodes_file):
-
     with open(metadata_file, "r", encoding="utf-8") as input_file:
         resources = json.load(input_file)
 
@@ -37,7 +36,17 @@ def update_session(session, resources, serlo_id_to_datenraum_id):
             try:
                 session.add_node(ressource)
             except AssertionError:
-                print(f"ERROR: {ressource_id} couldn't be added")
+                datenraum_id = session.get_node_from_external_id(ressource["id"])
+
+                if datenraum_id:
+                    try:
+                        session.update_node(ressource, datenraum_id)
+                    except AssertionError:
+                        print(
+                            f"ERROR: {ressource_id} with node {datenraum_id} couldn't be updated"
+                        )
+                else:
+                    print(f"ERROR: {ressource_id} couldn't be added")
         else:
             print(f"INFO: Update node {datenraum_id} for {ressource_id}")
 
