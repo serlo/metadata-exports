@@ -25,7 +25,7 @@ def main(metadata_file, nodes_file):
 
     update_session(session, filtered_resources, serlo_id_to_datenraum_id)
 
-    delete_deprecated_ids(session, serlo_id_to_datenraum_id, filtered_resources)
+    delete_deprecated_ids(session, filtered_resources, serlo_id_to_datenraum_id)
 
 
 def update_session(session, resources, serlo_id_to_datenraum_id):
@@ -61,7 +61,7 @@ def update_session(session, resources, serlo_id_to_datenraum_id):
                 )
 
 
-def delete_deprecated_ids(session, serlo_id_to_datenraum_id, resources):
+def delete_deprecated_ids(session, resources, serlo_id_to_datenraum_id):
     stored_ids = set(serlo_id_to_datenraum_id.keys())
     current_ids = set(ressource["id"] for ressource in resources)
 
