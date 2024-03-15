@@ -22,7 +22,7 @@ def main(output_filename: str):
     for record in records:
         time_passed = current_time() - start_time
 
-        if not has_description(record) and time_passed < timedelta(minutes=20):
+        if not has_description(record) and time_passed < timedelta(minutes=30):
             record["description"] = get_description(record, description_cache)
 
     with open("public/description-cache.json", "w", encoding="utf-8") as output_file:
