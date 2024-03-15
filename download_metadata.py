@@ -94,12 +94,12 @@ def get_description_from_content(record: Dict[str, Any]):
 
         content_text = get_text(content)
 
-        first_paragraph = re.sub(" +", " ", content_text.split("\n")[0])
+        first_paragraph = content_text.split("\n", maxsplit=1)[0]
 
-        if not first_paragraph.isspace():
-            return first_paragraph
-        else:
+        if first_paragraph.isspace():
             return None
+
+        return re.sub(" +", " ", first_paragraph)
     except json.JSONDecodeError:
         return None
 
@@ -107,21 +107,23 @@ def get_description_from_content(record: Dict[str, Any]):
 def get_text(data) -> str:
     if isinstance(data, list):
         return "".join(get_text(child) for child in data)
-    elif isinstance(data, dict):
-        if "plugin" in data and data["plugin"] == "text" and "state" in data:
-            return get_text(data["state"]) + "\n"
-        if "type" in data and data["type"] == "h" and "children" in data:
-            return get_text(data["children"]) + "\n"
-        if "type" in data and data["type"] == "p" and "children" in data:
-            return get_text(data["children"]) + " "
-        if "type" in data and data["type"] == "math" and "src" in data:
-            return "$" + data["src"] + "$"
-        elif "text" in data and isinstance(data["text"], str):
-            return data["text"]
-        else:
-            return "".join(get_text(child) for child in data.values())
-    else:
-        return ""
+    if isinstance(data, dict):
+        get_text_from_dict(data)
+    return ""
+
+
+def get_text_from_dict(data):
+    if "plugin" in data and data["plugin"] == "text" and "state" in data:
+        return get_text(data["state"]) + "\n"
+    if "type" in data and data["type"] == "h" and "children" in data:
+        return get_text(data["children"]) + "\n"
+    if "type" in data and data["type"] == "p" and "children" in data:
+        return get_text(data["children"]) + " "
+    if "type" in data and data["type"] == "math" and "src" in data:
+        return "$" + data["src"] + "$"
+    if "text" in data and isinstance(data["text"], str):
+        return data["text"]
+    return "".join(get_text(child) for child in data.values())
 
 
 def load_description_cache_from_last_run():

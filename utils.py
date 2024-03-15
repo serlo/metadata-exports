@@ -1,8 +1,9 @@
 import json
 import re
-import requests
 
 from datetime import datetime, timezone
+
+import requests
 
 
 def has_description(record):
@@ -51,5 +52,5 @@ def pick(path, data):
 
     if key in data:
         return pick(path[1:], data[key])
-    else:
-        return None
+
+    return None
