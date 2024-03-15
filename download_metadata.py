@@ -48,7 +48,11 @@ def get_description(
     resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: timedelta
 ):
     resource_id = resource["id"]
-    if "description" in resource and isinstance(resource["description"], str):
+    if (
+        "description" in resource
+        and isinstance(resource["description"], str)
+        and not resource["description"].isspace()
+    ):
         return resource["description"]
 
     cached_value = description_cache.get(resource_id, {})
