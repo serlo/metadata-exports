@@ -3,6 +3,15 @@ import re
 import requests
 
 
+def has_description(record):
+    return (
+        record is not None
+        and "description" in record
+        and isinstance(record["description"], str)
+        and not record["description"].isspace()
+    )
+
+
 def load_json_ld(url):
     try:
         response = requests.get(url, timeout=60)

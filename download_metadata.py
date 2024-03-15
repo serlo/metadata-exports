@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 import requests
 
 from serlo_api_client import fetch_metadata
-from utils import load_json_ld
+from utils import load_json_ld, has_description
 
 
 def main(output_filename: str):
@@ -48,17 +48,13 @@ def get_description(
     resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: timedelta
 ):
     resource_id = resource["id"]
-    if (
-        "description" in resource
-        and isinstance(resource["description"], str)
-        and not resource["description"].isspace()
-    ):
+    if has_description(resource):
         return resource["description"]
 
     cached_value = description_cache.get(resource_id, {})
 
-    if cached_value.get("version", None) == resource["version"] and isinstance(
-        cached_value.get("description", None), str
+    if cached_value.get("version", None) == resource["version"] and has_description(
+        cached_value
     ):
         return cached_value["description"]
 
@@ -86,12 +82,8 @@ def load_description_from_website(resource: Dict[str, Any]):
 
     data = load_json_ld(f"https://serlo.org/{identifier}")
 
-    if (
-        data is not None
-        and "description" in data
-        and isinstance(data["description"], str)
-        and not data["description"].isspace()
-    ):
+    # TODO: Update TypeChecking data
+    if data is not None and has_description(data):
         return data["description"]
 
     return None
