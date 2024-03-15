@@ -57,14 +57,17 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     # Update time in fromisoformat() to ensure all descriptions are updated
     if (
         cached_value.get("version", None) == resource["version"]
-        and has_description(cached_value)
         and "dateCreated" in cached_value
         and datetime.fromisoformat(cached_value["dateCreated"])
-        > datetime.fromisoformat("2024-03-15T18:19:53.758746")
+        > datetime.fromisoformat("2024-03-15T19:10:48.379135")
+        and has_description(cached_value)
     ):
         return cached_value["description"]
 
     new_description = get_description_from_content(resource)
+
+    if new_description is None:
+        return None
 
     description_cache[resource_id] = {
         "description": new_description,
@@ -72,8 +75,7 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
         "dateCreated": current_time().isoformat(),
     }
 
-    if new_description:
-        print(f"updated description for {resource_id}")
+    print(f"updated description for {resource_id}")
 
     return new_description
 
@@ -108,7 +110,7 @@ def get_text(data) -> str:
     if isinstance(data, list):
         return "".join(get_text(child) for child in data)
     if isinstance(data, dict):
-        get_text_from_dict(data)
+        return get_text_from_dict(data)
     return ""
 
 
