@@ -57,10 +57,10 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     # Update time in fromisoformat() to ensure all descriptions are updated
     if (
         cached_value.get("version", None) == resource["version"]
-        and has_description(cached_value)
         and "dateCreated" in cached_value
         and datetime.fromisoformat(cached_value["dateCreated"])
         > datetime.fromisoformat("2024-03-15T18:19:53.758746")
+        and has_description(cached_value)
     ):
         return cached_value["description"]
 
