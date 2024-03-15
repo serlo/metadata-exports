@@ -66,14 +66,16 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
 
     new_description = get_description_from_content(resource)
 
+    if new_description is None:
+        return None
+
     description_cache[resource_id] = {
         "description": new_description,
         "version": resource["version"],
         "dateCreated": current_time().isoformat(),
     }
 
-    if new_description:
-        print(f"updated description for {resource_id}")
+    print(f"updated description for {resource_id}")
 
     return new_description
 
