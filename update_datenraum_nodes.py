@@ -56,10 +56,7 @@ def delete_deprecated_ids(session, records, serlo_id_to_datenraum_id):
 
         print(f"INFO: Delete node {datenraum_id}")
 
-        try:
-            session.delete_node(datenraum_id)
-        except AssertionError:
-            print(f"ERROR: {datenraum_id} couldn't be deleted")
+        session.delete_node(datenraum_id)
 
 
 if __name__ == "__main__":

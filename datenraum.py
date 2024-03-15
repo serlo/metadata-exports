@@ -63,8 +63,15 @@ class Source:
 
         return is_success
 
-    def delete_node(self, node_id):
-        self.session.delete(f"/api/core/nodes/{node_id}")
+    def delete_node(self, node_id, log_error=True):
+        response = self.session.delete(f"/api/core/nodes/{node_id}")
+
+        is_success = response.status_code == 204
+
+        if not is_success and log_error:
+            log_response(response, "Could not delete " + node_id)
+
+        return is_success
 
     def get_nodes(self, offset, limit=100):
         result = self.session.get_json(
