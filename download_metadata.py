@@ -90,6 +90,7 @@ def load_description_from_website(resource: Dict[str, Any]):
         data is not None
         and "description" in data
         and isinstance(data["description"], str)
+        and not data["description"].isspace()
     ):
         return data["description"]
 
