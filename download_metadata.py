@@ -5,7 +5,7 @@ import re
 import sys
 
 from typing import Dict, Any
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 import requests
 
@@ -54,8 +54,13 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
 
     cached_value = description_cache.get(resource_id, {})
 
-    if cached_value.get("version", None) == resource["version"] and has_description(
-        cached_value
+    # Update time in fromisoformat() to ensure all descriptions are updated
+    if (
+        cached_value.get("version", None) == resource["version"]
+        and has_description(cached_value)
+        and "dateCreated" in cached_value
+        and datetime.fromisoformat(cached_value["dateCreated"])
+        > datetime.fromisoformat("2024-03-15T18:19:53.758746")
     ):
         return cached_value["description"]
 
@@ -64,6 +69,7 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     description_cache[resource_id] = {
         "description": new_description,
         "version": resource["version"],
+        "dateCreated": current_time().isoformat(),
     }
 
     if new_description:
