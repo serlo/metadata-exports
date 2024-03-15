@@ -77,7 +77,7 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
         "dateCreated": current_time().isoformat(),
     }
 
-    print(f"updated description for {resource_id}")
+    print(f"INFO: Update cached description for {resource_id}")
 
     return new_description
 
