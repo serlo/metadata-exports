@@ -19,9 +19,10 @@ def main(output_filename: str):
     start_time = datetime.now(timezone.utc)
 
     for record in records:
-        record["description"] = get_description(
-            record, description_cache, datetime.now(timezone.utc) - start_time
-        )
+        time_passed = datetime.now(timezone.utc) - start_time
+
+        if not has_description(record) and time_passed < timedelta(minutes=20):
+            record["description"] = get_description(record, description_cache)
 
     with open("public/description-cache.json", "w", encoding="utf-8") as output_file:
         json.dump(description_cache, output_file)
@@ -44,10 +45,9 @@ def fetch_all_metadata():
             break
 
 
-def get_description(
-    resource: Dict[str, Any], description_cache: Dict[str, Any], time_passed: timedelta
-):
+def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any]):
     resource_id = resource["id"]
+
     if has_description(resource):
         return resource["description"]
 
@@ -57,9 +57,6 @@ def get_description(
         cached_value
     ):
         return cached_value["description"]
-
-    if time_passed > timedelta(minutes=20):
-        return None
 
     new_description = load_description_from_website(resource)
 
