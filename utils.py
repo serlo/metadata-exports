@@ -35,3 +35,15 @@ def load_json_ld(url):
         pass
 
     return None
+
+
+def pick(path, data):
+    if len(path) == 0:
+        return data
+
+    key = path[0]
+
+    if key in data:
+        return pick(path[1:], data[key])
+    else:
+        return None

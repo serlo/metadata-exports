@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+import re
 import sys
 
 from typing import Dict, Any
@@ -8,8 +9,8 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-from serlo_api_client import fetch_metadata
-from utils import load_json_ld, has_description
+from serlo_api_client import fetch_content, fetch_metadata
+from utils import has_description, pick
 
 
 def main(output_filename: str):
@@ -58,7 +59,7 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     ):
         return cached_value["description"]
 
-    new_description = load_description_from_website(resource)
+    new_description = get_description_from_content(resource)
 
     description_cache[resource_id] = {
         "description": new_description,
@@ -71,19 +72,50 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     return new_description
 
 
-def load_description_from_website(resource: Dict[str, Any]):
-    identifier = resource.get("identifier", {}).get("value", None)
+def get_description_from_content(record: Dict[str, Any]):
+    identifier = pick(["identifier", "value"], record)
 
     if not isinstance(identifier, int):
         return None
 
-    data = load_json_ld(f"https://serlo.org/{identifier}")
+    content_raw = fetch_content(identifier)
 
-    # TODO: Update TypeChecking data
-    if data is not None and has_description(data):
-        return data["description"]
+    if not isinstance(content_raw, str):
+        return None
 
-    return None
+    try:
+        content = json.loads(content_raw)
+
+        content_text = get_text(content)
+
+        first_paragraph = re.sub(" +", " ", content_text.split("\n")[0])
+
+        if not first_paragraph.isspace():
+            return first_paragraph
+        else:
+            return None
+    except json.JSONDecodeError:
+        return None
+
+
+def get_text(data) -> str:
+    if isinstance(data, list):
+        return "".join(get_text(child) for child in data)
+    elif isinstance(data, dict):
+        if "plugin" in data and data["plugin"] == "text" and "state" in data:
+            return get_text(data["state"]) + "\n"
+        if "type" in data and data["type"] == "h" and "children" in data:
+            return get_text(data["children"]) + "\n"
+        if "type" in data and data["type"] == "p" and "children" in data:
+            return get_text(data["children"]) + " "
+        if "type" in data and data["type"] == "math" and "src" in data:
+            return "$" + data["src"] + "$"
+        elif "text" in data and isinstance(data["text"], str):
+            return data["text"]
+        else:
+            return "".join(get_text(child) for child in data.values())
+    else:
+        return ""
 
 
 def load_description_cache_from_last_run():
