@@ -8,8 +8,8 @@ from datetime import datetime, timedelta, timezone
 
 import requests
 
-from load_json_ld import load_json_ld
 from serlo_api_client import fetch_metadata
+from utils import load_json_ld
 
 
 def main(output_filename: str):

@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from load_json_ld import load_json_ld
+from utils import load_json_ld
 
 SEARCH_URL = "https://repository.staging.openeduhub.net/edu-sharing/rest/search/v1/queries/-home-/mds_oeh/ngsearch/lrmi"
 
