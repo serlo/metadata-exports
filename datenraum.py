@@ -31,16 +31,23 @@ class Source:
         self.session = session
         self.source_id = source_id
 
-    def add_node(self, node, node_type="LearningOpportunity"):
+    def add_node(self, node, node_type="LearningOpportunity", log_error=True):
         data = self.convert_node_to_request_body(node, node_type)
 
         response = self.session.post_json(
             "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
         )
 
-        assert response.status_code == 201
+        is_success = response.status_code == 201
 
-    def update_node(self, node, node_id, node_type="LearningOpportunity"):
+        if not is_success and log_error:
+            log_response(response, "Could not add " + node["id"])
+
+        return is_success
+
+    def update_node(
+        self, node, node_id, node_type="LearningOpportunity", log_error=True
+    ):
         data = self.convert_node_to_request_body(node, node_type)
 
         response = self.session.put_json(
@@ -49,7 +56,12 @@ class Source:
             params={"metadataValidation": "Amb"},
         )
 
-        assert response.status_code == 204
+        is_success = response.status_code == 204
+
+        if not is_success and log_error:
+            log_response(response, "Could not update " + node["id"] + " for " + node_id)
+
+        return is_success
 
     def delete_node(self, node_id):
         self.session.delete(f"/api/core/nodes/{node_id}")
@@ -246,3 +258,10 @@ class Credentials:
 
 def current_time():
     return int(time.time())
+
+
+def log_response(response, message):
+    print(f"ERROR: {message}")
+    print("Status code: ", response.status_code)
+    print("Response text: ", response.text)
+    print()

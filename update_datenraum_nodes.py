@@ -36,29 +36,17 @@ def update_session(session, resources, serlo_id_to_datenraum_id):
         if datenraum_id is None:
             print(f"INFO: Add new node for {ressource_id}")
 
-            try:
-                session.add_node(ressource)
-            except AssertionError:
+            result = session.add_node(ressource)
+
+            if not result:
                 datenraum_id = session.get_node_from_external_id(ressource["id"])["id"]
 
                 if datenraum_id:
-                    try:
-                        session.update_node(ressource, datenraum_id)
-                    except AssertionError:
-                        print(
-                            f"ERROR: {ressource_id} with node {datenraum_id} couldn't be updated"
-                        )
-                else:
-                    print(f"ERROR: {ressource_id} couldn't be added")
+                    session.update_node(ressource, datenraum_id)
         else:
             print(f"INFO: Update node {datenraum_id} for {ressource_id}")
 
-            try:
-                session.update_node(ressource, datenraum_id)
-            except AssertionError:
-                print(
-                    f"ERROR: {ressource_id} with node {datenraum_id} couldn't be updated"
-                )
+            session.update_node(ressource, datenraum_id)
 
 
 def delete_deprecated_ids(session, resources, serlo_id_to_datenraum_id):
