@@ -82,8 +82,6 @@ def fetch_content(uuid):
 
     result = execute(query, {"id": uuid})
 
-    print(result)
-
     return pick(["uuid", "currentRevision", "content"], result)
 
 
