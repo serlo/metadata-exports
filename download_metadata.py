@@ -16,7 +16,7 @@ from utils import current_time, has_description, pick
 def main(output_filename: str):
     records = list(fetch_all_metadata())
 
-    print("INFO: {len(records)} metadata records downloaded")
+    print(f"INFO: {len(records)} metadata records downloaded")
 
     description_cache = load_description_cache_from_last_run()
     start_time = current_time()
