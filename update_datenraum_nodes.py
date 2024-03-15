@@ -39,7 +39,7 @@ def update_session(session, resources, serlo_id_to_datenraum_id):
             try:
                 session.add_node(ressource)
             except AssertionError:
-                datenraum_id = session.get_node_from_external_id(ressource["id"])
+                datenraum_id = session.get_node_from_external_id(ressource["id"])["id"]
 
                 if datenraum_id:
                     try:
