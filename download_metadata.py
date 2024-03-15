@@ -59,7 +59,7 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
         cached_value.get("version", None) == resource["version"]
         and "dateCreated" in cached_value
         and datetime.fromisoformat(cached_value["dateCreated"])
-        > datetime.fromisoformat("2024-03-15T18:19:53.758746")
+        > datetime.fromisoformat("2024-03-15T19:10:48.379135")
         and has_description(cached_value)
     ):
         return cached_value["description"]
@@ -108,7 +108,7 @@ def get_text(data) -> str:
     if isinstance(data, list):
         return "".join(get_text(child) for child in data)
     if isinstance(data, dict):
-        get_text_from_dict(data)
+        return get_text_from_dict(data)
     return ""
 
 
