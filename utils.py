@@ -2,6 +2,8 @@ import json
 import re
 import requests
 
+from datetime import datetime, timezone
+
 
 def has_description(record):
     return (
@@ -35,6 +37,10 @@ def load_json_ld(url):
         pass
 
     return None
+
+
+def current_time():
+    return datetime.now(timezone.utc)
 
 
 def pick(path, data):

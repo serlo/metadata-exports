@@ -5,22 +5,22 @@ import re
 import sys
 
 from typing import Dict, Any
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 
 import requests
 
 from serlo_api_client import fetch_content, fetch_metadata
-from utils import has_description, pick
+from utils import current_time, has_description, pick
 
 
 def main(output_filename: str):
     records = list(fetch_all_metadata())
 
     description_cache = load_description_cache_from_last_run()
-    start_time = datetime.now(timezone.utc)
+    start_time = current_time()
 
     for record in records:
-        time_passed = datetime.now(timezone.utc) - start_time
+        time_passed = current_time() - start_time
 
         if not has_description(record) and time_passed < timedelta(minutes=20):
             record["description"] = get_description(record, description_cache)
