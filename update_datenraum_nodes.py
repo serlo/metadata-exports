@@ -2,6 +2,7 @@ import sys
 import json
 
 from datenraum import create_datenraum_session
+from utils import has_description
 
 
 def main(metadata_file, nodes_file):
@@ -19,12 +20,7 @@ def main(metadata_file, nodes_file):
     session = create_datenraum_session()
 
     filtered_resources = [
-        resource
-        for resource in resources
-        if "description" in resource
-        and isinstance(resource["description"], str)
-        and not resource["description"] == ""
-        and not resource["description"].isspace()
+        resource for resource in resources if has_description(resource)
     ]
 
     update_session(session, filtered_resources, serlo_id_to_datenraum_id)

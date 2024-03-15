@@ -6,6 +6,7 @@ from datetime import datetime
 from typing import Dict, Any, List, Callable
 
 from serlo_api_client import fetch_publisher
+from utils import has_description
 
 GERMAN_LANGUAGE_CODE = "de"
 VIDEO_RESOURCE_TYPE = "VideoObject"
@@ -101,7 +102,7 @@ def converted_resource(
     rss += f'  <title>{escape(resource["name"])}</title>\n'
     rss += f"  <sdx:language>{GERMAN_LANGUAGE_CODE}</sdx:language>\n"
 
-    if "description" in resource and resource["description"]:
+    if has_description(resource):
         description = resource["description"]
         rss += f"  <description>{escape(description)}</description>\n"
 

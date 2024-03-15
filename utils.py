@@ -1,6 +1,18 @@
 import json
 import re
+
+from datetime import datetime, timezone
+
 import requests
+
+
+def has_description(record):
+    return (
+        record is not None
+        and "description" in record
+        and isinstance(record["description"], str)
+        and not record["description"].isspace()
+    )
 
 
 def load_json_ld(url):
@@ -24,5 +36,21 @@ def load_json_ld(url):
         return json.loads(match.strip())
     except (TypeError, json.JSONDecodeError):
         pass
+
+    return None
+
+
+def current_time():
+    return datetime.now(timezone.utc)
+
+
+def pick(path, data):
+    if len(path) == 0:
+        return data
+
+    key = path[0]
+
+    if key in data:
+        return pick(path[1:], data[key])
 
     return None
