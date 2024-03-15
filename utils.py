@@ -1,7 +1,7 @@
 import json
 import re
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 import requests
 
@@ -41,7 +41,7 @@ def load_json_ld(url):
 
 
 def current_time():
-    return datetime.now(timezone.utc)
+    return datetime.now().astimezone()
 
 
 def pick(path, data):
