@@ -50,7 +50,10 @@ def pick(path, data):
 
     key = path[0]
 
-    if key in data:
+    if isinstance(data, dict) and isinstance(key, str) and key in data:
+        return pick(path[1:], data[key])
+
+    if isinstance(data, list) and isinstance(key, int) and len(data) > key:
         return pick(path[1:], data[key])
 
     return None
