@@ -105,7 +105,7 @@ def get_description_from_content(record: Dict[str, Any]):
 
         first_paragraph = content_text.split("\n", maxsplit=1)[0]
 
-        if first_paragraph.isspace():
+        if len(first_paragraph.strip()) == 0:
             return None
 
         return re.sub(" +", " ", first_paragraph)
