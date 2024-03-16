@@ -26,6 +26,11 @@ def main(output_filename: str):
 
         if not has_description(record) and time_passed < timedelta(minutes=40):
             record["description"] = get_description(record, description_cache)
+        elif not has_description(record):
+            cached_value = description_cache.get(record["id"], None)
+
+            if has_description(cached_value):
+                record["description"] = cached_value["description"]
 
     with open("public/description-cache.json", "w", encoding="utf-8") as output_file:
         json.dump(description_cache, output_file)
