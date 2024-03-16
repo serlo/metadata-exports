@@ -11,7 +11,7 @@ def has_description(record):
         record is not None
         and "description" in record
         and isinstance(record["description"], str)
-        and not record["description"].isspace()
+        and len(record["description"].strip()) > 0
     )
 
 
