@@ -210,9 +210,7 @@ class Session:
             raise error
 
     def delete(self, endpoint):
-        response = self.send(requests.Request("DELETE", self.base_url + endpoint))
-
-        assert response.status_code == 204
+        return self.send(requests.Request("DELETE", self.base_url + endpoint))
 
     def send(self, req, no_retries=0):
         if self.is_token_expired():

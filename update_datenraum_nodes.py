@@ -23,7 +23,7 @@ def main(metadata_file, nodes_file):
 
     update_session(session, filtered_records, datenraum_nodes)
 
-    # delete_deprecated_ids(session, filtered_records, datenraum_nodes)
+    delete_deprecated_ids(session, filtered_records, datenraum_nodes)
 
 
 def update_session(session, records, datenraum_nodes):
@@ -71,12 +71,12 @@ def update_session(session, records, datenraum_nodes):
                 session.update_node(record, datenraum_node_id)
 
 
-def delete_deprecated_ids(session, records, serlo_id_to_datenraum_id):
-    stored_ids = set(node["id"] for node in serlo_id_to_datenraum_id.values())
+def delete_deprecated_ids(session, records, datenraum_nodes):
+    stored_ids = set(node["metadata"]["Amb"]["id"] for node in datenraum_nodes.values())
     current_ids = set(record["id"] for record in records)
 
     for ressource_id in stored_ids - current_ids:
-        datenraum_id = serlo_id_to_datenraum_id[ressource_id]
+        datenraum_id = datenraum_nodes[ressource_id]["id"]
 
         print(f"INFO: Delete node {datenraum_id}")
 
