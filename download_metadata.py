@@ -62,6 +62,11 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     cached_value = description_cache.get(resource_id, {})
 
     # Update time in fromisoformat() to ensure all descriptions are updated
+    #
+    # Run the following command to update the baseline date:
+    #
+    # >>> from datetime import datetime
+    # >>> datetime.now().astimezone().isoformat()
     if (
         cached_value.get("version", None) == resource["version"]
         and "dateCreated" in cached_value
