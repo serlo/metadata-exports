@@ -158,7 +158,7 @@ class Source:
                 }
             },
         )
-        print(response.status_code)
+
         assert response.status_code in (201, 204)
 
     def delete_edge_type(self, edge_type_id):
