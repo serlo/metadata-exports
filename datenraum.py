@@ -308,7 +308,7 @@ class Session:
         self.token["expires_at"] = current_time() + self.token["expires_in"] - 20
 
     def is_token_expired(self):
-        return self.token is None or self.token["expires_at"] >= current_time()
+        return self.token is None or self.token["expires_at"] <= current_time()
 
 
 @dataclass
