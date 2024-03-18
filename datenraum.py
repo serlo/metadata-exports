@@ -1,20 +1,24 @@
 import time
 import os
 import sys
+
+from enum import Enum
 from dataclasses import dataclass
+
 import requests
+
 from requests.auth import HTTPBasicAuth
 
 
 def create_datenraum_session():
-    base_url = os.environ.get("BASE_URL")
+    env = get_current_environment()
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
 
     assert client_id is not None
     assert client_secret is not None
 
-    session = Session(base_url, Credentials(client_id, client_secret))
+    session = Session(env, Credentials(client_id, client_secret))
     client = Client(session)
 
     return client.create_source(
@@ -162,9 +166,9 @@ class Session:
     Class for handling API calls to the Datenraums. Manages authentication token creation and renewal.
     """
 
-    def __init__(self, base_url, credentials):
+    def __init__(self, env, credentials):
         self.token = None
-        self.base_url = base_url
+        self.env = env
         self.credentials = credentials
         self.session = requests.Session()
 
@@ -232,10 +236,8 @@ class Session:
         return response
 
     def update_token(self):
-        url = "https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/token"
-
         response = self.session.post(
-            url,
+            self.authentication_url,
             auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data={"grant_type": "client_credentials"},
@@ -250,6 +252,22 @@ class Session:
     def is_token_expired(self):
         return self.token is None or self.token["expires_at"] >= current_time()
 
+    @property
+    def base_url(self):
+        return (
+            "https://dam.demo.meinbildungsraum.de/datenraum"
+            if self.env == Environment.DEMO
+            else "https://dam-dev.nbpdev.de/datenraum"
+        )
+
+    @property
+    def authentication_url(self):
+        return (
+            "https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/token"
+            if self.env == Environment.DEMO
+            else "https://aai-dev.nbpdev.de/realms/nbp-aai/protocol/openid-connect/token"
+        )
+
 
 @dataclass
 class Credentials:
@@ -259,6 +277,23 @@ class Credentials:
 
     identifier: str
     secret: str
+
+
+class Environment(Enum):
+    DEV = 1
+    DEMO = 2
+
+
+def get_current_environment():
+    env = os.environ.get("DATENRAUM_ENV")
+    env = env.strip().lower() if env is not None else None
+
+    if env == "demo":
+        return Environment.DEMO
+    if env == "dev":
+        return Environment.DEV
+
+    raise ValueError("Illegal state: DATENRAUM_ENVIRONMENT must be defined")
 
 
 def current_time():

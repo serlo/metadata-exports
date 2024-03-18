@@ -39,14 +39,14 @@ jobs:
       - name: Download metadata from Datenraum (DEMO)
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-demo.json
         env:
-          BASE_URL: https://dam.demo.meinbildungsraum.de/datenraum
+          DATENRAUM_ENV: demo
           CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
 
       - name: Download metadata from Datenraum (DEV)
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-dev.json
         env:
-          BASE_URL: https://dam-dev.nbpdev.de/datenraum
+          DATENRAUM_ENV: dev
           CLIENT_ID: ${{ secrets.CLIENT_ID_DEV }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEV }}
 
@@ -56,14 +56,14 @@ jobs:
       - name: Sync metadata from Serlo Metadata API to Datenraum
         run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-demo.json
         env:
-          BASE_URL: https://dam.demo.meinbildungsraum.de/datenraum
+          DATENRAUM_ENV: demo
           CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
 
       - name: Sync metadata from Serlo Metadata API to Datenraum
         run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-dev.json
         env:
-          BASE_URL: https://dam-dev.nbpdev.de/datenraum
+          DATENRAUM_ENV: dev
           CLIENT_ID: ${{ secrets.CLIENT_ID_DEV }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEV }}
 
