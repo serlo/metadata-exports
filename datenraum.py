@@ -280,6 +280,10 @@ class Credentials:
 
 
 class Environment(Enum):
+    """
+    Enum representing different environments.
+    """
+
     DEV = 1
     DEMO = 2
 
