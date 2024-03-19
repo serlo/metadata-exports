@@ -1,6 +1,7 @@
 import sys
 import json
 
+from example_taxonomies import taxonomies
 from datenraum import create_datenraum_session
 from utils import has_description, pick
 
@@ -20,10 +21,11 @@ def main(metadata_file, nodes_file):
     session = create_datenraum_session()
 
     filtered_records = [record for record in records if has_description(record)]
+    records = filtered_records + taxonomies
 
-    update_session(session, filtered_records, datenraum_nodes)
+    update_session(session, records, datenraum_nodes)
 
-    delete_deprecated_ids(session, filtered_records, datenraum_nodes)
+    delete_deprecated_ids(session, records, datenraum_nodes)
 
 
 def update_session(session, records, datenraum_nodes):
