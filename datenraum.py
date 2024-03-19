@@ -28,7 +28,7 @@ def create_datenraum_session():
 
 class Source:
     """
-    Represents a source in the Datenraum for creating, updating, or deleting nodes.
+    Represents a source in the Datenraum for creating, updating, or deleting nodes or edges
     """
 
     def __init__(self, session, source_id):
@@ -93,6 +93,27 @@ class Source:
             params={"externalId": external_id},
         )
 
+    def get_nodes_by_taxonomy(self, taxonomy_id, limit=100):
+        result = self.session.get_json(
+            "/api/core/nodes",
+            params={
+                "sourceId": self.source_id,
+                "limit": limit,
+                "referencedByTail": taxonomy_id,
+            },
+        )
+
+        assert result is not None
+
+        return result["_embedded"]["nodes"]
+
+    def get_node_by_id(self, node_id):
+        result = self.session.get_json(f"/api/core/nodes/{node_id}")
+
+        assert result is not None
+
+        return result
+
     def convert_node_to_request_body(self, node, node_type="LearningOpportunity"):
         language = node.get("inLanguage", [])[:1]
 
@@ -117,6 +138,45 @@ class Source:
             data["description"] = node["description"]
 
         return data
+
+    def add_edge_type(self, name, description, slug):
+        response = self.session.post_json(
+            "/api/core/edge-types",
+            json={
+                "name": name,
+                "description": description,
+                "slug": slug,
+            },
+        )
+        assert response.status_code == 201
+
+    def get_edge_types(self):
+        return self.session.get_json("/api/core/edge-types")
+
+    def add_edge(self, edge_type_id, tail_node_id, head_node_id):
+        response = self.session.put_json(
+            f"/api/core/edges/{edge_type_id}/{tail_node_id}/{head_node_id}",
+            json={
+                "metadata": {
+                    "isAiGenerated": False,
+                }
+            },
+        )
+
+        assert response.status_code in (201, 204)
+
+    def delete_edge_type(self, edge_type_id):
+        self.session.delete(f"/api/core/edge-types/{edge_type_id}")
+
+    def get_edges(self):
+        response = self.session.get_json("/api/core/edges")
+        return response
+
+    def delete_edge(self, edge_type_id, tail_node_id, head_node_id):
+        response = self.session.delete(
+            f"/api/core/edges/{edge_type_id}/{tail_node_id}/{head_node_id}"
+        )
+        assert response.status_code in (201, 204)
 
 
 class Client:
@@ -250,7 +310,7 @@ class Session:
         self.token["expires_at"] = current_time() + self.token["expires_in"] - 20
 
     def is_token_expired(self):
-        return self.token is None or self.token["expires_at"] >= current_time()
+        return self.token is None or self.token["expires_at"] <= current_time()
 
     @property
     def base_url(self):

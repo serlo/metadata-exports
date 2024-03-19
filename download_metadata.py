@@ -62,11 +62,16 @@ def get_description(resource: Dict[str, Any], description_cache: Dict[str, Any])
     cached_value = description_cache.get(resource_id, {})
 
     # Update time in fromisoformat() to ensure all descriptions are updated
+    #
+    # Run the following command to update the baseline date:
+    #
+    # >>> from datetime import datetime
+    # >>> datetime.now().astimezone().isoformat()
     if (
         cached_value.get("version", None) == resource["version"]
         and "dateCreated" in cached_value
         and datetime.fromisoformat(cached_value["dateCreated"])
-        > datetime.fromisoformat("2024-03-15T17:00:00+00:00")
+        > datetime.fromisoformat("2024-03-17T20:34:16+01:00")
         and has_description(cached_value)
     ):
         return cached_value["description"]
@@ -129,7 +134,7 @@ def get_text_from_dict(data):
     if "type" in data and data["type"] == "p" and "children" in data:
         return get_text(data["children"]) + " "
     if "type" in data and data["type"] == "math" and "src" in data:
-        return "$" + data["src"] + "$"
+        return " $" + data["src"] + "$ "
     if "text" in data and isinstance(data["text"], str):
         return data["text"]
     return "".join(get_text(child) for child in data.values())
