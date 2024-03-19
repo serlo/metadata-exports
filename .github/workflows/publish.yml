@@ -53,14 +53,14 @@ jobs:
       - name: Generate RSS export for SODIX Mundo
         run: pipenv run python convert2rss.py public/serlo-metadata.json public/serlo-metadata.rss
 
-      - name: Sync metadata from Serlo Metadata API to Datenraum
+      - name: Sync metadata from Serlo Metadata API to Datenraum (DEMO)
         run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-demo.json
         env:
           DATENRAUM_ENV: demo
           CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
 
-      - name: Sync metadata from Serlo Metadata API to Datenraum
+      - name: Sync metadata from Serlo Metadata API to Datenraum (DEV)
         run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-dev.json
         env:
           DATENRAUM_ENV: dev
