@@ -9,7 +9,8 @@ from utils import pick
 
 
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
-    query = """
+    query = graphql(
+        """
         query ($first: Int, $after: String) {
             metadata {
                 resources(first: $first, after: $after) {
@@ -21,25 +22,29 @@ def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
                 }
             }
         }
-    """
+        """
+    )
 
     params = {"first": first, "after": after}
     return execute(query, params)
 
 
 def fetch_publisher() -> Dict[str, Any]:
-    query = """
+    query = graphql(
+        """
         query {
             metadata {
                 publisher
             }
         }
-    """
+        """
+    )
     return execute(query)
 
 
 def fetch_content(uuid):
-    query = """
+    query = graphql(
+        """
         query($id: Int) {
           uuid(id: $id) {
             ... on Article {
@@ -78,7 +83,9 @@ def fetch_content(uuid):
               }
             }
           }
-        }"""
+        }
+        """
+    )
 
     result = execute(query, {"id": uuid})
 
@@ -90,3 +97,10 @@ def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, An
     client = Client(transport=transport, fetch_schema_from_transport=True)
     graphql_query = gql(query)
     return client.execute(graphql_query, variable_values=params)
+
+
+def graphql(query):
+    """
+    Marker to detect graphql statements in https://github.com/serlo/unused-graphql-properties.
+    """
+    return query
