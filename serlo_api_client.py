@@ -42,56 +42,6 @@ def fetch_publisher() -> Dict[str, Any]:
     return execute(query)
 
 
-def fetch_content(uuid):
-    query = graphql(
-        """
-        query($id: Int) {
-          uuid(id: $id) {
-            ... on Article {
-              currentRevision {
-                content
-              }
-            }
-            ... on Applet {
-              currentRevision {
-                content
-              }
-            }
-            ... on Course {
-              currentRevision {
-                content
-              }
-            }
-            ... on Event {
-              currentRevision {
-                content
-              }
-            }
-            ... on Exercise {
-              currentRevision {
-                content
-              }
-            }
-            ... on ExerciseGroup {
-              currentRevision {
-                content
-              }
-            }
-            ... on Video {
-              currentRevision {
-                content
-              }
-            }
-          }
-        }
-        """
-    )
-
-    result = execute(query, {"id": uuid})
-
-    return pick(["uuid", "currentRevision", "content"], result)
-
-
 def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     transport = RequestsHTTPTransport(url="https://api.serlo.org/graphql")
     client = Client(transport=transport, fetch_schema_from_transport=True)
