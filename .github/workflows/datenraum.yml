@@ -1,0 +1,60 @@
+name: Sync metadata with Datenraum
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  sync_datenraum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+
+      - name: Install python requirements
+        run: pipenv install
+
+      - name: Download metadata from Serlo Metadata API
+        run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Download metadata from Datenraum (DEMO)
+        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-demo.json
+        env:
+          DATENRAUM_ENV: demo
+          CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
+
+      - name: Download metadata from Datenraum (DEV)
+        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-dev.json
+        env:
+          DATENRAUM_ENV: dev
+          CLIENT_ID: ${{ secrets.CLIENT_ID_DEV }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEV }}
+
+      - name: Sync metadata from Serlo Metadata API to Datenraum (DEMO)
+        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-demo.json
+        env:
+          DATENRAUM_ENV: demo
+          CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
+
+      - name: Sync metadata from Serlo Metadata API to Datenraum (DEV)
+        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-dev.json
+        env:
+          DATENRAUM_ENV: dev
+          CLIENT_ID: ${{ secrets.CLIENT_ID_DEV }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEV }}
