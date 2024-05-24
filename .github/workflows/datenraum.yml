@@ -15,12 +15,8 @@ jobs:
     strategy:
       matrix:
         env:
-          - CLIENT_ID_DEMO: ${{ secrets.CLIENT_ID_DEMO }}
-            CLIENT_SECRET_DEMO: ${{ secrets.CLIENT_SECRET_DEMO }}
-            DATENRAUM_ENV: demo
-          - CLIENT_ID_DEV: ${{ secrets.CLIENT_ID_DEV }}
-            CLIENT_SECRET_DEV: ${{ secrets.CLIENT_SECRET_DEV }}
-            DATENRAUM_ENV: dev
+          - DATENRAUM_ENV: demo
+          - DATENRAUM_ENV: dev
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +35,16 @@ jobs:
 
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Set credentials for Datenraum
+        run: |
+          if [ "${DATENRAUM_ENV}" = "demo" ]; then
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> $GITHUB_ENV
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> $GITHUB_ENV
+          elif [ "${DATENRAUM_ENV}" = "dev" ]; then
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEV }}" >> $GITHUB_ENV
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEV }}" >> $GITHUB_ENV
+          fi
 
       - name: Download metadata from Datenraum
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
