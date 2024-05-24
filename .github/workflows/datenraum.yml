@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        env_vars:
-          - DATENRAUM_ENV: demo
-          - DATENRAUM_ENV: dev
+        target_environment:
+          - demo
+          - dev
     steps:
       - uses: actions/checkout@v4
 
@@ -38,12 +38,16 @@ jobs:
 
       - name: Set credentials for Datenraum
         run: |
-          if [ "${DATENRAUM_ENV}" = "demo" ]; then
+          echo "DATENRAUM_ENVIRONMENT=${{ matrix.target_environment }}" >> $GITHUB_ENV
+          if [ "${{ matrix.target_environment }}" = "demo" ]; then
             echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> $GITHUB_ENV
             echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> $GITHUB_ENV
-          elif [ "${DATENRAUM_ENV}" = "dev" ]; then
+          elif [ "${{ matrix.target_environment }}" = "dev" ]; then
             echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEV }}" >> $GITHUB_ENV
             echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEV }}" >> $GITHUB_ENV
+          else
+            echo "Target environment must be 'demo' or 'dev'"
+            exit 1
           fi
 
       - name: Download metadata from Datenraum
