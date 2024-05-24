@@ -12,6 +12,15 @@ on:
 jobs:
   sync_datenraum:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env:
+          - CLIENT_ID_DEMO: ${{ secrets.CLIENT_ID_DEMO }}
+            CLIENT_SECRET_DEMO: ${{ secrets.CLIENT_SECRET_DEMO }}
+            DATENRAUM_ENV: demo
+          - CLIENT_ID_DEV: ${{ secrets.CLIENT_ID_DEV }}
+            CLIENT_SECRET_DEV: ${{ secrets.CLIENT_SECRET_DEV }}
+            DATENRAUM_ENV: dev
     steps:
       - uses: actions/checkout@v4
 
@@ -31,30 +40,8 @@ jobs:
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
 
-      - name: Download metadata from Datenraum (DEMO)
-        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-demo.json
-        env:
-          DATENRAUM_ENV: demo
-          CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
+      - name: Download metadata from Datenraum
+        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
 
-      - name: Download metadata from Datenraum (DEV)
-        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum-dev.json
-        env:
-          DATENRAUM_ENV: dev
-          CLIENT_ID: ${{ secrets.CLIENT_ID_DEV }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEV }}
-
-      - name: Sync metadata from Serlo Metadata API to Datenraum (DEMO)
-        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-demo.json
-        env:
-          DATENRAUM_ENV: demo
-          CLIENT_ID: ${{ secrets.CLIENT_ID_DEMO }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEMO }}
-
-      - name: Sync metadata from Serlo Metadata API to Datenraum (DEV)
-        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum-dev.json
-        env:
-          DATENRAUM_ENV: dev
-          CLIENT_ID: ${{ secrets.CLIENT_ID_DEV }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET_DEV }}
+      - name: Sync metadata from Serlo Metadata API to Datenraum
+        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum.json
