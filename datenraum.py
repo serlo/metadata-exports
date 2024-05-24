@@ -190,14 +190,11 @@ class Client:
     def create_source(self, slug, name, organization):
         source = self.get_source(slug)
 
-        if source is None:
+        if source is None or "id" not in source:
             self.register_source(slug, name, organization)
             source = self.get_source(slug)
 
         assert source is not None
-
-        if name not in source or organization not in source:
-            print(source)
 
         if (
             "name" not in source
