@@ -196,10 +196,15 @@ class Client:
 
         assert source is not None
 
-        if name not in source["name"] or organization not in source["organization"]:
+        if name not in source or organization not in source:
             print(source)
 
-        if name != source["name"] or organization != source["organization"]:
+        if (
+            "name" not in source
+            or "organization" not in source
+            or name != source["name"]
+            or organization != source["organization"]
+        ):
             self.update_source(source["id"], name, organization)
 
         return Source(self.session, source["id"])
