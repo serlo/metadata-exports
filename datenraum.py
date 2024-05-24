@@ -352,7 +352,7 @@ class Environment(Enum):
 
 
 def get_current_environment():
-    env = os.environ.get("DATENRAUM_ENV")
+    env = os.environ.get("DATENRAUM_ENVIRONMENT")
     env = env.strip().lower() if env is not None else None
 
     if env == "demo":
