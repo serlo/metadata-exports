@@ -13,6 +13,7 @@ jobs:
   sync_datenraum:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         target_environment:
           - demo
