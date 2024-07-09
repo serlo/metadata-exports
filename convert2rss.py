@@ -87,6 +87,7 @@ def filtered_data(metadata: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         if is_in_german(res)
         and has_description(res)
         and not is_a_video_resource(res)
+        and not "Course" in res["type"]
         and not is_a_quiz_resource(res)
         and is_the_subject_math(res)
         and get_license_name(res["license"]["id"]) is not None
