@@ -9,7 +9,7 @@ requests-toolbelt = "==1.0.0"
 
 [dev-packages]
 pylint = "==3.2.6"
-black = "==24.4.2"
+black = "==24.8.0"
 pytest = "==8.3.2"
 
 [scripts]
