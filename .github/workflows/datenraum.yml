@@ -36,7 +36,7 @@ jobs:
 
       - name: Set credentials for Datenraum
         run: |
-          echo "DATENRAUM_ENVIRONMENT=demo >> "$GITHUB_ENV"
+          echo "DATENRAUM_ENVIRONMENT=demo" >> "$GITHUB_ENV"
           echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> "$GITHUB_ENV"
           echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> "$GITHUB_ENV"
 
