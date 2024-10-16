@@ -14,10 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        target_environment:
-          - demo
-          - dev
+
     steps:
       - uses: actions/checkout@v4
 
@@ -39,17 +36,8 @@ jobs:
 
       - name: Set credentials for Datenraum
         run: |
-          echo "DATENRAUM_ENVIRONMENT=${{ matrix.target_environment }}" >> "$GITHUB_ENV"
-          if [ "${{ matrix.target_environment }}" = "demo" ]; then
-            echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> "$GITHUB_ENV"
-            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> "$GITHUB_ENV"
-          elif [ "${{ matrix.target_environment }}" = "dev" ]; then
-            echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEV }}" >> "$GITHUB_ENV"
-            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEV }}" >> "$GITHUB_ENV"
-          else
-            echo "Target environment must be 'demo' or 'dev'"
-            exit 1
-          fi
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> "$GITHUB_ENV"
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> "$GITHUB_ENV"
 
       - name: Download metadata from Datenraum
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
