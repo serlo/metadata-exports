@@ -2,7 +2,7 @@ name: Sync metadata with Datenraum
 
 on:
   push:
-    branches: ["main", "validate-nodes"]
+    branches: ["main"]
 
   workflow_dispatch:
 
