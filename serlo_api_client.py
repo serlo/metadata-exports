@@ -4,7 +4,7 @@ from typing import Dict, Any, Optional
 
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
-
+import os
 
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
     query = graphql(
@@ -41,7 +41,10 @@ def fetch_publisher() -> Dict[str, Any]:
 
 
 def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-    transport = RequestsHTTPTransport(url="https://api.serlo.org/graphql")
+    api_url = "https://api.serlo.org/graphql"
+    if os.getenv("USE_LOCAL_API"):
+        api_url = "http://localhost:3001/graphql"
+    transport = RequestsHTTPTransport(url=api_url)
     client = Client(transport=transport, fetch_schema_from_transport=True)
     graphql_query = gql(query)
     return client.execute(graphql_query, variable_values=params)

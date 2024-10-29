@@ -34,7 +34,7 @@ for learning_resource in learning_resources[:total_learning_resources]:
     except fastjsonschema.JsonSchemaException as e:
         failures.append(
             # pylint: disable=E1101
-            f"Failed at {learning_resource['id']} . Error: {e}, instead of {e.value}"
+            f"Failed at {learning_resource['id']} Error: {e}, instead of {e.value}"
             # pylint: enable=E1101
         )
 
