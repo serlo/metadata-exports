@@ -2,9 +2,9 @@
 
 from typing import Dict, Any, Optional
 
+import os
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
-import os
 
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
     query = graphql(
