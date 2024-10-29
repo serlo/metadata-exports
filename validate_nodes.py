@@ -31,16 +31,20 @@ for learning_resource in learning_resources[:total_learning_resources]:
     try:
         validator(learning_resource)
     except fastjsonschema.JsonSchemaException as e:
-        failures.append(f"Failed at {learning_resource['id']}. Error: {e}, instead of {e.value}")
+        failures.append(
+            f"Failed at {learning_resource['id']}. Error: {e}, instead of {e.value}"
+        )
 
 t1 = time.time()
 
-delta = t1 - t0
+time_info = f"Time needed: {t1 - t0}"
 
-if len(failures) > 0:
+total_failures = len(failures)
+
+if total_failures > 0:
     for failure in failures:
         print(failure)
-    print(f"Validation failed. Time needed: {delta}")
+    print(f"{len(total_failures)} validations failed. {time_info}")
     raise fastjsonschema.JsonSchemaException
 
-print(f"Validation successful. Time needed: {delta}")
+print(f"Validation successful. {time_info}")
