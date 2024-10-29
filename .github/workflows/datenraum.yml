@@ -2,7 +2,7 @@ name: Sync metadata with Datenraum
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "validate-nodes"]
 
   workflow_dispatch:
 
@@ -12,8 +12,8 @@ on:
 jobs:
   sync_datenraum:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
+    # strategy:
+    #   fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
