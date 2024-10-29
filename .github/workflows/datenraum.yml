@@ -43,5 +43,8 @@ jobs:
       - name: Download metadata from Datenraum
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
 
+      - name: Validate nodes according to AMB Schema
+        run: pipenv run python validate_nodes.py
+
       - name: Sync metadata from Serlo Metadata API to Datenraum
         run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum.json
