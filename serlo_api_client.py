@@ -6,6 +6,7 @@ import os
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 
+
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
     query = graphql(
         """
