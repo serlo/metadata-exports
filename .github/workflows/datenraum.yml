@@ -12,8 +12,6 @@ on:
 jobs:
   sync_datenraum:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
 
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +31,9 @@ jobs:
 
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Validate nodes according to AMB Schema
+        run: pipenv run python validate_nodes.py
 
       - name: Set credentials for Datenraum
         run: |

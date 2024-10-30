@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 gql = "==3.5.0"
 requests-toolbelt = "==1.0.0"
+fastjsonschema = "==2.20.0"
 
 [dev-packages]
 pylint = "==3.3.1"
@@ -17,6 +18,7 @@ lint = "pylint *.py"
 format = "black ."
 format_check = "black . --check"
 test = "pytest -vv tests/"
+validate_local = "pipenv run env USE_LOCAL_API=1 python download_metadata.py public/serlo-metadata.json && pipenv run python validate_nodes.py"
 
 [requires]
 python_version = "3.11"
