@@ -322,7 +322,7 @@ class Session:
         return (
             "https://dam.demo.meinbildungsraum.de/datenraum"
             if self.env == Environment.DEMO
-            else "https://dam-dev.nbpdev.de/datenraum"
+            else "https://test.k3s-mbr.uni-potsdam.de/datenraum"
         )
 
     @property
@@ -330,7 +330,7 @@ class Session:
         return (
             "https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/token"
             if self.env == Environment.DEMO
-            else "https://aai-dev.nbpdev.de/realms/nbp-aai/protocol/openid-connect/token"
+            else "https://keycloak-test.k3s-mbr.uni-potsdam.de/realms/datenraum/protocol/openid-connect/token"
         )
 
 
@@ -349,7 +349,7 @@ class Environment(Enum):
     Enum representing different environments.
     """
 
-    DEV = 1
+    POSTDAM = 1
     DEMO = 2
 
 
@@ -359,8 +359,8 @@ def get_current_environment():
 
     if env == "demo":
         return Environment.DEMO
-    if env == "dev":
-        return Environment.DEV
+    if env == "postdam":
+        return Environment.POSTDAM
 
     raise ValueError("Illegal state: DATENRAUM_ENVIRONMENT must be defined")
 
