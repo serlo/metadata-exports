@@ -301,11 +301,21 @@ class Session:
         return response
 
     def update_token(self):
+        data = {"grant_type": "client_credentials"}
+
+        if self.env == Environment.POSTDAM:
+            data = {
+                "grant_type": "password",
+                "client_id": self.credentials.identifier,
+                "username": "TODO: hide it behind secret",
+                "password": self.credentials.secret,
+            }
+
         response = self.session.post(
             self.authentication_url,
             auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data={"grant_type": "client_credentials"},
+            data=data,
         )
 
         if response.status_code != 200:
