@@ -41,7 +41,7 @@ def fetch_publisher() -> Dict[str, Any]:
     return execute(query)
 
 
-def fetch_entity_content(id) -> Dict[str, Any]:
+def fetch_entity_content(uuid_id) -> Dict[str, Any]:
     query = graphql(
         """
         query ($id: Int) {
@@ -56,7 +56,7 @@ def fetch_entity_content(id) -> Dict[str, Any]:
         """
     )
 
-    params = {"id": id}
+    params = {"id": uuid_id}
     return execute(query, params)
 
 
