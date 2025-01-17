@@ -2,6 +2,7 @@
 
 import json
 import sys
+import time
 
 from datenraum import get_current_environment, Environment
 from serlo_api_client import fetch_entity_content, fetch_metadata
@@ -21,6 +22,8 @@ def main(output_filename: str):
                 "content" in response["uuid"]["currentRevision"]
             ):
                 record["content"] = response["uuid"]["currentRevision"]["content"]
+            # Let's not DDOS our own api
+            time.sleep(0.5)
 
     with open(output_filename, "w", encoding="utf-8") as output_file:
         json.dump(records, output_file)
