@@ -12,7 +12,11 @@ on:
 jobs:
   sync_datenraum:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        target_environment:
+          - demo
+          - postdam
     steps:
       - uses: actions/checkout@v4
 
@@ -37,12 +41,19 @@ jobs:
 
       - name: Set credentials for Datenraum
         run: |
-          echo "DATENRAUM_ENVIRONMENT=demo" >> "$GITHUB_ENV"
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> "$GITHUB_ENV"
-          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> "$GITHUB_ENV"
+          echo "DATENRAUM_ENVIRONMENT=${{ matrix.target_environment }}" >> "$GITHUB_ENV"
+          if [ "${{ matrix.target_environment }}" = "demo" ]; then
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> "$GITHUB_ENV"
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> "$GITHUB_ENV"
+          elif [ "${{ matrix.target_environment }}" = "postdam" ]; then
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_POSTDAM }}" >> "$GITHUB_ENV"
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_POSTDAM }}" >> "$GITHUB_ENV"
+          else
+            echo "Target environment must be 'demo' or 'postdam'"
+            exit 1
 
       - name: Download metadata from Datenraum
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
 
-      - name: Sync metadata from Serlo Metadata API to Datenraum
+      - name: Sync metadata from Serlo Metadata API to the ${{ matrix.target_environment }} Datenraum environment
         run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum.json

@@ -41,6 +41,25 @@ def fetch_publisher() -> Dict[str, Any]:
     return execute(query)
 
 
+def fetch_entity_content(uuid_id) -> Dict[str, Any]:
+    query = graphql(
+        """
+        query ($id: Int) {
+            uuid(id: $id) {
+                ...on AbstractEntity {
+                    currentRevision {
+                        content
+                    }
+                }
+            }
+        }
+        """
+    )
+
+    params = {"id": uuid_id}
+    return execute(query, params)
+
+
 def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     api_url = "https://api.serlo.org/graphql"
     if os.getenv("USE_LOCAL_API"):
