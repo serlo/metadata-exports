@@ -14,11 +14,12 @@ def create_datenraum_session():
     env = get_current_environment()
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
+    postdam_username = os.environ.get("POSTDAM_USERNAME")
 
     assert client_id is not None
     assert client_secret is not None
 
-    session = Session(env, Credentials(client_id, client_secret))
+    session = Session(env, Credentials(client_id, client_secret, postdam_username))
     client = Client(session)
 
     return client.create_source(
@@ -307,7 +308,7 @@ class Session:
             data = {
                 "grant_type": "password",
                 "client_id": self.credentials.identifier,
-                "username": "TODO: hide it behind secret",
+                "username": self.credentials.postdam_username,
                 "password": self.credentials.secret,
             }
 
@@ -352,6 +353,7 @@ class Credentials:
 
     identifier: str
     secret: str
+    postdam_username: str
 
 
 class Environment(Enum):
