@@ -23,7 +23,7 @@ def main(output_filename: str):
             ):
                 record["content"] = response["uuid"]["currentRevision"]["content"]
             # Let's not DDOS our own api
-            time.sleep(0.5)
+            time.sleep(0.1)
 
     with open(output_filename, "w", encoding="utf-8") as output_file:
         json.dump(records, output_file)
