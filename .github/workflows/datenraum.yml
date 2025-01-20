@@ -45,6 +45,7 @@ jobs:
           else
             echo "Target environment must be 'demo' or 'postdam'"
             exit 1
+          fi
 
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
