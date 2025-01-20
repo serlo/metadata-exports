@@ -33,13 +33,7 @@ jobs:
       - name: Install python requirements
         run: pipenv install
 
-      - name: Download metadata from Serlo Metadata API
-        run: pipenv run python download_metadata.py public/serlo-metadata.json
-
-      - name: Validate nodes according to AMB Schema
-        run: pipenv run python validate_nodes.py
-
-      - name: Set credentials for Datenraum
+      - name: Set credentials for corresponding Datenraum
         run: |
           echo "DATENRAUM_ENVIRONMENT=${{ matrix.target_environment }}" >> "$GITHUB_ENV"
           if [ "${{ matrix.target_environment }}" = "demo" ]; then
@@ -51,6 +45,12 @@ jobs:
           else
             echo "Target environment must be 'demo' or 'postdam'"
             exit 1
+
+      - name: Download metadata from Serlo Metadata API
+        run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Validate nodes according to AMB Schema
+        run: pipenv run python validate_nodes.py
 
       - name: Download metadata from Datenraum
         run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
