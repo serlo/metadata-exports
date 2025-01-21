@@ -11,12 +11,16 @@ on:
 
 jobs:
   sync_demo_datenraum:
-    uses: ./.github/sync-datenraum-job.yml
+    uses: ./.github/workflows/sync-datenraum-job.yml
     with:
       target_environment: demo
+      client_id: ${{ secrets.CLIENT_ID_DEMO }}
+      client_secret: ${{ secrets.CLIENT_SECRET_DEMO }}
+
   sync_postdam_datenraum:
-    # Let's not overload the api running then at same time
     needs: sync_demo_datenraum
-    uses: ./.github/sync-datenraum-job.yml
+    uses: ./.github/workflows/sync-datenraum-job.yml
     with:
       target_environment: postdam
+      client_id: ${{ secrets.CLIENT_ID_POSTDAM }}
+      client_secret: ${{ secrets.CLIENT_SECRET_POSTDAM }}
