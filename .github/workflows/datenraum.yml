@@ -11,7 +11,7 @@ on:
 
 jobs:
   sync_demo_datenraum:
-    uses: ./.github/workflows/sync-datenraum-job.yml
+    uses: serlo/metadata-exports/.github/workflows/sync-datenraum-job.yml
     with:
       target_environment: demo
       client_id: ${{ secrets.CLIENT_ID_DEMO }}
@@ -19,7 +19,7 @@ jobs:
 
   sync_postdam_datenraum:
     needs: sync_demo_datenraum
-    uses: ./.github/workflows/sync-datenraum-job.yml
+    uses: serlo/metadata-exports/.github/workflows/sync-datenraum-job.yml
     with:
       target_environment: postdam
       client_id: ${{ secrets.CLIENT_ID_POSTDAM }}
