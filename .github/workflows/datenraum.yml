@@ -11,18 +11,76 @@ on:
 
 jobs:
   sync_demo_datenraum:
-    uses: serlo/metadata-exports/.github/workflows/sync-datenraum-job.yml
-    with:
-      target_environment: demo
-    secrets:
-      client_id: ${{ secrets.CLIENT_ID_DEMO }}
-      client_secret: ${{ secrets.CLIENT_SECRET_DEMO }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+
+      - name: Install python requirements
+        run: pipenv install
+
+      - name: Set credentials for corresponding Datenraum
+        run: |
+          echo "DATENRAUM_ENVIRONMENT=demo" >> "$GITHUB_ENV"
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO  }}" >> "$GITHUB_ENV"
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO  }}" >> "$GITHUB_ENV"
+
+      - name: Download metadata from Serlo Metadata API
+        run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Validate nodes according to AMB Schema
+        run: pipenv run python validate_nodes.py
+
+      - name: Download metadata from Datenraum
+        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
+
+      - name: Sync metadata from Serlo Metadata API to the demo Datenraum environment
+        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum.json
+
+  # Repetitive, but unfortunately a reusable workflow didn't work
   sync_postdam_datenraum:
+     # Let's not overload the API by running them at the same time
     needs: sync_demo_datenraum
-    uses: serlo/metadata-exports/.github/workflows/sync-datenraum-job.yml
-    with:
-      target_environment: postdam
-    secrets:
-      client_id: ${{ secrets.CLIENT_ID_POSTDAM }}
-      client_secret: ${{ secrets.CLIENT_SECRET_POSTDAM }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+
+      - name: Install python requirements
+        run: pipenv install
+
+      - name: Set credentials for corresponding Datenraum
+        run: |
+          echo "DATENRAUM_ENVIRONMENT=postdam" >> "$GITHUB_ENV"
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID_POSTDAM }}" >> "$GITHUB_ENV"
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_POSTDAM }}" >> "$GITHUB_ENV"
+
+      - name: Download metadata from Serlo Metadata API
+        run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Validate nodes according to AMB Schema
+        run: pipenv run python validate_nodes.py
+
+      - name: Download metadata from Datenraum
+        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
+
+      - name: Sync metadata from Serlo Metadata API to the postdam Datenraum environment
+        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum.json
