@@ -6,12 +6,11 @@ on:
       target_environment:
         required: true
         type: string
+    secrets:
       client_id:
         required: true
-        type: string
       client_secret:
         required: true
-        type: string
 
 jobs:
   sync_metadata:
@@ -35,8 +34,8 @@ jobs:
       - name: Set credentials for corresponding Datenraum
         run: |
           echo "DATENRAUM_ENVIRONMENT=${{ inputs.target_environment }}" >> "$GITHUB_ENV"
-          echo "CLIENT_ID=${{ inputs.client_id }}" >> "$GITHUB_ENV"
-          echo "CLIENT_SECRET=${{ inputs.client_secret }}" >> "$GITHUB_ENV"
+          echo "CLIENT_ID=${{ secrets.client_id }}" >> "$GITHUB_ENV"
+          echo "CLIENT_SECRET=${{ secrets.client_secret }}" >> "$GITHUB_ENV"
 
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
