@@ -17,11 +17,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target_environment:
-          - demo
-          - postdam
     steps:
       - uses: actions/checkout@v4
 
@@ -40,7 +35,7 @@ jobs:
 
       - name: Set environment
         run: |
-          echo "DATENRAUM_ENVIRONMENT=${{ matrix.target_environment }}" >> "$GITHUB_ENV"
+          echo "DATENRAUM_ENVIRONMENT=demo" >> "$GITHUB_ENV"
 
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
