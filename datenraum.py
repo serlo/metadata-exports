@@ -16,8 +16,8 @@ def create_datenraum_session():
     client_secret = os.environ.get("CLIENT_SECRET")
     postdam_username = os.environ.get("POSTDAM_USERNAME")
 
-    assert client_id is not None
-    assert client_secret is not None
+    assert client_id
+    assert client_secret
 
     session = Session(env, Credentials(client_id, client_secret, postdam_username))
     client = Client(session)
