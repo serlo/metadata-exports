@@ -18,6 +18,8 @@ def create_datenraum_session():
 
     assert client_id
     assert client_secret
+    if env == Environment.POSTDAM:
+        assert postdam_username
 
     session = Session(env, Credentials(client_id, client_secret, postdam_username))
     client = Client(session)
