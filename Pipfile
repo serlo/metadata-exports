@@ -7,6 +7,8 @@ name = "pypi"
 gql = "==3.5.0"
 requests-toolbelt = "==1.0.0"
 fastjsonschema = "==2.21.1"
+ipykernel = "==6.29.5"
+jupyter = "==1.1.1"
 
 [dev-packages]
 pylint = "==3.3.3"
