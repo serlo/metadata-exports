@@ -2,7 +2,7 @@ import time
 import os
 import sys
 
-from enum import Enum
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 import requests
@@ -227,12 +227,43 @@ class Client:
         return self.session.get_json(f"/api/core/sources/slug/{slug}")
 
 
+class Environment(ABC):
+    """
+    An abstract base class representing an environment with necessary URLs.
+
+    This class defines the properties that any subclass should implement
+    to provide specific URLs for use in various actions like authentication.
+    """
+
+    @property
+    @abstractmethod
+    def base_url(self) -> str:
+        """
+        Abstract property that should be implemented to return the base URL of the environment.
+
+        Returns:
+            str: The base URL as a string.
+        """
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def authentication_url(self) -> str:
+        """
+        Abstract property that should be implemented to return the authentication URL of the environment.
+
+        Returns:
+            str: The authentication URL as a string.
+        """
+        raise NotImplementedError
+
+
 class Session:
     """
     Class for handling API calls to the Datenraums. Manages authentication token creation and renewal.
     """
 
-    def __init__(self, env, credentials):
+    def __init__(self, env: Environment, credentials):
         self.token = None
         self.env = env
         self.credentials = credentials
@@ -240,19 +271,23 @@ class Session:
 
     def post_json(self, endpoint, json, params=None):
         return self.send(
-            requests.Request("POST", self.base_url + endpoint, json=json, params=params)
+            requests.Request(
+                "POST", self.env.base_url + endpoint, json=json, params=params
+            )
         )
 
     def put_json(self, endpoint, json, params=None):
         return self.send(
-            requests.Request("PUT", self.base_url + endpoint, json=json, params=params)
+            requests.Request(
+                "PUT", self.env.base_url + endpoint, json=json, params=params
+            )
         )
 
     def patch_json(self, endpoint, json):
         return self.send(
             requests.Request(
                 "PATCH",
-                self.base_url + endpoint,
+                self.env.base_url + endpoint,
                 json=json,
                 headers={"Content-Type": "application/json-patch+json"},
             )
@@ -262,7 +297,7 @@ class Session:
         response = self.send(
             requests.Request(
                 "GET",
-                self.base_url + endpoint,
+                self.env.base_url + endpoint,
                 params=params,
                 headers={"Accept": "application/json"},
             )
@@ -280,7 +315,7 @@ class Session:
             raise error
 
     def delete(self, endpoint):
-        return self.send(requests.Request("DELETE", self.base_url + endpoint))
+        return self.send(requests.Request("DELETE", self.env.base_url + endpoint))
 
     def send(self, req, no_retries=0):
         if self.is_token_expired():
@@ -304,7 +339,7 @@ class Session:
     def update_token(self):
         data = {"grant_type": "client_credentials"}
 
-        if self.env == Environment.POSTDAM:
+        if self.credentials.postdam_username is not None:
             data = {
                 "grant_type": "password",
                 "client_id": self.credentials.identifier,
@@ -313,7 +348,7 @@ class Session:
             }
 
         response = self.session.post(
-            self.authentication_url,
+            self.env.authentication_url,
             auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
             data=data,
@@ -328,22 +363,6 @@ class Session:
     def is_token_expired(self):
         return self.token is None or self.token["expires_at"] <= current_time()
 
-    @property
-    def base_url(self):
-        return (
-            "https://dam.demo.meinbildungsraum.de/datenraum"
-            if self.env == Environment.DEMO
-            else "https://test.k3s-mbr.uni-potsdam.de/datenraum"
-        )
-
-    @property
-    def authentication_url(self):
-        return (
-            "https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/token"
-            if self.env == Environment.DEMO
-            else "https://keycloak-test.k3s-mbr.uni-potsdam.de/realms/datenraum/protocol/openid-connect/token"
-        )
-
 
 @dataclass
 class Credentials:
@@ -353,16 +372,35 @@ class Credentials:
 
     identifier: str
     secret: str
-    postdam_username: str
+    postdam_username: str | None
 
 
-class Environment(Enum):
+class DemoEnvironment(Environment):
     """
-    Enum representing different environments.
+    An environment for the current Datenraum at the SPRIND.
     """
 
-    POSTDAM = 1
-    DEMO = 2
+    @property
+    def base_url(self):
+        return "https://dam.demo.meinbildungsraum.de/datenraum"
+
+    @property
+    def authentication_url(self):
+        return "https://aai.demo.meinbildungsraum.de/realms/nbp-aai/protocol/openid-connect/token"
+
+
+class PotsdamEnvironment(Environment):
+    """
+    An environment for the Datenraum of the university of Potsdam.
+    """
+
+    @property
+    def base_url(self):
+        return "https://test.k3s-mbr.uni-potsdam.de/datenraum"
+
+    @property
+    def authentication_url(self):
+        return "https://keycloak-test.k3s-mbr.uni-potsdam.de/realms/datenraum/protocol/openid-connect/token"
 
 
 def get_current_environment():
@@ -370,9 +408,9 @@ def get_current_environment():
     env = env.strip().lower() if env is not None else None
 
     if env == "demo":
-        return Environment.DEMO
+        return DemoEnvironment()
     if env == "postdam":
-        return Environment.POSTDAM
+        return PotsdamEnvironment()
 
     raise ValueError("Illegal state: DATENRAUM_ENVIRONMENT must be defined")
 

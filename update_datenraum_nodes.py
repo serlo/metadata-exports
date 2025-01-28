@@ -2,7 +2,7 @@ import sys
 import json
 
 from example_taxonomies import taxonomies
-from datenraum import create_datenraum_session, Environment, get_current_environment
+from datenraum import create_datenraum_session, PotsdamEnvironment
 from utils import has_description, pick
 
 
@@ -25,7 +25,7 @@ def main(metadata_file, nodes_file):
 
     update_session(session, records, datenraum_nodes)
 
-    if get_current_environment() != Environment.POSTDAM:
+    if isinstance(session.session.env, PotsdamEnvironment):
         delete_deprecated_ids(session, records, datenraum_nodes)
 
 
