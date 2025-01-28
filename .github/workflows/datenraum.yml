@@ -54,9 +54,9 @@ jobs:
             exit 1
           fi
 
-      - name: Wait for 1 minute in case of potsdam environment
+      - name: Wait for 2 minute in case of potsdam environment
         if: matrix.target_environment == 'potsdam'
-        run: sleep 30
+        run: sleep 120
 
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
