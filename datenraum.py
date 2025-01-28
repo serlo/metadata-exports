@@ -14,12 +14,11 @@ def create_datenraum_session():
     env = get_current_environment()
     client_id = os.environ.get("CLIENT_ID")
     client_secret = os.environ.get("CLIENT_SECRET")
-    postdam_username = os.environ.get("POSTDAM_USERNAME")
 
     assert client_id is not None
     assert client_secret is not None
 
-    session = Session(env, Credentials(client_id, client_secret, postdam_username))
+    session = Session(env, Credentials(client_id, client_secret))
     client = Client(session)
 
     return client.create_source(
@@ -337,21 +336,11 @@ class Session:
         return response
 
     def update_token(self):
-        data = {"grant_type": "client_credentials"}
-
-        if self.credentials.postdam_username is not None:
-            data = {
-                "grant_type": "password",
-                "client_id": self.credentials.identifier,
-                "username": self.credentials.postdam_username,
-                "password": self.credentials.secret,
-            }
-
         response = self.session.post(
             self.env.authentication_url,
             auth=HTTPBasicAuth(self.credentials.identifier, self.credentials.secret),
             headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data=data,
+            data={"grant_type": "client_credentials"},
         )
 
         if response.status_code != 200:
@@ -372,7 +361,6 @@ class Credentials:
 
     identifier: str
     secret: str
-    postdam_username: str | None
 
 
 class DemoEnvironment(Environment):
