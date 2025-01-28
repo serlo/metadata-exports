@@ -1,8 +1,9 @@
 """A client to send requests to the Serlo GraphQL API"""
 
+import os
+
 from typing import Dict, Any, Optional
 
-import os
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
 
@@ -41,23 +42,23 @@ def fetch_publisher() -> Dict[str, Any]:
     return execute(query)
 
 
-def fetch_entity_content(uuid_id) -> Dict[str, Any]:
+def fetch_current_content(revision_id):
     query = graphql(
         """
         query ($id: Int) {
             uuid(id: $id) {
-                ...on AbstractEntity {
-                    currentRevision {
-                        content
-                    }
+                ...on AbstractRevision {
+                    content
                 }
             }
         }
         """
     )
+    result = execute(query, {"id": revision_id})
 
-    params = {"id": uuid_id}
-    return execute(query, params)
+    if content := result.get("uuid", {}).get("content", None):
+        return content
+    return None
 
 
 def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
