@@ -81,7 +81,7 @@ def add_content_to_records(records):
                 cached_content[current_revision_id] = content
 
                 # Do not hammer the API
-                time.sleep(0.2)
+                time.sleep(0.1)
 
             if content is not None:
                 record["content"] = content
