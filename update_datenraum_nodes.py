@@ -13,8 +13,10 @@ from datenraum import (
 from serlo_api_client import fetch_current_content
 from utils import has_description, pick
 
+# See https://github.com/serlo/evaluations/blob/main/src/2025/2025-01-28-cache-current-revisions.ipynb
+# for the generation of this file
 CACHED_CONTENT_FILE = "cache/current-content.json.gz"
-MAX_CONTENT_DOWNLOAD_TIME = 30 * 60
+MAX_CONTENT_DOWNLOAD_TIME = 20 * 60
 
 
 def main(metadata_file, nodes_file):
@@ -38,7 +40,11 @@ def main(metadata_file, nodes_file):
     filtered_records = [record for record in records if has_description(record)]
 
     if isinstance(env, PotsdamEnvironment):
-        records = [record for record in records if record["content"] is not None]
+        records = [
+            record
+            for record in records
+            if "content" in record and record["content"] is not None
+        ]
     else:
         records = filtered_records + taxonomies
 
@@ -47,11 +53,14 @@ def main(metadata_file, nodes_file):
 
 
 def add_content_to_records(records):
+    print("INFO: Load cached content")
+
     with gzip.open(CACHED_CONTENT_FILE, "rt", encoding="utf-8") as gzip_file:
         cached_content = json.load(gzip_file)
 
     start_time = current_time()
 
+    print("INFO: Start content download")
     for record in records:
         if (current_time() - start_time) > MAX_CONTENT_DOWNLOAD_TIME:
             print("INFO: Stop content download due to time limit")
@@ -64,25 +73,25 @@ def add_content_to_records(records):
                 continue
 
             if current_revision_id in cached_content:
-                content_text = cached_content[current_revision_id]
+                content = cached_content[current_revision_id]
             else:
                 print(f"INFO: Download content for {current_revision_id}")
 
-                content_text = fetch_current_content(current_revision_id)
-                cached_content[current_revision_id] = content_text
+                content = fetch_current_content(current_revision_id)
+                cached_content[current_revision_id] = content
 
                 # Do not hammer the API
-                time.sleep(0.5)
+                time.sleep(0.1)
 
-            if isinstance(content_text, str):
-                try:
-                    content = json.loads(content_text)
-                    record["content"] = content
-                except json.JSONDecodeError:
-                    continue
+            if content is not None:
+                record["content"] = content
+
+    print("INFO: Save cached content")
 
     with gzip.open(CACHED_CONTENT_FILE, "wt", encoding="utf-8") as gzip_file:
         json.dump(cached_content, gzip_file)
+
+    print("INFO: Finish content download")
 
     return records
 
