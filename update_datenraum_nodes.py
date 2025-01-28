@@ -14,7 +14,7 @@ from serlo_api_client import fetch_current_content
 from utils import has_description, pick
 
 CACHED_CONTENT_FILE = "cache/current-content.json.gz"
-MAX_CONTENT_DOWNLOAD_TIME = 30 * 60
+MAX_CONTENT_DOWNLOAD_TIME = 20 * 60
 
 
 def main(metadata_file, nodes_file):
@@ -38,7 +38,11 @@ def main(metadata_file, nodes_file):
     filtered_records = [record for record in records if has_description(record)]
 
     if isinstance(env, PotsdamEnvironment):
-        records = [record for record in records if record["content"] is not None]
+        records = [
+            record
+            for record in records
+            if "content" in record and record["content"] is not None
+        ]
     else:
         records = filtered_records + taxonomies
 
