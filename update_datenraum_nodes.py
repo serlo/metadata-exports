@@ -64,22 +64,18 @@ def add_content_to_records(records):
                 continue
 
             if current_revision_id in cached_content:
-                content_text = cached_content[current_revision_id]
+                content = cached_content[current_revision_id]
             else:
                 print(f"INFO: Download content for {current_revision_id}")
 
-                content_text = fetch_current_content(current_revision_id)
-                cached_content[current_revision_id] = content_text
+                content = fetch_current_content(current_revision_id)
+                cached_content[current_revision_id] = content
 
                 # Do not hammer the API
-                time.sleep(0.5)
+                time.sleep(0.2)
 
-            if isinstance(content_text, str):
-                try:
-                    content = json.loads(content_text)
-                    record["content"] = content
-                except json.JSONDecodeError:
-                    continue
+            if content is not None:
+                record["content"] = content
 
     with gzip.open(CACHED_CONTENT_FILE, "wt", encoding="utf-8") as gzip_file:
         json.dump(cached_content, gzip_file)
