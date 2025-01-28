@@ -1,5 +1,6 @@
 """A client to send requests to the Serlo GraphQL API"""
 
+import json
 import os
 
 from typing import Dict, Any, Optional
@@ -56,8 +57,11 @@ def fetch_current_content(revision_id):
     )
     result = execute(query, {"id": revision_id})
 
-    if content := result.get("uuid", {}).get("content", None):
-        return content
+    if content_text := result.get("uuid", {}).get("content", None):
+        try:
+            return json.loads(content_text)
+        except json.JSONDecodeError:
+            pass
     return None
 
 
