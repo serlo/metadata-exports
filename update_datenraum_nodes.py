@@ -71,7 +71,11 @@ def main(metadata_file, nodes_file):
             json.dump(cached_content, fd)
 
     filtered_records = [record for record in records if has_description(record)]
-    records = filtered_records + taxonomies
+
+    if isinstance(env, PotsdamEnvironment):
+        records = [record for record in records if record["content"] is not None]
+    else:
+        records = filtered_records + taxonomies
 
     update_session(session, records, datenraum_nodes)
     delete_deprecated_ids(session, records, datenraum_nodes)
