@@ -13,6 +13,8 @@ from datenraum import (
 from serlo_api_client import fetch_current_content
 from utils import has_description, pick
 
+# See https://github.com/serlo/evaluations/blob/main/src/2025/2025-01-28-cache-current-revisions.ipynb
+# for the generation of this file
 CACHED_CONTENT_FILE = "cache/current-content.json.gz"
 MAX_CONTENT_DOWNLOAD_TIME = 20 * 60
 
