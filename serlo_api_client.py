@@ -41,13 +41,14 @@ def fetch_publisher() -> Dict[str, Any]:
     return execute(query)
 
 
-def fetch_entity_content(uuid_id) -> Dict[str, Any]:
+def fetch_current_revision(uuid_id):
     query = graphql(
         """
         query ($id: Int) {
             uuid(id: $id) {
                 ...on AbstractEntity {
                     currentRevision {
+                        id
                         content
                     }
                 }
@@ -55,9 +56,13 @@ def fetch_entity_content(uuid_id) -> Dict[str, Any]:
         }
         """
     )
+    result = execute(query, {"id": uuid_id})
 
-    params = {"id": uuid_id}
-    return execute(query, params)
+    if current_revision := result.get("uuid", {}).get("currentRevision", None):
+        if content := current_revision.get("content", None):
+            if id := current_revision.get("id", None):
+                return {"content": content, "id": id}
+    return None
 
 
 def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
