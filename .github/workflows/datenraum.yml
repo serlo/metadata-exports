@@ -1,0 +1,71 @@
+name: Sync metadata with Datenraum
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  sync_datenraum:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target_environment:
+          - demo
+          - potsdam
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Cache current-content.json.gzip
+        if: matrix.target_environment == 'potsdam'
+        uses: actions/cache@v4
+        with:
+          path: cache/current-content.json.gzip
+          key: ${{ runner.os }}-cache-${{ matrix.target_environment }}
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+
+      - name: Install python requirements
+        run: pipenv install
+
+      - name: Set credentials for corresponding Datenraum
+        run: |
+          echo "DATENRAUM_ENVIRONMENT=${{ matrix.target_environment }}" >> "$GITHUB_ENV"
+          if [ "${{ matrix.target_environment }}" = "demo" ]; then
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_DEMO }}" >> "$GITHUB_ENV"
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_DEMO }}" >> "$GITHUB_ENV"
+          elif [ "${{ matrix.target_environment }}" = "potsdam" ]; then
+            echo "CLIENT_ID=${{ secrets.CLIENT_ID_POTSDAM }}" >> "$GITHUB_ENV"
+            echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET_POTSDAM }}" >> "$GITHUB_ENV"
+          else
+            echo "Target environment must be 'demo' or 'potsdam'"
+            exit 1
+          fi
+
+      - name: Wait for 1 minute in case of potsdam environment
+        if: matrix.target_environment == 'potsdam'
+        run: sleep 30
+
+      - name: Download metadata from Serlo Metadata API
+        run: pipenv run python download_metadata.py public/serlo-metadata.json
+
+      - name: Validate nodes according to AMB Schema
+        run: pipenv run python validate_nodes.py
+
+      - name: Download metadata from Datenraum
+        run: pipenv run python download_datenraum_nodes.py public/serlo-datenraum.json
+
+      - name: Sync metadata from Serlo Metadata API to the ${{ matrix.target_environment }} Datenraum environment
+        run: pipenv run python update_datenraum_nodes.py public/serlo-metadata.json public/serlo-datenraum.json
