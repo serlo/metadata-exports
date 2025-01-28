@@ -397,7 +397,7 @@ def get_current_environment():
 
     if env == "demo":
         return DemoEnvironment()
-    if env == "postdam":
+    if env == "potsdam":
         return PotsdamEnvironment()
 
     raise ValueError("Illegal state: DATENRAUM_ENVIRONMENT must be defined")
