@@ -51,11 +51,14 @@ def main(metadata_file, nodes_file):
 
 
 def add_content_to_records(records):
+    print("INFO: Load cached content")
+
     with gzip.open(CACHED_CONTENT_FILE, "rt", encoding="utf-8") as gzip_file:
         cached_content = json.load(gzip_file)
 
     start_time = current_time()
 
+    print("INFO: Start content download")
     for record in records:
         if (current_time() - start_time) > MAX_CONTENT_DOWNLOAD_TIME:
             print("INFO: Stop content download due to time limit")
@@ -81,8 +84,12 @@ def add_content_to_records(records):
             if content is not None:
                 record["content"] = content
 
+    print("INFO: Save cached content")
+
     with gzip.open(CACHED_CONTENT_FILE, "wt", encoding="utf-8") as gzip_file:
         json.dump(cached_content, gzip_file)
+
+    print("INFO: Finish content download")
 
     return records
 
