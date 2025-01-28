@@ -1,9 +1,20 @@
-import sys
+import gzip
 import json
+import sys
+import time
 
 from example_taxonomies import taxonomies
-from datenraum import create_datenraum_session, PotsdamEnvironment
+from datenraum import (
+    create_datenraum_session,
+    PotsdamEnvironment,
+    current_time,
+    get_current_environment,
+)
+from serlo_api_client import fetch_current_content
 from utils import has_description, pick
+
+CACHED_CONTENT_FILE = "cache/current-content.json.gz"
+MAX_CONTENT_DOWNLOAD_TIME = 30 * 60
 
 
 def main(metadata_file, nodes_file):
@@ -18,7 +29,46 @@ def main(metadata_file, nodes_file):
         for node in nodes:
             datenraum_nodes[node["externalId"]] = node
 
+    env = get_current_environment()
     session = create_datenraum_session()
+
+    if isinstance(env, PotsdamEnvironment):
+        with gzip.open(CACHED_CONTENT_FILE, "rt", encoding="utf-8") as fd:
+            cached_content = json.load(fd)
+
+        start_time = current_time()
+
+        for record in records:
+            if (current_time() - start_time) > MAX_CONTENT_DOWNLOAD_TIME:
+                print("INFO: Stop content download due to time limit")
+                break
+
+            if version_url := record.get("version", {}).get("id"):
+                try:
+                    current_revision_id = int(version_url.split("/")[-1])
+                except ValueError:
+                    continue
+
+                if current_revision_id in cached_content:
+                    content_text = cached_content[current_revision_id]
+                else:
+                    print(f"INFO: Download content for {current_revision_id}")
+
+                    content_text = fetch_current_content(current_revision_id)
+                    cached_content[current_revision_id] = content_text
+
+                    # Do not hammer the API
+                    time.sleep(0.5)
+
+                if isinstance(content_text, str):
+                    try:
+                        content = json.loads(content_text)
+                        record["content"] = content
+                    except json.JSONDecodeError:
+                        continue
+
+        with gzip.open(CACHED_CONTENT_FILE, "wt", encoding="utf-8") as fd:
+            json.dump(cached_content, fd)
 
     filtered_records = [record for record in records if has_description(record)]
     records = filtered_records + taxonomies
