@@ -24,9 +24,7 @@ def main(metadata_file, nodes_file):
     records = filtered_records + taxonomies
 
     update_session(session, records, datenraum_nodes)
-
-    if isinstance(session.session.env, PotsdamEnvironment):
-        delete_deprecated_ids(session, records, datenraum_nodes)
+    delete_deprecated_ids(session, records, datenraum_nodes)
 
 
 def update_session(session, records, datenraum_nodes):
