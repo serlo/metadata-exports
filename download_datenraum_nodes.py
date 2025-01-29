@@ -7,17 +7,24 @@ from datenraum import create_datenraum_session
 def main(output_file):
     session = create_datenraum_session()
 
+    limit = 20
+    offset = 0
     nodes = []
 
     while True:
-        new_nodes = session.get_nodes(offset=len(nodes))
+        try:
+            new_nodes = session.get_nodes(offset=offset, limit=limit)
 
-        nodes.extend(new_nodes)
+            nodes.extend(new_nodes)
 
-        print(f"Update: {len(nodes)} nodes downloaded")
+            print(f"Update: {len(nodes)} nodes downloaded")
 
-        if len(new_nodes) == 0:
-            break
+            if len(new_nodes) == 0:
+                break
+        except json.JSONDecodeError:
+            pass
+        finally:
+            offset += limit
 
     with open(output_file, "w", encoding="utf8") as new_file:
         json.dump(nodes, new_file, indent=2)
