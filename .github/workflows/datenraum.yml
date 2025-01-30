@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: cache/current-content.json.gzip
-          key: ${{ runner.os }}-cache-${{ matrix.target_environment }}
+          key: current-content-${{ runner.os }}-${{ matrix.target_environment }}
 
       - name: Install pipenv
         run: |

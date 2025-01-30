@@ -1,6 +1,5 @@
 import time
 import os
-import sys
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -305,13 +304,7 @@ class Session:
         if response.status_code == 404:
             return None
 
-        try:
-            return response.json()
-        except requests.exceptions.RequestException as error:
-            sys.stderr.write(str(response.status_code) + "\n")
-            sys.stderr.write(response.text + "\n")
-
-            raise error
+        return response.json()
 
     def delete(self, endpoint):
         return self.send(requests.Request("DELETE", self.env.base_url + endpoint))

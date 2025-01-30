@@ -67,17 +67,14 @@ def add_content_to_records(records):
             break
 
         if version_url := record.get("version", {}).get("id"):
-            try:
-                current_revision_id = int(version_url.split("/")[-1])
-            except ValueError:
-                continue
+            current_revision_id = version_url.split("/")[-1]
 
             if current_revision_id in cached_content:
                 content = cached_content[current_revision_id]
             else:
                 print(f"INFO: Download content for {current_revision_id}")
 
-                content = fetch_current_content(current_revision_id)
+                content = fetch_current_content(int(current_revision_id))
                 cached_content[current_revision_id] = content
 
                 # Do not hammer the API
@@ -85,6 +82,8 @@ def add_content_to_records(records):
 
             if content is not None:
                 record["content"] = content
+        else:
+            print(f"INFO: No version URL found for {record['id']}")
 
     print("INFO: Save cached content")
 
