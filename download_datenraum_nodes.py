@@ -22,6 +22,7 @@ def main(output_file):
             if len(new_nodes) == 0:
                 break
         except json.JSONDecodeError:
+            print(f"Error: Offset {offset} could not be downloaded")
             pass
         finally:
             offset += limit
