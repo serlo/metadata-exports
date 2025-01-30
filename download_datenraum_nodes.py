@@ -23,7 +23,6 @@ def main(output_file):
                 break
         except json.JSONDecodeError:
             print(f"Error: Offset {offset} could not be downloaded")
-            pass
         finally:
             offset += limit
 
