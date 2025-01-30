@@ -82,6 +82,8 @@ def add_content_to_records(records):
 
             if content is not None:
                 record["content"] = content
+        else:
+            print(f"INFO: No version URL found for {record['id']}")
 
     print("INFO: Save cached content")
 
