@@ -284,34 +284,34 @@ class Session:
         self.credentials = credentials
         self.session = requests.Session()
 
-    def post_json(self, endpoint, json, params=None):
+    def post_json(self, endpoint, json_data, params=None):
         return self.send(
             requests.Request(
                 "POST",
                 self.env.base_url + endpoint,
-                json=json,
+                json=json_data,
                 params=params,
                 headers={"Content-Type": "application/json"},
             )
         )
 
-    def put_json(self, endpoint, json, params=None):
+    def put_json(self, endpoint, json_data, params=None):
         return self.send(
             requests.Request(
                 "PUT",
                 self.env.base_url + endpoint,
-                json=json,
+                json=json_data,
                 params=params,
                 headers={"Content-Type": "application/json"},
             )
         )
 
-    def patch_json(self, endpoint, json):
+    def patch_json(self, endpoint, json_data):
         return self.send(
             requests.Request(
                 "PATCH",
                 self.env.base_url + endpoint,
-                json=json,
+                json=json_data,
                 headers={"Content-Type": "application/json-patch+json"},
             )
         )
