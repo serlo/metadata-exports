@@ -48,7 +48,11 @@ def main(metadata_file, nodes_file):
     else:
         records = filtered_records + taxonomies
 
-    update_session(session, records, datenraum_nodes)
+    if isinstance(env, PotsdamEnvironment):
+        update_session_potsdam(session, records)
+    else:
+        update_session(session, records, datenraum_nodes)
+
     delete_deprecated_ids(session, records, datenraum_nodes)
 
 
@@ -93,6 +97,15 @@ def add_content_to_records(records):
     print("INFO: Finish content download")
 
     return records
+
+
+def update_session_potsdam(session, records):
+    for record in records:
+        record_id = record["id"]
+
+        print(f"INFO: Create/update node {record_id}")
+
+        session.create_or_update_node(record)
 
 
 def update_session(session, records, datenraum_nodes):

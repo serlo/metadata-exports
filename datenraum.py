@@ -1,5 +1,6 @@
-import time
+import json
 import os
+import time
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -33,6 +34,22 @@ class Source:
     def __init__(self, session, source_id):
         self.session = session
         self.source_id = source_id
+
+    def create_or_update_node(self, node, log_error=True):
+        response = self.session.put_json(
+            f"/api/core/nodes-v2/{self.source_id}",
+            json=node,
+            params={"MetadataFormat": "Serlo"},
+        )
+
+        if not response.ok and log_error:
+            print(f"ERROR: Could not create or update {node['id']}")
+            print("    Status Code: ", response.status_code)
+            print("    Content:")
+            print(json.dumps(node))
+            print()
+
+        return response.ok
 
     def add_node(self, node, node_type="LearningOpportunity", log_error=True):
         data = self.convert_node_to_request_body(node, node_type)
