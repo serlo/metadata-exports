@@ -270,14 +270,22 @@ class Session:
     def post_json(self, endpoint, json, params=None):
         return self.send(
             requests.Request(
-                "POST", self.env.base_url + endpoint, json=json, params=params
+                "POST",
+                self.env.base_url + endpoint,
+                json=json,
+                params=params,
+                headers={"Content-Type": "application/json"},
             )
         )
 
     def put_json(self, endpoint, json, params=None):
         return self.send(
             requests.Request(
-                "PUT", self.env.base_url + endpoint, json=json, params=params
+                "PUT",
+                self.env.base_url + endpoint,
+                json=json,
+                params=params,
+                headers={"Content-Type": "application/json"},
             )
         )
 
