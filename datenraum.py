@@ -38,7 +38,7 @@ class Source:
     def create_or_update_node(self, node, log_error=True):
         response = self.session.put_json(
             f"/api/core/nodes-v2/{self.source_id}",
-            json=node,
+            json_data=node,
             params={"MetadataFormat": "Serlo"},
         )
 
@@ -55,7 +55,7 @@ class Source:
         data = self.convert_node_to_request_body(node, node_type)
 
         response = self.session.post_json(
-            "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
+            "/api/core/nodes", json_data=data, params={"metadataValidation": "Amb"}
         )
 
         is_success = response.status_code == 201
@@ -72,7 +72,7 @@ class Source:
 
         response = self.session.put_json(
             f"/api/core/nodes/{node_id}",
-            json=data,
+            json_data=data,
             params={"metadataValidation": "Amb"},
         )
 
@@ -158,7 +158,7 @@ class Source:
     def add_edge_type(self, name, description, slug):
         response = self.session.post_json(
             "/api/core/edge-types",
-            json={
+            json_data={
                 "name": name,
                 "description": description,
                 "slug": slug,
@@ -172,7 +172,7 @@ class Source:
     def add_edge(self, edge_type_id, tail_node_id, head_node_id):
         response = self.session.put_json(
             f"/api/core/edges/{edge_type_id}/{tail_node_id}/{head_node_id}",
-            json={
+            json_data={
                 "metadata": {
                     "isAiGenerated": False,
                 }
