@@ -1,5 +1,6 @@
-import time
+import json
 import os
+import time
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -34,11 +35,27 @@ class Source:
         self.session = session
         self.source_id = source_id
 
+    def create_or_update_node(self, node, log_error=True):
+        response = self.session.put_json(
+            f"/api/core/nodes-v2/{self.source_id}",
+            json_data=node,
+            params={"MetadataFormat": "Serlo"},
+        )
+
+        if not response.ok and log_error:
+            print(f"ERROR: Could not create or update {node['id']}")
+            print("    Status Code: ", response.status_code)
+            print("    Content:")
+            print(json.dumps(node))
+            print()
+
+        return response.ok
+
     def add_node(self, node, node_type="LearningOpportunity", log_error=True):
         data = self.convert_node_to_request_body(node, node_type)
 
         response = self.session.post_json(
-            "/api/core/nodes", json=data, params={"metadataValidation": "Amb"}
+            "/api/core/nodes", json_data=data, params={"metadataValidation": "Amb"}
         )
 
         is_success = response.status_code == 201
@@ -55,7 +72,7 @@ class Source:
 
         response = self.session.put_json(
             f"/api/core/nodes/{node_id}",
-            json=data,
+            json_data=data,
             params={"metadataValidation": "Amb"},
         )
 
@@ -141,7 +158,7 @@ class Source:
     def add_edge_type(self, name, description, slug):
         response = self.session.post_json(
             "/api/core/edge-types",
-            json={
+            json_data={
                 "name": name,
                 "description": description,
                 "slug": slug,
@@ -155,7 +172,7 @@ class Source:
     def add_edge(self, edge_type_id, tail_node_id, head_node_id):
         response = self.session.put_json(
             f"/api/core/edges/{edge_type_id}/{tail_node_id}/{head_node_id}",
-            json={
+            json_data={
                 "metadata": {
                     "isAiGenerated": False,
                 }
@@ -267,26 +284,34 @@ class Session:
         self.credentials = credentials
         self.session = requests.Session()
 
-    def post_json(self, endpoint, json, params=None):
+    def post_json(self, endpoint, json_data, params=None):
         return self.send(
             requests.Request(
-                "POST", self.env.base_url + endpoint, json=json, params=params
+                "POST",
+                self.env.base_url + endpoint,
+                json=json_data,
+                params=params,
+                headers={"Content-Type": "application/json"},
             )
         )
 
-    def put_json(self, endpoint, json, params=None):
+    def put_json(self, endpoint, json_data, params=None):
         return self.send(
             requests.Request(
-                "PUT", self.env.base_url + endpoint, json=json, params=params
+                "PUT",
+                self.env.base_url + endpoint,
+                json=json_data,
+                params=params,
+                headers={"Content-Type": "application/json"},
             )
         )
 
-    def patch_json(self, endpoint, json):
+    def patch_json(self, endpoint, json_data):
         return self.send(
             requests.Request(
                 "PATCH",
                 self.env.base_url + endpoint,
-                json=json,
+                json=json_data,
                 headers={"Content-Type": "application/json-patch+json"},
             )
         )
