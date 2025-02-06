@@ -161,11 +161,7 @@ def update_session(session, records, datenraum_nodes):
 
 
 def delete_deprecated_ids(session, records, datenraum_nodes):
-    stored_serlo_org_ids = set(
-        node["externalId"]
-        for node in datenraum_nodes.values()
-        if not node["externalId"].startswith("https://datenraum.serlo.org/")
-    )
+    stored_serlo_org_ids = set(node["externalId"] for node in datenraum_nodes.values())
     current_ids = set(record["id"] for record in records)
 
     for ressource_id in stored_serlo_org_ids - current_ids:
