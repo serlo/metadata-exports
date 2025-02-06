@@ -7,7 +7,7 @@ from datenraum import create_datenraum_session
 def main(output_file):
     session = create_datenraum_session()
 
-    limit = 20
+    limit = 100
     offset = 0
     nodes = []
 
