@@ -37,13 +37,20 @@ def main(metadata_file, nodes_file):
     if isinstance(env, PotsdamEnvironment):
         records = add_content_to_records(records)
 
+        for record in records:
+            if "description" not in record:
+                record["description"] = record.get("name", None)
+
     filtered_records = [record for record in records if has_description(record)]
 
     if isinstance(env, PotsdamEnvironment):
         records = [
             record
             for record in records
-            if "content" in record and record["content"] is not None
+            if "content" in record
+            and record["content"]
+            and "description" in record
+            and record["description"]
         ]
     else:
         records = filtered_records + taxonomies
