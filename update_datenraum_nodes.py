@@ -49,7 +49,7 @@ def main(metadata_file, nodes_file):
             for record in records
             if "content" in record
             and isinstance(record["content"], dict)
-            and isinstance(record["content"]["document"], dict)
+            and isinstance(record["content"].get("document", None), dict)
             and "plugin" in record["content"]["document"]
             and record["content"]["document"]["plugin"]
             in ["article", "course", "exercise", "exerciseGroup"]
