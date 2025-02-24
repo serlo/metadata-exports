@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-gql = "==3.5.0"
+gql = "==3.5.1"
 requests-toolbelt = "==1.0.0"
 fastjsonschema = "==2.21.1"
 
