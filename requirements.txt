@@ -3,7 +3,7 @@ anyio==4.8.0; python_version >= '3.8'
 backoff==2.2.1; python_version >= '3.7' and python_version < '4.0'
 certifi==2025.1.31; python_version >= '3.6'
 charset-normalizer==3.4.1; python_full_version >= '3.7.0'
-gql==3.5.0
+gql==3.5.1
 graphql-core==3.2.6; python_version >= '3.6' and python_version < '4'
 idna==3.10; python_version >= '3.5'
 multidict==6.1.0; python_version >= '3.7'
