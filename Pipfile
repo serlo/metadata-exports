@@ -11,7 +11,7 @@ fastjsonschema = "==2.21.1"
 [dev-packages]
 pylint = "==3.3.4"
 black = "==25.1.0"
-pytest = "==8.3.4"
+pytest = "==8.3.5"
 
 [scripts]
 lint = "pylint *.py"
