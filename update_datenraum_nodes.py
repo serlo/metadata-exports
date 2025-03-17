@@ -1,16 +1,12 @@
-import gzip
 import json
 import sys
-import time
 
 from example_taxonomies import taxonomies
 from datenraum import (
     create_datenraum_session,
     PotsdamEnvironment,
-    current_time,
     get_current_environment,
 )
-from serlo_api_client import fetch_current_content
 from utils import has_description, pick
 
 # See https://github.com/serlo/evaluations/blob/main/src/2025/2025-01-28-cache-current-revisions.ipynb
