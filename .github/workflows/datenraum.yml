@@ -26,13 +26,6 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Cache current-content.json.gzip
-        if: matrix.target_environment == 'potsdam'
-        uses: actions/cache@v4
-        with:
-          path: cache/current-content.json.gzip
-          key: current-content-${{ runner.os }}-${{ matrix.target_environment }}
-
       - name: Install pipenv
         run: |
           python -m pip install --upgrade pip

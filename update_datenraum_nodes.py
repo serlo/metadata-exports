@@ -35,8 +35,6 @@ def main(metadata_file, nodes_file):
     session = create_datenraum_session()
 
     if isinstance(env, PotsdamEnvironment):
-        records = add_content_to_records(records)
-
         for record in records:
             if "description" not in record:
                 record["description"] = record.get("name", None)
@@ -59,64 +57,9 @@ def main(metadata_file, nodes_file):
     else:
         records = filtered_records + taxonomies
 
-    if isinstance(env, PotsdamEnvironment):
-        update_session_potsdam(session, records)
-    else:
-        update_session(session, records, datenraum_nodes)
+    update_session(session, records, datenraum_nodes)
 
     delete_deprecated_ids(session, records, datenraum_nodes)
-
-
-def add_content_to_records(records):
-    print("INFO: Load cached content")
-
-    with gzip.open(CACHED_CONTENT_FILE, "rt", encoding="utf-8") as gzip_file:
-        cached_content = json.load(gzip_file)
-
-    start_time = current_time()
-
-    print("INFO: Start content download")
-    for record in records:
-        if (current_time() - start_time) > MAX_CONTENT_DOWNLOAD_TIME:
-            print("INFO: Stop content download due to time limit")
-            break
-
-        if version_url := record.get("version", {}).get("id"):
-            current_revision_id = version_url.split("/")[-1]
-
-            if current_revision_id in cached_content:
-                content = cached_content[current_revision_id]
-            else:
-                print(f"INFO: Download content for {current_revision_id}")
-
-                content = fetch_current_content(int(current_revision_id))
-                cached_content[current_revision_id] = content
-
-                # Do not hammer the API
-                time.sleep(0.1)
-
-            if content is not None:
-                record["content"] = content
-        else:
-            print(f"INFO: No version URL found for {record['id']}")
-
-    print("INFO: Save cached content")
-
-    with gzip.open(CACHED_CONTENT_FILE, "wt", encoding="utf-8") as gzip_file:
-        json.dump(cached_content, gzip_file)
-
-    print("INFO: Finish content download")
-
-    return records
-
-
-def update_session_potsdam(session, records):
-    for record in records:
-        record_id = record["id"]
-
-        print(f"INFO: Create/update node {record_id}")
-
-        session.create_or_update_node(record)
 
 
 def update_session(session, records, datenraum_nodes):
