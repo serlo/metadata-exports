@@ -37,6 +37,9 @@ jobs:
         run: |
           echo "DATENRAUM_ENVIRONMENT=demo" >> "$GITHUB_ENV"
 
+      - name: Wait for 4 minutes so that the metadata API is not overloaded
+        run: sleep 240
+
       - name: Download metadata from Serlo Metadata API
         run: pipenv run python download_metadata.py public/serlo-metadata.json
 
