@@ -9,11 +9,6 @@ from datenraum import (
 )
 from utils import has_description, pick
 
-# See https://github.com/serlo/evaluations/blob/main/src/2025/2025-01-28-cache-current-revisions.ipynb
-# for the generation of this file
-CACHED_CONTENT_FILE = "cache/current-content.json.gz"
-MAX_CONTENT_DOWNLOAD_TIME = 20 * 60
-
 
 def main(metadata_file, nodes_file):
     with open(metadata_file, "r", encoding="utf-8") as input_file:
@@ -41,21 +36,32 @@ def main(metadata_file, nodes_file):
         records = [
             record
             for record in records
-            if "content" in record
-            and isinstance(record["content"], dict)
-            and isinstance(record["content"].get("document", None), dict)
-            and "plugin" in record["content"]["document"]
-            and record["content"]["document"]["plugin"]
-            in ["article", "course", "exercise", "exerciseGroup"]
+            if (
+                "Article" in record["type"]
+                or "Course" in record["type"]
+                or "Exercise" in record["type"]
+            )
             and "description" in record
             and record["description"]
         ]
     else:
         records = filtered_records + taxonomies
 
-    update_session(session, records, datenraum_nodes)
+    print(len(records))
+
+    if isinstance(env, PotsdamEnvironment):
+        update_session_potsdam(session, records)
+    else:
+        update_session(session, records, datenraum_nodes)
 
     delete_deprecated_ids(session, records, datenraum_nodes)
+
+
+def update_session_potsdam(session, records):
+    for record in records:
+        record_id = record["id"]
+        print(f"INFO: Create/update node {record_id}")
+        session.create_or_update_node(record)
 
 
 def update_session(session, records, datenraum_nodes):
