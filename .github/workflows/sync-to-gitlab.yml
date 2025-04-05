@@ -2,8 +2,7 @@ name: Sync to GitLab
 on:
   push:
     branches:
-      - staging
-      - production
+      - main
 
 jobs:
   sync:
@@ -13,5 +12,5 @@ jobs:
         uses: kulla/sync-to-gitlab@v1
         with:
           owner: stephan_kulla
-          repository_name: serlo-cloudflare-worker
+          repository_name: serlo-metadata-exports
           token: ${{ secrets.GITLAB_TOKEN }}
