@@ -80,16 +80,16 @@ def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, An
     for attempt in range(max_retries):
         try:
             return client.execute(graphql_query, variable_values=params)
-        except Exception as e:  # pylint: disable=broad-exception-caught
+        except Exception as e:
             last_exception = e
-            if attempt < max_retries - 1:
-                # Calculate sleep time with exponential backoff: 1s, 2s, 4s
-                sleep_time = 2**attempt
-                time.sleep(sleep_time)
-            # If this was the last attempt, the exception will be raised below
 
-    # If all retries failed, raise the last exception
-    raise last_exception
+            if attempt < max_retries - 1:
+                sleep_time = 2**attempt * 10
+                time.sleep(sleep_time)
+
+    raise last_exception if last_exception else Exception(
+        "max_retries must be at least 1"
+    )
 
 
 def graphql(query):
