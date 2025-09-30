@@ -88,8 +88,10 @@ def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, An
                 sleep_time = 2**attempt * 10
                 time.sleep(sleep_time)
 
-    raise last_exception if last_exception else Exception(
-        "max_retries must be at least 1"
+    raise (
+        last_exception
+        if last_exception
+        else Exception("max_retries must be at least 1")
     )
 
 
