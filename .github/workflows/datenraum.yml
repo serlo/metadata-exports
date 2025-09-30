@@ -17,7 +17,6 @@ jobs:
       matrix:
         target_environment:
           - demo
-          - potsdam
     steps:
       - uses: actions/checkout@v5
 
