@@ -8,6 +8,7 @@ from typing import Dict, Any, Optional
 
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
+from gql.transport.exceptions import TransportError
 
 
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
@@ -80,8 +81,8 @@ def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, An
     for attempt in range(max_retries):
         try:
             return client.execute(graphql_query, variable_values=params)
-        except Exception as e:
-            last_exception = e
+        except TransportError as error:
+            last_exception = error
 
             if attempt < max_retries - 1:
                 sleep_time = 2**attempt * 10
