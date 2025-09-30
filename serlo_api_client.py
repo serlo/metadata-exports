@@ -2,11 +2,13 @@
 
 import json
 import os
+import time
 
 from typing import Dict, Any, Optional
 
 from gql import gql, Client
 from gql.transport.requests import RequestsHTTPTransport
+from gql.transport.exceptions import TransportError
 
 
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
@@ -72,7 +74,25 @@ def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, An
     transport = RequestsHTTPTransport(url=api_url)
     client = Client(transport=transport, fetch_schema_from_transport=True)
     graphql_query = gql(query)
-    return client.execute(graphql_query, variable_values=params)
+
+    max_retries = 3
+    last_exception = None
+
+    for attempt in range(max_retries):
+        try:
+            return client.execute(graphql_query, variable_values=params)
+        except TransportError as error:
+            last_exception = error
+
+            if attempt < max_retries - 1:
+                sleep_time = 2**attempt * 10
+                time.sleep(sleep_time)
+
+    raise (
+        last_exception
+        if last_exception
+        else Exception("max_retries must be at least 1")
+    )
 
 
 def graphql(query):
