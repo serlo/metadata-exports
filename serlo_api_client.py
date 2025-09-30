@@ -2,6 +2,7 @@
 
 import json
 import os
+import time
 
 from typing import Dict, Any, Optional
 
@@ -72,7 +73,23 @@ def execute(query: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, An
     transport = RequestsHTTPTransport(url=api_url)
     client = Client(transport=transport, fetch_schema_from_transport=True)
     graphql_query = gql(query)
-    return client.execute(graphql_query, variable_values=params)
+
+    max_retries = 3
+    last_exception = None
+
+    for attempt in range(max_retries):
+        try:
+            return client.execute(graphql_query, variable_values=params)
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            last_exception = e
+            if attempt < max_retries - 1:
+                # Calculate sleep time with exponential backoff: 1s, 2s, 4s
+                sleep_time = 2**attempt
+                time.sleep(sleep_time)
+            # If this was the last attempt, the exception will be raised below
+
+    # If all retries failed, raise the last exception
+    raise last_exception
 
 
 def graphql(query):
