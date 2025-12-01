@@ -9,7 +9,7 @@ requests-toolbelt = "==1.0.0"
 fastjsonschema = "==2.21.2"
 
 [dev-packages]
-pylint = "==4.0.3"
+pylint = "==4.0.4"
 black = "==25.11.0"
 pytest = "==9.0.1"
 
