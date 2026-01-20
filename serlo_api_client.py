@@ -12,8 +12,7 @@ from gql.transport.exceptions import TransportError
 
 
 def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
-    query = graphql(
-        """
+    query = graphql("""
         query ($first: Int, $after: String) {
             metadata {
                 resources(first: $first, after: $after) {
@@ -25,29 +24,25 @@ def fetch_metadata(first=500, after=None) -> Dict[str, Any]:
                 }
             }
         }
-        """
-    )
+        """)
 
     params = {"first": first, "after": after}
     return execute(query, params)
 
 
 def fetch_publisher() -> Dict[str, Any]:
-    query = graphql(
-        """
+    query = graphql("""
         query {
             metadata {
                 publisher
             }
         }
-        """
-    )
+        """)
     return execute(query)
 
 
 def fetch_current_content(revision_id):
-    query = graphql(
-        """
+    query = graphql("""
         query ($id: Int) {
             uuid(id: $id) {
                 ...on AbstractRevision {
@@ -55,8 +50,7 @@ def fetch_current_content(revision_id):
                 }
             }
         }
-        """
-    )
+        """)
     result = execute(query, {"id": revision_id})
 
     if content_text := result.get("uuid", {}).get("content", None):
